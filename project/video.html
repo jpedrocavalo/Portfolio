@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Jotap Films — Latest Work</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; width: 100%; background: #0a0a0a; color: #f5f1e8; font-family: 'Inter', system-ui, sans-serif; }
+  #root { width: 100%; }
+  a { color: inherit; }
+</style>
+
+<!-- React + Babel -->
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel">
+const PALETTE = { bg: '#0a0a0a', fg: '#f5f1e8', muted: '#8a8580', accent: '#7a00d8' };
+const FONTS = {
+  display: '"Fraunces", serif',
+  sans: '"Inter", system-ui, sans-serif',
+  mono: '"JetBrains Mono", monospace',
+};
+
+const CF_CUSTOMER_CODE = 'customer-x1j6qmqmv38ltwyr';
+
+// ════════════════════════════════════════════════════════════════
+// ÚLTIMO VÍDEO ADICIONADO
+// Atualize este objeto (e o LATEST_VIDEO em reel.html) ao adicionar
+// um trabalho novo. streamId = UID do Cloudflare Stream.
+// ════════════════════════════════════════════════════════════════
+const LATEST_VIDEO = {
+  title: 'Latest Work',
+  duration: '04:32',
+  year: '2026',
+  category: 'Short film',
+  streamId: '',   // UID do Cloudflare Stream
+  description: 'Descrição do projeto aqui — contexto, papel do Jotap, o que o trabalho representa. Edite este texto livremente.',
+};
+
+// URL do player do Cloudflare Stream — com controles (página de assistir)
+function streamPlayerUrl(id) {
+  return `https://${CF_CUSTOMER_CODE}.cloudflarestream.com/${id}/iframe?controls=true&preload=auto`;
+}
+
+function Header({ fonts, palette }) {
+  return (
+    <div style={{
+      position: 'fixed', top: 0, left: 0, right: 0,
+      padding: '28px 40px',
+      display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+      fontFamily: fonts.mono, fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase',
+      color: '#fff',
+      zIndex: 10,
+      mixBlendMode: 'difference',
+    }}>
+      <a href="./index.html" style={{
+        fontFamily: fonts.display, fontSize: 16, letterSpacing: '-0.02em',
+        textTransform: 'none', fontStyle: 'italic', color: '#fff', textDecoration: 'none',
+      }}>Jotap Films</a>
+      <div style={{ display: 'flex', gap: 32 }}>
+        <a href="./color.html" style={{ color: 'inherit', textDecoration: 'none' }}>Color</a>
+        <a href="./reel.html" style={{ color: 'inherit', textDecoration: 'none' }}>Reel</a>
+        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=jotapfilms@gmail.com"
+          target="_blank" rel="noopener noreferrer"
+          style={{ color: 'inherit', textDecoration: 'none' }}>
+          Contact
+        </a>
+      </div>
+    </div>
+  );
+}
+
+function App() {
+  const v = LATEST_VIDEO;
+  return (
+    <div style={{ width: '100%' }}>
+      <Header fonts={FONTS} palette={PALETTE} />
+
+      <section style={{
+        minHeight: '100vh',
+        padding: '140px 40px 80px',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+      }}>
+        {/* Label topo */}
+        <div style={{
+          width: '100%', maxWidth: 1100,
+          display: 'flex', justifyContent: 'space-between',
+          fontFamily: FONTS.mono, fontSize: 11, letterSpacing: '0.3em',
+          textTransform: 'uppercase', color: PALETTE.muted, marginBottom: 20,
+        }}>
+          <span style={{ color: PALETTE.accent }}>Latest work</span>
+          <span>{v.year} · {v.category}</span>
+        </div>
+
+        {/* Player do vídeo — 16:9 */}
+        <div style={{
+          width: '100%', maxWidth: 1100,
+          aspectRatio: '16 / 9',
+          background: `linear-gradient(135deg, ${PALETTE.accent}22, ${PALETTE.fg}08)`,
+          border: `1px solid ${PALETTE.fg}1a`,
+          overflow: 'hidden',
+          position: 'relative',
+        }}>
+          {v.streamId ? (
+            <iframe
+              src={streamPlayerUrl(v.streamId)}
+              allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+              allowFullScreen
+              style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', border: 'none' }}
+            />
+          ) : (
+            <>
+              <div style={{
+                position: 'absolute', inset: 0,
+                background: `repeating-linear-gradient(90deg, transparent, transparent 36px, ${PALETTE.fg}08 36px, ${PALETTE.fg}08 38px)`,
+              }} />
+              <div style={{
+                position: 'absolute', inset: 0,
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                flexDirection: 'column', gap: 16,
+              }}>
+                <div style={{
+                  width: 0, height: 0,
+                  borderLeft: `26px solid ${PALETTE.accent}`,
+                  borderTop: '17px solid transparent',
+                  borderBottom: '17px solid transparent',
+                  marginLeft: 6,
+                }} />
+                <div style={{
+                  fontFamily: FONTS.mono, fontSize: 10, letterSpacing: '0.3em',
+                  textTransform: 'uppercase', color: 'rgba(255,255,255,0.4)',
+                }}>
+                  Cole o streamId do Cloudflare
+                </div>
+              </div>
+            </>
+          )}
+        </div>
+
+        {/* Info do vídeo */}
+        <div style={{
+          width: '100%', maxWidth: 1100, marginTop: 40,
+          display: 'flex', flexDirection: 'column', gap: 24,
+        }}>
+          <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16 }}>
+            <h1 style={{
+              fontFamily: FONTS.display,
+              fontSize: 'clamp(40px, 6vw, 88px)',
+              fontWeight: 300, fontStyle: 'italic',
+              letterSpacing: '-0.03em', lineHeight: 1, margin: 0,
+            }}>
+              {v.title}
+            </h1>
+            <span style={{
+              fontFamily: FONTS.mono, fontSize: 13, letterSpacing: '0.2em',
+              color: PALETTE.muted,
+            }}>
+              {v.duration}
+            </span>
+          </div>
+
+          <p style={{
+            fontFamily: FONTS.sans, fontSize: 16, lineHeight: 1.7,
+            color: 'rgba(245,241,232,0.78)', maxWidth: 640, margin: 0,
+          }}>
+            {v.description}
+          </p>
+
+          <a href="./reel.html" style={{
+            fontFamily: FONTS.mono, fontSize: 11, letterSpacing: '0.3em',
+            textTransform: 'uppercase', color: PALETTE.accent,
+            textDecoration: 'none', marginTop: 8,
+          }}>
+            ← Back to reel
+          </a>
+        </div>
+      </section>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+
+</body>
+</html>

@@ -72,8 +72,19 @@ const FEATURED = [
   { title: 'Short-form ↗',              duration: '',      imageSrc: '', href: './short-form.html' },
 ];
 
-// ID do vídeo do hero — deixe vazio pra usar o MP4 local "./reel.mp4"
+// ID do vídeo do hero (fundo) — deixe vazio pra usar o MP4 local "./reel.mp4"
 const HERO_STREAM_ID = '';
+
+// ════════════════════════════════════════════════════════════════
+// ÚLTIMO VÍDEO ADICIONADO
+// Este é o vídeo do mini-card clicável na hero da reel.
+// Ao adicionar um trabalho novo, atualize AQUI e também em video.html.
+// ════════════════════════════════════════════════════════════════
+const LATEST_VIDEO = {
+  title: 'Latest Work',
+  duration: '04:32',
+  streamId: '',   // UID do Cloudflare Stream (preview do mini-card)
+};
 
 // Helper — monta a URL do iframe do Cloudflare Stream
 function streamUrl(id) {
@@ -163,8 +174,10 @@ function App() {
           palette={PALETTE} fonts={FONTS} intensity={1}
           streamSrc={HERO_STREAM_ID ? streamUrl(HERO_STREAM_ID) : ''}
           videoSrc="./reel.mp4"
-          heroTitle="Latest Work"
-          heroDuration="04:32"
+          heroTitle={LATEST_VIDEO.title}
+          heroDuration={LATEST_VIDEO.duration}
+          heroHref="./video.html"
+          heroThumbStream={LATEST_VIDEO.streamId ? streamUrl(LATEST_VIDEO.streamId) : ''}
           colorSrc="" bwSrc=""
         />
       </div>
