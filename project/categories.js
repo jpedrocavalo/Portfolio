@@ -6,9 +6,9 @@
      • category.html — exibe a página de uma categoria (?cat=índice)
 
    cover  = imagem de fundo da seção (na color.html)
-   works  = trabalhos dentro da categoria. Formato de cada item:
-            { title: 'Nome', meta: '2026 · Cliente', streamId: '' }
-            (streamId = UID do Cloudflare Stream; deixe '' por enquanto)
+   works  = IMAGENS da categoria (frames / stills de color grading).
+            Formato de cada item:
+            { title: 'Nome', meta: '2026 · Cliente', imageSrc: './foto.jpg' }
    ════════════════════════════════════════════════════════════════ */
 window.CATEGORIES = [
   {
