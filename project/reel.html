@@ -24,6 +24,9 @@
 <body>
 <div id="root"></div>
 
+<!-- Lista central de vídeos (script normal, roda antes do Babel) -->
+<script src="videos.js"></script>
+
 <script type="text/babel" src="heroes/color-reveal-bg.jsx"></script>
 <script type="text/babel" src="heroes/v1-showreel.jsx"></script>
 
@@ -62,29 +65,18 @@ const labelStyle = {
 // ────────────────────────────────────────────────────────────────
 const CF_CUSTOMER_CODE = 'customer-x1j6qmqmv38ltwyr';
 
-// 6 itens. Use streamId (Cloudflare) — videoSrc (MP4 local) é fallback.
+// Grid "Selected Works" = todos os vídeos de videos.js (cada um clicável,
+// leva pra ./video.html?v=<índice>) + o card Short-form no final.
 const FEATURED = [
-  { title: 'Aurora — short film',      duration: '04:32', streamId: '', videoSrc: '' },
-  { title: 'Marés — commercial',        duration: '01:18', streamId: '', videoSrc: '' },
-  { title: 'Vento Norte — clip',        duration: '03:05', streamId: '', videoSrc: '' },
-  { title: 'Solstício — documentary',   duration: '12:00', streamId: '', videoSrc: '' },
-  { title: 'Eclipse — music video',     duration: '03:48', streamId: '', videoSrc: '' },
-  { title: 'Short-form ↗',              duration: '',      imageSrc: '', href: './short-form.html' },
+  ...window.VIDEOS.map((v, i) => ({ ...v, href: './video.html?v=' + i })),
+  { title: 'Short-form ↗', duration: '', imageSrc: '', href: './short-form.html' },
 ];
 
 // ID do vídeo do hero (fundo) — deixe vazio pra usar o MP4 local "./reel.mp4"
 const HERO_STREAM_ID = '';
 
-// ════════════════════════════════════════════════════════════════
-// ÚLTIMO VÍDEO ADICIONADO
-// Este é o vídeo do mini-card clicável na hero da reel.
-// Ao adicionar um trabalho novo, atualize AQUI e também em video.html.
-// ════════════════════════════════════════════════════════════════
-const LATEST_VIDEO = {
-  title: 'Latest Work',
-  duration: '04:32',
-  streamId: '',   // UID do Cloudflare Stream (preview do mini-card)
-};
+// Último vídeo = índice 0 de videos.js — alimenta o mini-card da hero.
+const LATEST_VIDEO = window.VIDEOS[0];
 
 // Helper — monta a URL do iframe do Cloudflare Stream
 function streamUrl(id) {

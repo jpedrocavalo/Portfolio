@@ -25,6 +25,9 @@
 <body>
 <div id="root"></div>
 
+<!-- Lista central de vídeos (script normal, roda antes do Babel) -->
+<script src="videos.js"></script>
+
 <script type="text/babel">
 const PALETTE = { bg: '#0a0a0a', fg: '#f5f1e8', muted: '#8a8580', accent: '#7a00d8' };
 const FONTS = {
@@ -35,19 +38,13 @@ const FONTS = {
 
 const CF_CUSTOMER_CODE = 'customer-x1j6qmqmv38ltwyr';
 
-// ════════════════════════════════════════════════════════════════
-// ÚLTIMO VÍDEO ADICIONADO
-// Atualize este objeto (e o LATEST_VIDEO em reel.html) ao adicionar
-// um trabalho novo. streamId = UID do Cloudflare Stream.
-// ════════════════════════════════════════════════════════════════
-const LATEST_VIDEO = {
-  title: 'Latest Work',
-  duration: '04:32',
-  year: '2026',
-  category: 'Short film',
-  streamId: '',   // UID do Cloudflare Stream
-  description: 'Descrição do projeto aqui — contexto, papel do Jotap, o que o trabalho representa. Edite este texto livremente.',
-};
+// Qual vídeo mostrar: lê ?v=<índice> da URL (vindo do grid da reel).
+// Sem parâmetro (ou inválido) → mostra o último vídeo (índice 0).
+const VIDEO_INDEX = parseInt(new URLSearchParams(location.search).get('v'), 10);
+const IS_LATEST = !Number.isInteger(VIDEO_INDEX) || VIDEO_INDEX === 0;
+const VIDEO = (window.VIDEOS && window.VIDEOS[VIDEO_INDEX])
+  || (window.VIDEOS && window.VIDEOS[0])
+  || { title: 'Vídeo', duration: '', year: '', category: '', streamId: '', description: '' };
 
 // URL do player do Cloudflare Stream — com controles (página de assistir)
 function streamPlayerUrl(id) {
@@ -83,7 +80,7 @@ function Header({ fonts, palette }) {
 }
 
 function App() {
-  const v = LATEST_VIDEO;
+  const v = VIDEO;
   return (
     <div style={{ width: '100%' }}>
       <Header fonts={FONTS} palette={PALETTE} />
@@ -102,7 +99,7 @@ function App() {
           fontFamily: FONTS.mono, fontSize: 11, letterSpacing: '0.3em',
           textTransform: 'uppercase', color: PALETTE.muted, marginBottom: 20,
         }}>
-          <span style={{ color: PALETTE.accent }}>Latest work</span>
+          <span style={{ color: PALETTE.accent }}>{IS_LATEST ? 'Latest work' : 'Selected work'}</span>
           <span>{v.year} · {v.category}</span>
         </div>
 
