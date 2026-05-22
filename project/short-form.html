@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Jotap Films — Short-form</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; width: 100%; background: #0a0a0a; color: #f5f1e8; font-family: 'Inter', system-ui, sans-serif; }
+  #root { width: 100%; }
+  a { color: inherit; }
+</style>
+
+<!-- React + Babel -->
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel">
+const { useState, useEffect } = React;
+
+const PALETTE = { bg: '#0a0a0a', fg: '#f5f1e8', muted: '#8a8580', accent: '#7a00d8' };
+const FONTS = {
+  display: '"Fraunces", serif',
+  sans: '"Inter", system-ui, sans-serif',
+  mono: '"JetBrains Mono", monospace',
+};
+
+const CF_CUSTOMER_CODE = 'customer-x1j6qmqmv38ltwyr';
+
+// ════════════════════════════════════════════════════════════════
+// VÍDEOS SHORT-FORM
+// Cada item: { title, streamId }  (streamId = UID do Cloudflare Stream)
+// Adicione/edite à vontade — o grid se ajusta sozinho.
+// ════════════════════════════════════════════════════════════════
+const SHORTFORM = [
+  { title: 'Reel 01', streamId: '' },
+  { title: 'Reel 02', streamId: '' },
+  { title: 'Reel 03', streamId: '' },
+  { title: 'Reel 04', streamId: '' },
+  { title: 'Reel 05', streamId: '' },
+  { title: 'Reel 06', streamId: '' },
+  { title: 'Reel 07', streamId: '' },
+  { title: 'Reel 08', streamId: '' },
+  { title: 'Reel 09', streamId: '' },
+];
+
+// Imagem-poster gerada pelo Cloudflare Stream (thumbnail estático do grid)
+function thumbUrl(id) {
+  return `https://${CF_CUSTOMER_CODE}.cloudflarestream.com/${id}/thumbnails/thumbnail.jpg`;
+}
+// Player do lightbox — autoplay mudo, com controles (usuário desmuta)
+function playerUrl(id) {
+  return `https://${CF_CUSTOMER_CODE}.cloudflarestream.com/${id}/iframe?autoplay=true&muted=true&controls=true`;
+}
+
+function Header({ fonts }) {
+  return (
+    <div style={{
+      position: 'fixed', top: 0, left: 0, right: 0,
+      padding: '28px 40px',
+      display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+      fontFamily: fonts.mono, fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase',
+      color: '#fff', zIndex: 20, mixBlendMode: 'difference',
+    }}>
+      <a href="./index.html" style={{
+        fontFamily: fonts.display, fontSize: 16, letterSpacing: '-0.02em',
+        textTransform: 'none', fontStyle: 'italic', color: '#fff', textDecoration: 'none',
+      }}>Jotap Films</a>
+      <div style={{ display: 'flex', gap: 32 }}>
+        <a href="./color.html" style={{ color: 'inherit', textDecoration: 'none' }}>Color</a>
+        <a href="./reel.html" style={{ color: 'inherit', textDecoration: 'none' }}>Reel</a>
+        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=jotapfilms@gmail.com"
+          target="_blank" rel="noopener noreferrer"
+          style={{ color: 'inherit', textDecoration: 'none' }}>
+          Contact
+        </a>
+      </div>
+    </div>
+  );
+}
+
+// Thumbnail vertical 9:16 do grid — estático, clicável.
+function GridItem({ item, index, onOpen, fonts, palette }) {
+  const [hover, setHover] = useState(false);
+  return (
+    <div
+      onClick={() => onOpen(index)}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+      style={{
+        position: 'relative',
+        aspectRatio: '9 / 16',
+        background: `linear-gradient(135deg, ${palette.accent}33, ${palette.fg}11)`,
+        overflow: 'hidden',
+        cursor: 'pointer',
+      }}
+    >
+      {item.streamId ? (
+        <img
+          src={thumbUrl(item.streamId)}
+          alt={item.title}
+          style={{
+            position: 'absolute', inset: 0, width: '100%', height: '100%',
+            objectFit: 'cover',
+            transform: hover ? 'scale(1.05)' : 'scale(1)',
+            transition: 'transform 0.5s cubic-bezier(0.2,0.8,0.2,1)',
+          }}
+        />
+      ) : (
+        <div style={{
+          position: 'absolute', inset: 0,
+          background: `repeating-linear-gradient(90deg, transparent, transparent 22px, ${palette.fg}08 22px, ${palette.fg}08 24px)`,
+        }} />
+      )}
+
+      {/* Overlay escuro + play no hover */}
+      <div style={{
+        position: 'absolute', inset: 0,
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        background: hover ? 'rgba(10,10,10,0.35)' : 'rgba(10,10,10,0)',
+        transition: 'background 0.25s',
+      }}>
+        <div style={{
+          width: 0, height: 0,
+          borderLeft: `18px solid ${hover ? palette.accent : 'rgba(255,255,255,0.85)'}`,
+          borderTop: '12px solid transparent',
+          borderBottom: '12px solid transparent',
+          marginLeft: 5,
+          opacity: hover ? 1 : 0,
+          transform: hover ? 'scale(1)' : 'scale(0.7)',
+          transition: 'opacity 0.25s, transform 0.25s, border-color 0.25s',
+        }} />
+      </div>
+    </div>
+  );
+}
+
+// Lightbox — vídeo ampliado 9:16, fundo desfocado.
+function Lightbox({ item, onClose, fonts }) {
+  // Fecha com Esc
+  useEffect(() => {
+    const onKey = (e) => { if (e.key === 'Escape') onClose(); };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [onClose]);
+
+  return (
+    <div
+      onClick={onClose}
+      style={{
+        position: 'fixed', inset: 0, zIndex: 100,
+        background: 'rgba(8,8,8,0.72)',
+        backdropFilter: 'blur(28px)',
+        WebkitBackdropFilter: 'blur(28px)',
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        padding: 40,
+      }}
+    >
+      {/* Botão fechar */}
+      <button
+        onClick={onClose}
+        style={{
+          position: 'absolute', top: 24, right: 28,
+          width: 40, height: 40, borderRadius: 20,
+          border: '1px solid rgba(255,255,255,0.2)',
+          background: 'transparent', color: '#fff',
+          fontSize: 20, lineHeight: 1, cursor: 'pointer',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          transition: 'background 0.2s',
+        }}
+        onMouseEnter={(e) => (e.currentTarget.style.background = 'rgba(255,255,255,0.12)')}
+        onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
+      >×</button>
+
+      {/* Vídeo 9:16 ampliado — stopPropagation pra não fechar ao clicar nele */}
+      <div
+        onClick={(e) => e.stopPropagation()}
+        style={{
+          height: 'min(86vh, 1100px)',
+          aspectRatio: '9 / 16',
+          background: '#000',
+          borderRadius: 4,
+          overflow: 'hidden',
+          boxShadow: '0 30px 90px rgba(0,0,0,0.6)',
+        }}
+      >
+        {item.streamId ? (
+          <iframe
+            src={playerUrl(item.streamId)}
+            allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+            allowFullScreen
+            style={{ width: '100%', height: '100%', border: 'none' }}
+          />
+        ) : (
+          <div style={{
+            width: '100%', height: '100%',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            flexDirection: 'column', gap: 14,
+            fontFamily: fonts.mono, fontSize: 11, letterSpacing: '0.25em',
+            textTransform: 'uppercase', color: 'rgba(255,255,255,0.4)',
+            background: 'linear-gradient(135deg, #1a1a1a, #0a0a0a)',
+          }}>
+            <div style={{
+              width: 0, height: 0,
+              borderLeft: '22px solid #7a00d8',
+              borderTop: '15px solid transparent',
+              borderBottom: '15px solid transparent',
+            }} />
+            Sem streamId
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function App() {
+  const [openIndex, setOpenIndex] = useState(null);
+
+  return (
+    <div style={{ width: '100%' }}>
+      <Header fonts={FONTS} />
+
+      {/* Bloco de título */}
+      <section style={{
+        padding: '160px 40px 50px',
+      }}>
+        <div style={{
+          fontFamily: FONTS.mono, fontSize: 11, letterSpacing: '0.3em',
+          textTransform: 'uppercase', color: PALETTE.accent, marginBottom: 24,
+        }}>
+          Vertical · Reels · Social
+        </div>
+        <h1 style={{
+          fontFamily: FONTS.display,
+          fontSize: 'clamp(56px, 9vw, 160px)',
+          fontWeight: 300, lineHeight: 0.95, letterSpacing: '-0.04em', margin: 0,
+        }}>
+          Short-form.
+        </h1>
+        <p style={{
+          marginTop: 28, maxWidth: 560,
+          fontFamily: FONTS.sans, fontSize: 15, lineHeight: 1.7,
+          color: 'rgba(245,241,232,0.7)',
+        }}>
+          Vídeos curtos verticais — clipes para redes sociais. Clique pra assistir.
+        </p>
+      </section>
+
+      {/* Grid estilo Instagram — 3 por fileira */}
+      <section style={{ padding: '0 40px 80px' }}>
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(3, 1fr)',
+          gap: 12,
+        }}>
+          {SHORTFORM.map((item, i) => (
+            <GridItem
+              key={i}
+              item={item}
+              index={i}
+              onOpen={setOpenIndex}
+              fonts={FONTS}
+              palette={PALETTE}
+            />
+          ))}
+        </div>
+
+        <a href="./reel.html" style={{
+          display: 'inline-block', marginTop: 48,
+          fontFamily: FONTS.mono, fontSize: 11, letterSpacing: '0.3em',
+          textTransform: 'uppercase', color: PALETTE.accent, textDecoration: 'none',
+        }}>
+          ← Back to reel
+        </a>
+      </section>
+
+      {/* Lightbox */}
+      {openIndex !== null && (
+        <Lightbox
+          item={SHORTFORM[openIndex]}
+          onClose={() => setOpenIndex(null)}
+          fonts={FONTS}
+        />
+      )}
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+
+</body>
+</html>
