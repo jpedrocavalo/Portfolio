@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Jotap Films</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet" />
+
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; width: 100%; background: #0a0a0a; }
+  #root { width: 100%; }
+</style>
+
+<!-- React + Babel -->
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel" src="heroes/color-reveal-bg.jsx"></script>
+<script type="text/babel" src="heroes/v4-projector.jsx"></script>
+
+<script type="text/babel">
+const PALETTE = { bg: '#0a0a0a', fg: '#f5f1e8', muted: '#8a8580', accent: '#7a00d8' };
+const FONTS = {
+  display: '"Fraunces", serif',
+  sans: '"Inter", system-ui, sans-serif',
+  mono: '"JetBrains Mono", monospace',
+};
+
+// 5 sessões abaixo da hero — cada uma é um link para uma página diferente.
+// Preencha imageSrc com o caminho da foto de fundo e href com a URL destino.
+const SECTIONS = [
+  { number: '01', title: 'Commercials',     subtitle: 'Brand films',          imageSrc: './Captura de tela 2026-03-14 101310.jpg', href: './commercials.html' },
+  { number: '02', title: 'Music Videos',    subtitle: 'Visual scores',        imageSrc: './Captura de tela 2026-03-30 113939.jpg', href: './music-videos.html' },
+  { number: '03', title: 'Short Films',     subtitle: 'Narrative work',       imageSrc: './Captura de tela 2026-04-25 092041.jpg', href: './short-films.html' },
+  { number: '04', title: 'Documentaries',   subtitle: 'Real stories',         imageSrc: './Captura de tela 2026-04-15 102933.jpg', href: './documentaries.html' },
+  { number: '05', title: 'Selected Stills', subtitle: 'Photography archive',  imageSrc: './Captura de tela 2026-03-14 085100.jpg', href: './stills.html' },
+  { number: '06', title: 'IDK YET',         subtitle: 'Will find out tho',    imageSrc: './Captura de tela 2026-03-14 101853.jpg', href: './idkbro.html' },
+];
+
+function SectionLink({ data, fonts, palette }) {
+  const [hover, setHover] = React.useState(false);
+  return (
+    <a
+      href={data.href}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+      style={{
+        position: 'relative',
+        display: 'block',
+        width: '100%',
+        height: '60vh',
+        textDecoration: 'none',
+        color: 'inherit',
+        overflow: 'hidden',
+        cursor: 'pointer',
+        background: '#0a0a0a',
+      }}
+    >
+      {/* Foto de fundo (placeholder se vazio) */}
+      <div
+        style={{
+          position: 'absolute',
+          inset: 0,
+          background: data.imageSrc
+            ? `url("${data.imageSrc}") center/cover no-repeat`
+            : `linear-gradient(135deg, ${palette.accent}22, ${palette.fg}08)`,
+          transform: hover ? 'scale(1.05)' : 'scale(1)',
+          transition: 'transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.5s ease',
+          filter: hover
+            ? 'grayscale(0) brightness(0.95)'
+            : 'grayscale(1) brightness(0.5)',
+        }}
+      />
+
+      {/* Vinheta */}
+      <div
+        style={{
+          position: 'absolute',
+          inset: 0,
+          background: 'linear-gradient(to bottom, rgba(0,0,0,0.35) 0%, transparent 30%, transparent 65%, rgba(0,0,0,0.65) 100%)',
+          pointerEvents: 'none',
+        }}
+      />
+
+      {/* Conteúdo */}
+      <div
+        style={{
+          position: 'absolute',
+          inset: 0,
+          padding: '36px 40px',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+          color: '#fff',
+        }}
+      >
+        <div style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          fontFamily: fonts.mono,
+          fontSize: 11,
+          letterSpacing: '0.3em',
+          textTransform: 'uppercase',
+          opacity: 0.75,
+        }}>
+          <span>{data.number}</span>
+          <span>{data.subtitle}</span>
+        </div>
+
+        <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between' }}>
+          <h2 style={{
+            fontFamily: fonts.display,
+            fontSize: 'clamp(36px, 4.5vw, 72px)',
+            fontWeight: 300,
+            letterSpacing: '-0.025em',
+            lineHeight: 1,
+            margin: 0,
+            transform: hover ? 'translateX(8px)' : 'translateX(0)',
+            transition: 'transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1)',
+          }}>
+            {data.title}
+          </h2>
+
+          <div style={{
+            fontFamily: fonts.mono,
+            fontSize: 11,
+            letterSpacing: '0.3em',
+            textTransform: 'uppercase',
+            color: hover ? palette.accent : 'rgba(255,255,255,0.7)',
+            transition: 'color 0.3s',
+            display: 'flex',
+            alignItems: 'center',
+            gap: 8,
+          }}>
+            View <span style={{ fontSize: 14 }}>↗</span>
+          </div>
+        </div>
+      </div>
+    </a>
+  );
+}
+
+function ContactCTA({ fonts }) {
+  return (
+    <section style={{
+      minHeight: '80vh',
+      padding: '120px 40px',
+      display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center',
+      textAlign: 'center',
+    }}>
+      <div style={{
+        fontFamily: fonts.mono, fontSize: 11, letterSpacing: '0.3em',
+        textTransform: 'uppercase', color: 'rgba(255,255,255,0.5)', marginBottom: 32,
+      }}>
+        Get in touch
+      </div>
+      <h2 style={{
+        fontFamily: fonts.display,
+        fontSize: 'clamp(56px, 9vw, 160px)',
+        fontWeight: 300, lineHeight: 0.95, letterSpacing: '-0.04em', margin: 0,
+        maxWidth: 1200,
+        color: '#fff',
+      }}>
+        Let's <em style={{ fontStyle: 'italic' }}>talk</em>.
+      </h2>
+      <div style={{ marginTop: 40, display: 'flex', gap: 32, alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
+        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=jotapfilms@gmail.com"
+          target="_blank" rel="noopener noreferrer"
+          style={{
+            display: 'inline-flex', alignItems: 'center', gap: 12,
+            padding: '18px 28px',
+            border: '1px solid #fff',
+            color: '#fff',
+            fontFamily: fonts.mono, fontSize: 12, letterSpacing: '0.25em',
+            textTransform: 'uppercase', textDecoration: 'none',
+            transition: 'background 0.3s, color 0.3s',
+          }}
+          onMouseEnter={(e) => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.color = '#0a0a0a'; }}
+          onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = '#fff'; }}
+        >
+          jotapfilms@gmail.com <span>↗</span>
+        </a>
+        <div style={{ fontFamily: fonts.mono, fontSize: 11, letterSpacing: '0.25em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.5)' }}>
+          Open for Q3 / Q4 — 2026
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function App() {
+  return (
+    <div style={{ width: '100%' }}>
+      <window.HeroProjector palette={PALETTE} fonts={FONTS} intensity={5} colorSrc="" bwSrc="" />
+
+      {/* Grid 2 colunas — 2 lado a lado, depois 2, e o 5° sozinho na última linha.
+          Gradient overlay no topo suaviza a transição com a hero. */}
+      <div style={{ position: 'relative' }}>
+        <div style={{
+          position: 'absolute',
+          top: 0, left: 0, right: 0,
+          height: 120,
+          background: 'linear-gradient(to bottom, #0a0a0a 0%, rgba(10,10,10,0.5) 50%, transparent 100%)',
+          pointerEvents: 'none',
+          zIndex: 5,
+        }} />
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: '1fr 1fr',
+          width: '100%',
+          gap: 0,
+        }}>
+          {SECTIONS.map((data, i) => (
+            <SectionLink key={i} data={data} fonts={FONTS} palette={PALETTE} />
+          ))}
+        </div>
+      </div>
+
+      <ContactCTA fonts={FONTS} />
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+
+</body>
+</html>

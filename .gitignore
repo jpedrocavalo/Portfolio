@@ -1,0 +1,20 @@
+# Sistema operacional
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editores
+.vscode/
+.idea/
+
+# Dependências (caso adicione build futuramente)
+node_modules/
+
+# Vercel
+.vercel/
+
+# Sidecar do Design Canvas (gerado em runtime)
+**/.design-canvas.state.json
+
+# Logs
+*.log

@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Jotap Films — About</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; width: 100%; background: #0a0a0a; color: #f5f1e8; font-family: 'Inter', system-ui, sans-serif; }
+  #root { width: 100%; }
+  a { color: inherit; }
+</style>
+
+<!-- React + Babel -->
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel">
+const PALETTE = { bg: '#0a0a0a', fg: '#f5f1e8', muted: '#8a8580', accent: '#7a00d8' };
+const FONTS = {
+  display: '"Fraunces", serif',
+  sans: '"Inter", system-ui, sans-serif',
+  mono: '"JetBrains Mono", monospace',
+};
+
+// ── BIO — edite este texto livremente ──
+const BIO = {
+  name: 'Jotap',
+  role: 'Editor & Colorist',
+  location: 'Natal, RN — Brasil',
+  intro: 'Editor e colorista baseado em Natal. Trabalha entre comerciais com identidade, filmes narrativos e ensaios pessoais — atrás, sempre, da imagem que carrega uma decisão.',
+  paragraphs: [
+    'Começou cedo, sem manual. A edição entrou como curiosidade — programa aberto, vídeo na timeline — e ficou. O olhar se afinou na repetição: assistir, refazer, refinar, até o corte deixar de ser exercício técnico e virar uma forma de pensar.',
+    'Hoje, divide o tempo entre marcas que pedem mais do que um filme bonito — pedem um filme certo — e projetos próprios, onde cor, estrutura e ritmo são decisões livres, não negociações.',
+    'Acredita que filme bom é feito de decisões pequenas: onde a câmera respira, qual frame fica, qual matiz se sustenta no preto. Cada projeto começa pela mesma pergunta — que sensação fica depois que a imagem sai do ar?',
+  ],
+};
+
+const SKILLS = [
+  { label: 'Direction',    items: ['Commercials', 'Music videos', 'Short films'] },
+  { label: 'Post',         items: ['Editing', 'Color grading', 'Sound design'] },
+  { label: 'Tools',        items: ['DaVinci Resolve', 'Premiere Pro', 'After Effects', 'Pro Tools'] },
+];
+
+const CREDITS = [
+  { year: '2026', title: 'Aurora',         role: 'Director · Editor',  type: 'Short film' },
+  { year: '2025', title: 'Marés',           role: 'Director',           type: 'Commercial' },
+  { year: '2025', title: 'Vento Norte',     role: 'Editor · Colorist',  type: 'Music video' },
+  { year: '2024', title: 'Solstício',       role: 'Director · Editor',  type: 'Documentary' },
+  { year: '2024', title: 'Eclipse',         role: 'Editor',             type: 'Music video' },
+  { year: '2023', title: 'Penumbra',        role: 'Director',           type: 'Short film' },
+];
+
+function Header({ fonts, palette }) {
+  return (
+    <div style={{
+      position: 'fixed', top: 0, left: 0, right: 0,
+      padding: '28px 40px',
+      display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+      fontFamily: fonts.mono, fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase',
+      color: '#fff',
+      zIndex: 10,
+      mixBlendMode: 'difference',
+    }}>
+      <a href="./index.html" style={{
+        fontFamily: fonts.display, fontSize: 16, letterSpacing: '-0.02em',
+        textTransform: 'none', fontStyle: 'italic', color: '#fff',
+        textDecoration: 'none',
+      }}>Jotap Films</a>
+      <div style={{ display: 'flex', gap: 32 }}>
+        <a href="./color.html" style={{ color: 'inherit', textDecoration: 'none' }}>Color</a>
+        <a href="./reel.html" style={{ color: 'inherit', textDecoration: 'none' }}>Reel</a>
+        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=jotapfilms@gmail.com"
+          target="_blank" rel="noopener noreferrer"
+          style={{ color: 'inherit', textDecoration: 'none' }}>
+          Contact
+        </a>
+      </div>
+    </div>
+  );
+}
+
+// ─── Seção 1: Roles (Editor / Colorist) ───────────────────────
+// Dois quadrados centralizados com capa + título, cada um link para sua página.
+// Preencha o `cover` com o caminho da imagem da capa.
+const ROLES = [
+  { title: 'Editor',   cover: '', href: './reel.html' },
+  { title: 'Colorist', cover: '', href: './color.html' },
+];
+
+function RoleCard({ data, fonts, palette }) {
+  const [hover, setHover] = React.useState(false);
+  return (
+    <a
+      href={data.href}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+      style={{
+        position: 'relative',
+        width: 'clamp(220px, 24vw, 340px)',
+        aspectRatio: '1 / 1',
+        textDecoration: 'none',
+        color: 'inherit',
+        overflow: 'hidden',
+        cursor: 'pointer',
+        background: '#0a0a0a',
+        border: '1px solid rgba(255,255,255,0.08)',
+      }}
+    >
+      {/* Capa */}
+      <div style={{
+        position: 'absolute',
+        inset: 0,
+        background: data.cover
+          ? `url("${data.cover}") center/cover no-repeat`
+          : `linear-gradient(135deg, ${palette.accent}22, ${palette.fg}08)`,
+        transform: hover ? 'scale(1.06)' : 'scale(1)',
+        transition: 'transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.5s ease',
+        filter: hover
+          ? 'grayscale(0) brightness(0.95)'
+          : 'grayscale(1) brightness(0.55)',
+      }} />
+
+      {/* Vinheta */}
+      <div style={{
+        position: 'absolute',
+        inset: 0,
+        background: 'linear-gradient(to bottom, rgba(0,0,0,0.25) 0%, transparent 40%, rgba(0,0,0,0.75) 100%)',
+        pointerEvents: 'none',
+      }} />
+
+      {/* Conteúdo */}
+      <div style={{
+        position: 'absolute',
+        inset: 0,
+        padding: 24,
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        color: '#fff',
+      }}>
+        <div style={{
+          fontFamily: fonts.mono, fontSize: 10, letterSpacing: '0.3em',
+          textTransform: 'uppercase', opacity: 0.7,
+        }}>
+          {data.title === 'Editor' ? '01' : '02'}
+        </div>
+        <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between' }}>
+          <h3 style={{
+            fontFamily: fonts.display,
+            fontSize: 'clamp(28px, 2.6vw, 40px)',
+            fontWeight: 300, lineHeight: 1, letterSpacing: '-0.02em',
+            margin: 0, fontStyle: 'italic',
+            transform: hover ? 'translateX(6px)' : 'translateX(0)',
+            transition: 'transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1)',
+          }}>
+            {data.title}
+          </h3>
+          <div style={{
+            fontFamily: fonts.mono, fontSize: 10, letterSpacing: '0.3em',
+            textTransform: 'uppercase',
+            color: hover ? palette.accent : 'rgba(255,255,255,0.7)',
+            transition: 'color 0.3s',
+            display: 'flex', alignItems: 'center', gap: 6,
+          }}>
+            View <span style={{ fontSize: 12 }}>↗</span>
+          </div>
+        </div>
+      </div>
+    </a>
+  );
+}
+
+function RolesSection({ fonts, palette }) {
+  return (
+    <section style={{
+      minHeight: '50vh',
+      padding: '140px 40px 60px',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: 32,
+      borderBottom: '1px solid rgba(255,255,255,0.06)',
+    }}>
+      {ROLES.map((r, i) => (
+        <RoleCard key={i} data={r} fonts={fonts} palette={palette} />
+      ))}
+    </section>
+  );
+}
+
+// ─── Seção 2: Bio + Foto ───────────────────────────────────────
+function BioSection({ fonts, palette }) {
+  return (
+    <section style={{
+      minHeight: '100vh',
+      padding: '120px 40px',
+      display: 'grid',
+      gridTemplateColumns: '1fr 1fr',
+      gap: 64,
+      alignItems: 'center',
+      borderBottom: '1px solid rgba(255,255,255,0.06)',
+    }}>
+      {/* Foto */}
+      <div style={{
+        position: 'relative',
+        aspectRatio: '4 / 5',
+        background: `linear-gradient(135deg, ${palette.accent}22, ${palette.fg}08)`,
+        overflow: 'hidden',
+      }}>
+        {/* Substitua a div abaixo por <img src="./sua-foto.jpg" /> quando tiver a foto */}
+        <div style={{
+          position: 'absolute', inset: 0,
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          fontFamily: fonts.mono, fontSize: 11, letterSpacing: '0.3em',
+          textTransform: 'uppercase', color: 'rgba(255,255,255,0.3)',
+        }}>
+          Portrait placeholder
+        </div>
+      </div>
+
+      {/* Texto */}
+      <div style={{ maxWidth: 540 }}>
+        <div style={{
+          fontFamily: fonts.mono, fontSize: 11, letterSpacing: '0.3em',
+          textTransform: 'uppercase', color: palette.muted, marginBottom: 16,
+        }}>
+          01 — Bio
+        </div>
+        <h2 style={{
+          fontFamily: fonts.display,
+          fontSize: 'clamp(40px, 5vw, 72px)',
+          fontWeight: 300, lineHeight: 1, letterSpacing: '-0.03em', margin: 0,
+        }}>
+          Finding <em>the cut</em>.
+        </h2>
+        <div style={{ marginTop: 32, display: 'flex', flexDirection: 'column', gap: 20, fontSize: 16, lineHeight: 1.7, color: 'rgba(245,241,232,0.78)' }}>
+          {BIO.paragraphs.map((p, i) => <p key={i} style={{ margin: 0 }}>{p}</p>)}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── Seção 3: Skills / Tools ───────────────────────────────────
+function SkillsSection({ fonts, palette }) {
+  return (
+    <section style={{
+      minHeight: '70vh',
+      padding: '120px 40px',
+      borderBottom: '1px solid rgba(255,255,255,0.06)',
+    }}>
+      <div style={{
+        fontFamily: fonts.mono, fontSize: 11, letterSpacing: '0.3em',
+        textTransform: 'uppercase', color: palette.muted, marginBottom: 60,
+      }}>
+        02 — Practice
+      </div>
+
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(3, 1fr)',
+        gap: 64,
+      }}>
+        {SKILLS.map((group, i) => (
+          <div key={i}>
+            <h3 style={{
+              fontFamily: fonts.display,
+              fontSize: 'clamp(28px, 3vw, 44px)',
+              fontWeight: 300, lineHeight: 1, letterSpacing: '-0.02em',
+              margin: '0 0 24px', fontStyle: 'italic',
+              color: palette.accent,
+            }}>
+              {group.label}
+            </h3>
+            <ul style={{
+              listStyle: 'none', padding: 0, margin: 0,
+              display: 'flex', flexDirection: 'column', gap: 10,
+            }}>
+              {group.items.map((it, j) => (
+                <li key={j} style={{
+                  fontFamily: fonts.sans, fontSize: 15,
+                  color: 'rgba(245,241,232,0.78)',
+                  paddingBottom: 10,
+                  borderBottom: '1px solid rgba(255,255,255,0.06)',
+                }}>
+                  {it}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+// ─── Seção 4: Selected Credits ─────────────────────────────────
+function CreditsSection({ fonts, palette }) {
+  return (
+    <section style={{
+      minHeight: '100vh',
+      padding: '120px 40px',
+      borderBottom: '1px solid rgba(255,255,255,0.06)',
+    }}>
+      <div style={{
+        display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end',
+        marginBottom: 60,
+      }}>
+        <div>
+          <div style={{
+            fontFamily: fonts.mono, fontSize: 11, letterSpacing: '0.3em',
+            textTransform: 'uppercase', color: palette.muted, marginBottom: 12,
+          }}>
+            03 — Selected work
+          </div>
+          <h2 style={{
+            fontFamily: fonts.display,
+            fontSize: 'clamp(40px, 5vw, 72px)',
+            fontWeight: 300, lineHeight: 1, letterSpacing: '-0.03em', margin: 0,
+          }}>
+            Credits.
+          </h2>
+        </div>
+        <a href="./reel.html" style={{
+          fontFamily: fonts.mono, fontSize: 11, letterSpacing: '0.3em',
+          textTransform: 'uppercase', color: palette.accent, textDecoration: 'none',
+        }}>
+          See full reel ↗
+        </a>
+      </div>
+
+      <div style={{ borderTop: '1px solid rgba(255,255,255,0.12)' }}>
+        {CREDITS.map((c, i) => (
+          <div key={i} style={{
+            display: 'grid',
+            gridTemplateColumns: '120px 1fr 1fr 1fr',
+            padding: '24px 0',
+            borderBottom: '1px solid rgba(255,255,255,0.06)',
+            alignItems: 'baseline',
+            fontFamily: fonts.sans,
+          }}>
+            <div style={{ fontFamily: fonts.mono, fontSize: 12, color: palette.muted }}>{c.year}</div>
+            <div style={{ fontFamily: fonts.display, fontStyle: 'italic', fontSize: 22 }}>{c.title}</div>
+            <div style={{ fontSize: 14, color: 'rgba(245,241,232,0.7)' }}>{c.role}</div>
+            <div style={{ fontFamily: fonts.mono, fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase', color: palette.muted, textAlign: 'right' }}>
+              {c.type}
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+// ─── Seção 5: CTA Contato (centralizado, branco) ──────────────
+function ContactSection({ fonts, palette }) {
+  return (
+    <section style={{
+      minHeight: '80vh',
+      padding: '120px 40px',
+      display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center',
+      textAlign: 'center',
+    }}>
+      <div style={{
+        fontFamily: fonts.mono, fontSize: 11, letterSpacing: '0.3em',
+        textTransform: 'uppercase', color: 'rgba(255,255,255,0.5)', marginBottom: 32,
+      }}>
+        Get in touch
+      </div>
+      <h2 style={{
+        fontFamily: fonts.display,
+        fontSize: 'clamp(56px, 9vw, 160px)',
+        fontWeight: 300, lineHeight: 0.95, letterSpacing: '-0.04em', margin: 0,
+        maxWidth: 1200,
+        color: '#fff',
+      }}>
+        Let's <em style={{ fontStyle: 'italic' }}>talk</em>.
+      </h2>
+      <div style={{ marginTop: 40, display: 'flex', gap: 32, alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
+        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=jotapfilms@gmail.com"
+          target="_blank" rel="noopener noreferrer"
+          style={{
+            display: 'inline-flex', alignItems: 'center', gap: 12,
+            padding: '18px 28px',
+            border: '1px solid #fff',
+            color: '#fff',
+            fontFamily: fonts.mono, fontSize: 12, letterSpacing: '0.25em',
+            textTransform: 'uppercase', textDecoration: 'none',
+            transition: 'background 0.3s, color 0.3s',
+          }}
+          onMouseEnter={(e) => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.color = '#0a0a0a'; }}
+          onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = '#fff'; }}
+        >
+          jotapfilms@gmail.com <span>↗</span>
+        </a>
+        <div style={{ fontFamily: fonts.mono, fontSize: 11, letterSpacing: '0.25em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.5)' }}>
+          Open for Q3 / Q4 — 2026
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── Footer ────────────────────────────────────────────────────
+function Footer({ fonts, palette }) {
+  return (
+    <footer style={{
+      padding: '32px 40px',
+      borderTop: '1px solid rgba(255,255,255,0.06)',
+      display: 'flex', justifyContent: 'space-between',
+      fontFamily: fonts.mono, fontSize: 10, letterSpacing: '0.25em',
+      textTransform: 'uppercase', color: palette.muted,
+    }}>
+      <span style={{ fontFamily: fonts.display, fontStyle: 'italic', textTransform: 'none', letterSpacing: '-0.02em', fontSize: 13 }}>Jotap Films</span>
+      <span>© 2026 · All rights reserved</span>
+    </footer>
+  );
+}
+
+function App() {
+  return (
+    <div style={{ width: '100%' }}>
+      <Header fonts={FONTS} palette={PALETTE} />
+      <RolesSection fonts={FONTS} palette={PALETTE} />
+      <BioSection fonts={FONTS} palette={PALETTE} />
+      <ContactSection fonts={FONTS} palette={PALETTE} />
+      <Footer fonts={FONTS} palette={PALETTE} />
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+
+</body>
+</html>
+</content>
+</invoke>
