@@ -24,6 +24,9 @@
 <body>
 <div id="root"></div>
 
+<!-- Lista central de categorias (script normal, roda antes do Babel) -->
+<script src="categories.js"></script>
+
 <script type="text/babel" src="heroes/color-reveal-bg.jsx"></script>
 <script type="text/babel" src="heroes/v4-projector.jsx"></script>
 
@@ -35,16 +38,15 @@ const FONTS = {
   mono: '"JetBrains Mono", monospace',
 };
 
-// 5 sessões abaixo da hero — cada uma é um link para uma página diferente.
-// Preencha imageSrc com o caminho da foto de fundo e href com a URL destino.
-const SECTIONS = [
-  { number: '01', title: 'Commercials',     subtitle: 'Brand films',          imageSrc: './Captura de tela 2026-03-14 101310.jpg', href: './commercials.html' },
-  { number: '02', title: 'Music Videos',    subtitle: 'Visual scores',        imageSrc: './Captura de tela 2026-03-30 113939.jpg', href: './music-videos.html' },
-  { number: '03', title: 'Short Films',     subtitle: 'Narrative work',       imageSrc: './Captura de tela 2026-04-25 092041.jpg', href: './short-films.html' },
-  { number: '04', title: 'Documentaries',   subtitle: 'Real stories',         imageSrc: './Captura de tela 2026-04-15 102933.jpg', href: './documentaries.html' },
-  { number: '05', title: 'Selected Stills', subtitle: 'Photography archive',  imageSrc: './Captura de tela 2026-03-14 085100.jpg', href: './stills.html' },
-  { number: '06', title: 'IDK YET',         subtitle: 'Will find out tho',    imageSrc: './Captura de tela 2026-03-14 101853.jpg', href: './idkbro.html' },
-];
+// Seções abaixo da hero — geradas a partir de categories.js.
+// Cada uma leva pra ./category.html?cat=<índice>.
+const SECTIONS = window.CATEGORIES.map((c, i) => ({
+  number: c.number,
+  title: c.title,
+  subtitle: c.subtitle,
+  imageSrc: c.cover,
+  href: './category.html?cat=' + i,
+}));
 
 function SectionLink({ data, fonts, palette }) {
   const [hover, setHover] = React.useState(false);
