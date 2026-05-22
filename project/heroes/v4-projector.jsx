@@ -26,16 +26,27 @@ function HeroProjector({ palette, fonts, intensity, colorSrc, bwSrc }) {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // Auto-cycle a cada 5s:
-  //   Desktop → 3 estados (uma imagem por still, a cor é revelada pelo cursor)
-  //   Mobile  → 6 estados (cada still aparece em P&B e depois revela a cor sozinho)
+  // Auto-cycle:
+  //   Desktop → 3 estados, 5s cada (cor revelada pelo cursor)
+  //   Mobile  → 6 estados. A imagem P&B (estado par) fica MENOS tempo no ar
+  //             antes de revelar a cor (estado ímpar), que fica mais tempo.
   const stepCount = isMobile ? 6 : 3;
+  const BW_DURATION = 2200;     // tempo da imagem P&B antes de revelar (mobile)
+  const COLOR_DURATION = 5000;  // tempo da imagem colorida revelada (mobile)
   useEffect4(() => {
     setStep(0);
-    const id = setInterval(() => {
-      setStep((s) => (s + 1) % stepCount);
-    }, 5000);
-    return () => clearInterval(id);
+    let id;
+    const schedule = (cur) => {
+      // No mobile, estado par = P&B (curto); ímpar = colorido (longo).
+      const delay = isMobile ? (cur % 2 === 0 ? BW_DURATION : COLOR_DURATION) : 5000;
+      id = setTimeout(() => {
+        const next = (cur + 1) % stepCount;
+        setStep(next);
+        schedule(next);
+      }, delay);
+    };
+    schedule(0);
+    return () => clearTimeout(id);
   }, [stepCount]);
 
   // No mobile: stillIdx avança a cada 2 passos; estado par = P&B, ímpar = cor revelada.
