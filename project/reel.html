@@ -183,7 +183,22 @@ function App() {
         flexDirection: 'column',
         borderTop: '1px solid rgba(255,255,255,0.06)',
       }}>
-        <div style={labelStyle}>01 — Selected works</div>
+        <div style={{
+          display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+        }}>
+          <div style={labelStyle}>01 — Selected works</div>
+          <a href="./works.html" style={{
+            ...labelStyle,
+            color: PALETTE.accent,
+            textDecoration: 'none',
+            transition: 'opacity 0.2s',
+          }}
+          onMouseEnter={(e) => (e.currentTarget.style.opacity = 0.6)}
+          onMouseLeave={(e) => (e.currentTarget.style.opacity = 1)}
+          >
+            See all ↗
+          </a>
+        </div>
         <div style={{
           flex: 1,
           marginTop: LABEL_TO_GRID,
