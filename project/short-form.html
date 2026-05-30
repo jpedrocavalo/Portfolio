@@ -257,12 +257,13 @@ function App() {
         </p>
       </section>
 
-      {/* Grid estilo Instagram — 3 por fileira */}
+      {/* Grid estilo Instagram — cards menores, auto-ajusta o número de colunas
+          conforme a largura da tela (≈ 5–6 colunas em desktop wide). */}
       <section style={{ padding: '0 40px 80px' }}>
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
-          gap: 12,
+          gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))',
+          gap: 6,
         }}>
           {SHORTFORM.map((item, i) => (
             <GridItem
