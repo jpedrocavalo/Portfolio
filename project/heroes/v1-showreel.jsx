@@ -92,7 +92,7 @@ function HeroShowreel({ palette, fonts, intensity, colorSrc, bwSrc, videoSrc, st
       {/* Top bar */}
       <div
         style={{
-          position: 'absolute',
+          position: 'fixed',
           top: 0,
           left: 0,
           right: 0,
@@ -104,13 +104,14 @@ function HeroShowreel({ palette, fonts, intensity, colorSrc, bwSrc, videoSrc, st
           fontSize: 11,
           letterSpacing: '0.18em',
           textTransform: 'uppercase',
-          color: palette.muted,
+          color: '#fff',
           zIndex: 10,
+          mixBlendMode: 'difference',
         }}
       >
         <a href="./index.html" style={{
           fontFamily: fonts.display, fontSize: 16, letterSpacing: '-0.02em',
-          textTransform: 'none', fontStyle: 'italic', color: palette.fg,
+          textTransform: 'none', fontStyle: 'italic', color: '#fff',
           textDecoration: 'none',
         }}>Jotap Films</a>
 
