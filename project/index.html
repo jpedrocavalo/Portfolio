@@ -118,6 +118,13 @@ const ROLES = [
 
 function RoleCard({ data, fonts, palette }) {
   const [hover, setHover] = React.useState(false);
+  // Detecta se o device tem hover (desktop com mouse). Mobile/touch = false.
+  const [canHover, setCanHover] = React.useState(true);
+  React.useEffect(() => {
+    setCanHover(window.matchMedia('(hover: hover)').matches);
+  }, []);
+  // Em mobile (sem hover), trata como se estivesse sempre "hover" → cor cheia.
+  const showColor = !canHover || hover;
   return (
     <a
       href={data.href}
@@ -144,7 +151,7 @@ function RoleCard({ data, fonts, palette }) {
           : `linear-gradient(135deg, ${palette.accent}22, ${palette.fg}08)`,
         transform: hover ? 'scale(1.06)' : 'scale(1)',
         transition: 'transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.5s ease',
-        filter: hover
+        filter: showColor
           ? 'grayscale(0) brightness(0.95)'
           : 'grayscale(1) brightness(0.55)',
       }} />
