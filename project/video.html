@@ -25,7 +25,8 @@
 <body>
 <div id="root"></div>
 
-<!-- Lista central de vídeos (script normal, roda antes do Babel) -->
+<!-- Traduções compartilhadas + lista de vídeos (scripts normais, antes do Babel) -->
+<script src="i18n.js"></script>
 <script src="videos.js"></script>
 
 <script type="text/babel">
@@ -51,7 +52,8 @@ function streamPlayerUrl(id) {
   return `https://${CF_CUSTOMER_CODE}.cloudflarestream.com/${id}/iframe?controls=true&preload=auto`;
 }
 
-function Header({ fonts, palette }) {
+function Header({ fonts, palette, lang, setLang }) {
+  const N = window.I18N[lang].nav;
   return (
     <div style={{
       position: 'fixed', top: 0, left: 0, right: 0,
@@ -66,13 +68,21 @@ function Header({ fonts, palette }) {
         fontFamily: fonts.display, fontSize: 16, letterSpacing: '-0.02em',
         textTransform: 'none', fontStyle: 'italic', color: '#fff', textDecoration: 'none',
       }}>Jotap Films</a>
+
+      {/* Toggle de idioma — centro */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+        <span onClick={() => setLang('en')} style={{ cursor: 'pointer', color: lang === 'en' ? palette.accent : 'inherit', opacity: lang === 'en' ? 1 : 0.55, transition: 'opacity 0.2s, color 0.2s' }}>EN</span>
+        <span style={{ opacity: 0.4 }}>·</span>
+        <span onClick={() => setLang('pt')} style={{ cursor: 'pointer', color: lang === 'pt' ? palette.accent : 'inherit', opacity: lang === 'pt' ? 1 : 0.55, transition: 'opacity 0.2s, color 0.2s' }}>PT</span>
+      </div>
+
       <div style={{ display: 'flex', gap: 32 }}>
-        <a href="./color.html" style={{ color: 'inherit', textDecoration: 'none' }}>Color</a>
-        <a href="./reel.html" style={{ color: 'inherit', textDecoration: 'none' }}>Reel</a>
+        <a href="./color.html" style={{ color: 'inherit', textDecoration: 'none' }}>{N.color}</a>
+        <a href="./reel.html" style={{ color: 'inherit', textDecoration: 'none' }}>{N.reel}</a>
         <a href="https://mail.google.com/mail/?view=cm&fs=1&to=jotapfilms@gmail.com"
           target="_blank" rel="noopener noreferrer"
           style={{ color: 'inherit', textDecoration: 'none' }}>
-          Contact
+          {N.contact}
         </a>
       </div>
     </div>
@@ -81,9 +91,12 @@ function Header({ fonts, palette }) {
 
 function App() {
   const v = VIDEO;
+  const [lang, setLangState] = React.useState(window.getInitialLang());
+  const setLang = (next) => { setLangState(next); window.persistLang(next); };
+  const T = window.I18N[lang];
   return (
     <div style={{ width: '100%' }}>
-      <Header fonts={FONTS} palette={PALETTE} />
+      <Header fonts={FONTS} palette={PALETTE} lang={lang} setLang={setLang} />
 
       <section style={{
         minHeight: '100vh',
@@ -99,7 +112,7 @@ function App() {
           fontFamily: FONTS.mono, fontSize: 11, letterSpacing: '0.3em',
           textTransform: 'uppercase', color: PALETTE.muted, marginBottom: 20,
         }}>
-          <span style={{ color: PALETTE.accent }}>{IS_LATEST ? 'Latest work' : 'Selected work'}</span>
+          <span style={{ color: PALETTE.accent }}>{IS_LATEST ? T.video.latestWork : T.video.selectedWork}</span>
           <span>{v.year} · {v.category}</span>
         </div>
 
@@ -182,7 +195,7 @@ function App() {
             textTransform: 'uppercase', color: PALETTE.accent,
             textDecoration: 'none', marginTop: 8,
           }}>
-            ← Back to reel
+            {T.backToReel}
           </a>
         </div>
       </section>

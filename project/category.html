@@ -25,7 +25,8 @@
 <body>
 <div id="root"></div>
 
-<!-- Lista central de categorias (script normal, roda antes do Babel) -->
+<!-- Traduções compartilhadas + lista de categorias (scripts normais, antes do Babel) -->
+<script src="i18n.js"></script>
 <script src="categories.js"></script>
 
 <script type="text/babel">
@@ -42,7 +43,8 @@ const CAT = (window.CATEGORIES && window.CATEGORIES[CAT_INDEX])
   || (window.CATEGORIES && window.CATEGORIES[0])
   || { number: '', title: 'Categoria', subtitle: '', intro: '', works: [] };
 
-function Header({ fonts, palette }) {
+function Header({ fonts, palette, lang, setLang }) {
+  const N = window.I18N[lang].nav;
   return (
     <div style={{
       position: 'fixed', top: 0, left: 0, right: 0,
@@ -55,13 +57,21 @@ function Header({ fonts, palette }) {
         fontFamily: fonts.display, fontSize: 16, letterSpacing: '-0.02em',
         textTransform: 'none', fontStyle: 'italic', color: '#fff', textDecoration: 'none',
       }}>Jotap Films</a>
+
+      {/* Toggle de idioma — centro */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+        <span onClick={() => setLang('en')} style={{ cursor: 'pointer', color: lang === 'en' ? palette.accent : 'inherit', opacity: lang === 'en' ? 1 : 0.55, transition: 'opacity 0.2s, color 0.2s' }}>EN</span>
+        <span style={{ opacity: 0.4 }}>·</span>
+        <span onClick={() => setLang('pt')} style={{ cursor: 'pointer', color: lang === 'pt' ? palette.accent : 'inherit', opacity: lang === 'pt' ? 1 : 0.55, transition: 'opacity 0.2s, color 0.2s' }}>PT</span>
+      </div>
+
       <div style={{ display: 'flex', gap: 32 }}>
-        <a href="./color.html" style={{ color: 'inherit', textDecoration: 'none' }}>Color</a>
-        <a href="./reel.html" style={{ color: 'inherit', textDecoration: 'none' }}>Reel</a>
+        <a href="./color.html" style={{ color: 'inherit', textDecoration: 'none' }}>{N.color}</a>
+        <a href="./reel.html" style={{ color: 'inherit', textDecoration: 'none' }}>{N.reel}</a>
         <a href="https://mail.google.com/mail/?view=cm&fs=1&to=jotapfilms@gmail.com"
           target="_blank" rel="noopener noreferrer"
           style={{ color: 'inherit', textDecoration: 'none' }}>
-          Contact
+          {N.contact}
         </a>
       </div>
     </div>
@@ -109,9 +119,13 @@ function App() {
   // Sem trabalhos ainda → mostra 6 placeholders dimmed.
   const placeholders = [0, 1, 2, 3, 4, 5];
 
+  const [lang, setLangState] = React.useState(window.getInitialLang());
+  const setLang = (next) => { setLangState(next); window.persistLang(next); };
+  const T = window.I18N[lang];
+
   return (
     <div style={{ width: '100%' }}>
-      <Header fonts={FONTS} palette={PALETTE} />
+      <Header fonts={FONTS} palette={PALETTE} lang={lang} setLang={setLang} />
 
       {/* Bloco de título */}
       <section style={{
@@ -149,7 +163,7 @@ function App() {
             fontFamily: FONTS.mono, fontSize: 11, letterSpacing: '0.3em',
             textTransform: 'uppercase', color: 'rgba(245,241,232,0.4)', marginBottom: 32,
           }}>
-            Trabalhos sendo adicionados — em breve
+            {T.category.worksBeingAdded}
           </div>
         )}
         <div style={{
@@ -171,7 +185,7 @@ function App() {
           fontFamily: FONTS.mono, fontSize: 11, letterSpacing: '0.3em',
           textTransform: 'uppercase', color: PALETTE.accent, textDecoration: 'none',
         }}>
-          ← Back to color
+          {T.backToColor}
         </a>
       </section>
 
@@ -187,7 +201,7 @@ function App() {
           fontFamily: FONTS.mono, fontSize: 11, letterSpacing: '0.3em',
           textTransform: 'uppercase', color: 'rgba(255,255,255,0.5)', marginBottom: 32,
         }}>
-          Get in touch
+          {T.contact.smallLabel}
         </div>
         <h2 style={{
           fontFamily: FONTS.display,
@@ -195,7 +209,7 @@ function App() {
           fontWeight: 300, lineHeight: 0.95, letterSpacing: '-0.04em', margin: 0,
           maxWidth: 1200, color: '#fff',
         }}>
-          Let's <em style={{ fontStyle: 'italic' }}>talk</em>.
+          {T.contact.headingA} <em style={{ fontStyle: 'italic' }}>{T.contact.headingB}</em>.
         </h2>
         <div style={{ marginTop: 40 }}>
           <a href="https://mail.google.com/mail/?view=cm&fs=1&to=jotapfilms@gmail.com"

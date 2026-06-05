@@ -25,6 +25,9 @@
 <body>
 <div id="root"></div>
 
+<!-- Traduções compartilhadas (script normal, roda antes do Babel) -->
+<script src="i18n.js"></script>
+
 <script type="text/babel">
 const PALETTE = { bg: '#0a0a0a', fg: '#f5f1e8', muted: '#8a8580', accent: '#7a00d8' };
 const FONTS = {
@@ -33,42 +36,8 @@ const FONTS = {
   mono: '"JetBrains Mono", monospace',
 };
 
-// ── TEXTOS BILÍNGUES — edite os parágrafos da Bio nos dois idiomas. ──
-// O toggle EN · PT no header da about troca entre eles e salva no localStorage.
-const TEXTS = {
-  pt: {
-    bioLabel: '01 — Bio',
-    bioHeadingA: 'Finding',
-    bioHeadingB: 'the cut',
-    paragraphs: [
-      'Começou cedo, sem manual. A edição entrou como curiosidade — programa aberto, vídeo na timeline — e ficou. O olhar se afinou na repetição: assistir, refazer, refinar, até o corte deixar de ser exercício técnico e virar uma forma de pensar.',
-      'Hoje, divide o tempo entre marcas que pedem mais do que um filme bonito — pedem um filme certo — e projetos próprios, onde cor, estrutura e ritmo são decisões livres, não negociações.',
-      'Acredita que filme bom é feito de decisões pequenas: onde a câmera respira, qual frame fica, qual matiz se sustenta no preto. Cada projeto começa pela mesma pergunta — que sensação fica depois que a imagem sai do ar?',
-    ],
-    contactSmall: 'Get in touch',
-    contactA: "Let's",
-    contactB: 'talk',
-    openFor: 'Aberto para Q3 / Q4 — 2026',
-    rightsReserved: '© 2026 · Todos os direitos reservados',
-  },
-  en: {
-    bioLabel: '01 — Bio',
-    bioHeadingA: 'Finding',
-    bioHeadingB: 'the cut',
-    paragraphs: [
-      "Started early, no manual. Editing came in as curiosity — software open, footage on the timeline — and it stayed. The eye sharpened through repetition: watch, redo, refine, until the cut stopped being a technical exercise and became a way of thinking.",
-      "Today, time is split between brands that ask for more than a pretty film — they ask for the right film — and personal projects, where color, structure and rhythm are free decisions, not negotiations.",
-      "A good film is made of small decisions: where the camera breathes, which frame stays, which hue holds up against the black. Every project starts with the same question — what feeling remains after the image leaves the screen?",
-    ],
-    contactSmall: 'Get in touch',
-    contactA: "Let's",
-    contactB: 'talk',
-    openFor: 'Open for Q3 / Q4 — 2026',
-    rightsReserved: '© 2026 · All rights reserved',
-  },
-};
-
 // ── BIO — campos sem tradução (nome/role/localização). ──
+// Os textos traduzíveis vêm de window.I18N (arquivo i18n.js).
 const BIO = {
   name: 'Jotap',
   role: 'Editor & Colorist',
@@ -127,12 +96,12 @@ function Header({ fonts, palette, lang, setLang }) {
       </div>
 
       <div style={{ display: 'flex', gap: 32 }}>
-        <a href="./color.html" style={{ color: 'inherit', textDecoration: 'none' }}>Color</a>
-        <a href="./reel.html" style={{ color: 'inherit', textDecoration: 'none' }}>Reel</a>
+        <a href="./color.html" style={{ color: 'inherit', textDecoration: 'none' }}>{window.I18N[lang].nav.color}</a>
+        <a href="./reel.html" style={{ color: 'inherit', textDecoration: 'none' }}>{window.I18N[lang].nav.reel}</a>
         <a href="https://mail.google.com/mail/?view=cm&fs=1&to=jotapfilms@gmail.com"
           target="_blank" rel="noopener noreferrer"
           style={{ color: 'inherit', textDecoration: 'none' }}>
-          Contact
+          {window.I18N[lang].nav.contact}
         </a>
       </div>
     </div>
@@ -250,7 +219,7 @@ function RolesSection({ fonts, palette }) {
 
 // ─── Seção 2: Bio + Foto ───────────────────────────────────────
 function BioSection({ fonts, palette, lang }) {
-  const t = TEXTS[lang];
+  const t = window.I18N[lang].about;
   return (
     <section style={{
       minHeight: '100vh',
@@ -417,7 +386,7 @@ function CreditsSection({ fonts, palette }) {
 
 // ─── Seção 5: CTA Contato (centralizado, branco) ──────────────
 function ContactSection({ fonts, palette, lang }) {
-  const t = TEXTS[lang];
+  const t = window.I18N[lang].contact;
   return (
     <section style={{
       minHeight: '80vh',
@@ -429,7 +398,7 @@ function ContactSection({ fonts, palette, lang }) {
         fontFamily: fonts.mono, fontSize: 11, letterSpacing: '0.3em',
         textTransform: 'uppercase', color: 'rgba(255,255,255,0.5)', marginBottom: 32,
       }}>
-        {t.contactSmall}
+        {t.smallLabel}
       </div>
       <h2 style={{
         fontFamily: fonts.display,
@@ -438,7 +407,7 @@ function ContactSection({ fonts, palette, lang }) {
         maxWidth: 1200,
         color: '#fff',
       }}>
-        {t.contactA} <em style={{ fontStyle: 'italic' }}>{t.contactB}</em>.
+        {t.headingA} <em style={{ fontStyle: 'italic' }}>{t.headingB}</em>.
       </h2>
       <div style={{ marginTop: 40, display: 'flex', gap: 32, alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
         <a href="https://mail.google.com/mail/?view=cm&fs=1&to=jotapfilms@gmail.com"
@@ -467,7 +436,7 @@ function ContactSection({ fonts, palette, lang }) {
 
 // ─── Footer ────────────────────────────────────────────────────
 function Footer({ fonts, palette, lang }) {
-  const t = TEXTS[lang];
+  const t = window.I18N[lang].footer;
   return (
     <footer style={{
       padding: '32px 40px',
@@ -483,17 +452,9 @@ function Footer({ fonts, palette, lang }) {
 }
 
 function App() {
-  // Idioma persiste no localStorage entre sessões. Default: pt.
-  const [lang, setLang] = React.useState(() => {
-    try {
-      const saved = localStorage.getItem('jotap_lang');
-      return (saved === 'en' || saved === 'pt') ? saved : 'pt';
-    } catch { return 'pt'; }
-  });
-
-  React.useEffect(() => {
-    try { localStorage.setItem('jotap_lang', lang); } catch {}
-  }, [lang]);
+  // Idioma vem de i18n.js (window.getInitialLang/persistLang).
+  const [lang, setLangState] = React.useState(window.getInitialLang());
+  const setLang = (next) => { setLangState(next); window.persistLang(next); };
 
   return (
     <div style={{ width: '100%' }}>

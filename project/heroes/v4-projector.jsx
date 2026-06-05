@@ -3,7 +3,9 @@ const { useState: useState4, useEffect: useEffect4, useRef: useRef4 } = React;
 
 // V4 — Cursor-driven projector / spotlight reveal
 // Background is dark; cursor reveals a "projected" film still beneath. Magnetic CTA.
-function HeroProjector({ palette, fonts, intensity, colorSrc, bwSrc }) {
+function HeroProjector({ palette, fonts, intensity, colorSrc, bwSrc, lang, setLang }) {
+  // Textos traduzíveis (lang vem da pagina). Default seguro caso i18n.js não carregue.
+  const T = (window.I18N && window.I18N[lang]) || { nav: { color: 'Color', reel: 'Reel', about: 'About', contact: 'Contact' }, color: { heroHeading1: 'Frames', heroHeading2: 'between', heroHeading3: 'frames.', heroDescription: '', moveToReveal: '◐ Move to reveal', nowShowing: 'Now showing' } };
   const [mouse, setMouse] = useState4({ x: 0.5, y: 0.5 });
   const [active, setActive] = useState4(false);
   const [step, setStep] = useState4(0);
@@ -127,10 +129,18 @@ function HeroProjector({ palette, fonts, intensity, colorSrc, bwSrc }) {
         mixBlendMode: pastHero ? 'difference' : 'screen',
       }}>
         <a href="./index.html" style={{ fontFamily: fonts.display, fontSize: 16, letterSpacing: '-0.02em', textTransform: 'none', fontStyle: 'italic', color: '#fff', textDecoration: 'none' }}>Jotap Films</a>
+
+        {/* Toggle de idioma — centro */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <span onClick={() => setLang && setLang('en')} style={{ cursor: 'pointer', color: lang === 'en' ? palette.accent : 'inherit', opacity: lang === 'en' ? 1 : 0.55, transition: 'opacity 0.2s, color 0.2s' }}>EN</span>
+          <span style={{ opacity: 0.4 }}>·</span>
+          <span onClick={() => setLang && setLang('pt')} style={{ cursor: 'pointer', color: lang === 'pt' ? palette.accent : 'inherit', opacity: lang === 'pt' ? 1 : 0.55, transition: 'opacity 0.2s, color 0.2s' }}>PT</span>
+        </div>
+
         <div style={{ display: 'flex', gap: 32 }}>
-          <a href="./reel.html" style={{ color: 'inherit', textDecoration: 'none', cursor: 'pointer' }}>Reel</a>
-          <a href="./index.html" style={{ color: 'inherit', textDecoration: 'none', cursor: 'pointer' }}>About</a>
-          <a href="https://mail.google.com/mail/?view=cm&fs=1&to=jotapfilms@gmail.com" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'none', cursor: 'pointer' }}>Contact</a>
+          <a href="./reel.html" style={{ color: 'inherit', textDecoration: 'none', cursor: 'pointer' }}>{T.nav.reel}</a>
+          <a href="./index.html" style={{ color: 'inherit', textDecoration: 'none', cursor: 'pointer' }}>{T.nav.about}</a>
+          <a href="https://mail.google.com/mail/?view=cm&fs=1&to=jotapfilms@gmail.com" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'none', cursor: 'pointer' }}>{T.nav.contact}</a>
         </div>
       </div>
 
@@ -154,7 +164,7 @@ function HeroProjector({ palette, fonts, intensity, colorSrc, bwSrc }) {
             marginBottom: 32,
             mixBlendMode: 'screen',
           }}>
-            ◐ Move to reveal
+            {T.color.moveToReveal}
           </div>
         )}
         <h1 style={{
@@ -167,9 +177,9 @@ function HeroProjector({ palette, fonts, intensity, colorSrc, bwSrc }) {
           color: palette.fg,
           mixBlendMode: 'difference',
         }}>
-          Frames<br />
-          <em style={{ fontWeight: 300 }}>between</em><br />
-          frames.
+          {T.color.heroHeading1}<br />
+          <em style={{ fontWeight: 300 }}>{T.color.heroHeading2}</em><br />
+          {T.color.heroHeading3}
         </h1>
         <div style={{
           marginTop: 32,
@@ -180,7 +190,7 @@ function HeroProjector({ palette, fonts, intensity, colorSrc, bwSrc }) {
           lineHeight: 1.6,
           mixBlendMode: 'screen',
         }}>
-          Films, commercials, and music videos directed and edited by Jotap. Twelve years finding the cut.
+          {T.color.heroDescription}
         </div>
       </div>
 
@@ -198,7 +208,7 @@ function HeroProjector({ palette, fonts, intensity, colorSrc, bwSrc }) {
         zIndex: 10,
         mixBlendMode: 'screen',
       }}>
-        <div style={{ color: palette.accent, marginBottom: 4 }}>Now showing</div>
+        <div style={{ color: palette.accent, marginBottom: 4 }}>{T.color.nowShowing}</div>
         <div style={{ fontFamily: fonts.display, fontSize: 22, fontStyle: 'italic', textTransform: 'none', letterSpacing: '-0.02em', color: '#fff' }}>
           {still.title}
         </div>

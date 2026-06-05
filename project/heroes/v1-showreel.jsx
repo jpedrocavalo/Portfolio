@@ -3,7 +3,8 @@ const { useState, useEffect, useRef } = React;
 
 // V1 — Cinematic full-bleed showreel hero
 // Massive type, ambient grain, cursor-tracked vignette, ticking clock, scroll cue
-function HeroShowreel({ palette, fonts, intensity, colorSrc, bwSrc, videoSrc, streamSrc, heroTitle, heroDuration, heroHref, heroThumbStream }) {
+function HeroShowreel({ palette, fonts, intensity, colorSrc, bwSrc, videoSrc, streamSrc, heroTitle, heroDuration, heroHref, heroThumbStream, lang, setLang }) {
+  const T = (window.I18N && window.I18N[lang]) || { nav: { color: 'COLOR', about: 'ABOUT', contact: 'CONTACT' }, reel: { heroLabel: '[001] — Filmmaker & Editor / Reel 2026', heroDescription: '', scroll: 'Scroll', latestWork: '↗ Latest work' } };
   const [mouse, setMouse] = useState({ x: 0.5, y: 0.5 });
   const [thumbHover, setThumbHover] = useState(false);
   const rootRef = useRef(null);
@@ -112,10 +113,18 @@ function HeroShowreel({ palette, fonts, intensity, colorSrc, bwSrc, videoSrc, st
           textTransform: 'none', fontStyle: 'italic', color: palette.fg,
           textDecoration: 'none',
         }}>Jotap Films</a>
+
+        {/* Toggle de idioma — centro */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <span onClick={() => setLang && setLang('en')} style={{ cursor: 'pointer', color: lang === 'en' ? palette.accent : 'inherit', opacity: lang === 'en' ? 1 : 0.55, transition: 'opacity 0.2s, color 0.2s' }}>EN</span>
+          <span style={{ opacity: 0.4 }}>·</span>
+          <span onClick={() => setLang && setLang('pt')} style={{ cursor: 'pointer', color: lang === 'pt' ? palette.accent : 'inherit', opacity: lang === 'pt' ? 1 : 0.55, transition: 'opacity 0.2s, color 0.2s' }}>PT</span>
+        </div>
+
         <div style={{ display: 'flex', gap: 32 }}>
-          <a href="./color.html" style={{ color: 'inherit', textDecoration: 'none', cursor: 'pointer' }}>COLOR</a>
-          <a href="./index.html" style={{ color: 'inherit', textDecoration: 'none', cursor: 'pointer' }}>ABOUT</a>
-          <a href="https://mail.google.com/mail/?view=cm&fs=1&to=jotapfilms@gmail.com" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'none', cursor: 'pointer' }}>CONTACT</a>
+          <a href="./color.html" style={{ color: 'inherit', textDecoration: 'none', cursor: 'pointer' }}>{(T.nav.color || 'COLOR').toUpperCase()}</a>
+          <a href="./index.html" style={{ color: 'inherit', textDecoration: 'none', cursor: 'pointer' }}>{(T.nav.about || 'ABOUT').toUpperCase()}</a>
+          <a href="https://mail.google.com/mail/?view=cm&fs=1&to=jotapfilms@gmail.com" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'none', cursor: 'pointer' }}>{(T.nav.contact || 'CONTACT').toUpperCase()}</a>
         </div>
       </div>
 
@@ -141,7 +150,7 @@ function HeroShowreel({ palette, fonts, intensity, colorSrc, bwSrc, videoSrc, st
             marginBottom: 24,
           }}
         >
-          [001] — Video Editor / Reel 2026
+          {T.reel.heroLabel}
         </div>
 
         <h1
@@ -182,7 +191,7 @@ function HeroShowreel({ palette, fonts, intensity, colorSrc, bwSrc, videoSrc, st
           }}
         >
           <div style={{ flex: 1, lineHeight: 1.6 }}>
-            Crafting cinematic stories for brands, artists, and the in-between. Available for commissions Q3–Q4 2026.
+            {T.reel.heroDescription}
           </div>
         </div>
       </div>
@@ -205,7 +214,7 @@ function HeroShowreel({ palette, fonts, intensity, colorSrc, bwSrc, videoSrc, st
           zIndex: 8,
         }}
       >
-        <span>Scroll</span>
+        <span>{T.reel.scroll}</span>
         <div style={{ width: 1, height: 60, background: `linear-gradient(${palette.muted}, transparent)`, animation: 'jp-scroll 2.2s ease-in-out infinite' }} />
       </div>
 
@@ -237,7 +246,7 @@ function HeroShowreel({ palette, fonts, intensity, colorSrc, bwSrc, videoSrc, st
             transition: 'color 0.25s',
             marginBottom: 10,
           }}>
-            ↗ Latest work
+            {T.reel.latestWork}
           </div>
 
           {/* Thumbnail 16:9 */}

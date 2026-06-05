@@ -24,7 +24,8 @@
 <body>
 <div id="root"></div>
 
-<!-- Lista central de categorias (script normal, roda antes do Babel) -->
+<!-- Traduções compartilhadas + lista de categorias (scripts normais, antes do Babel) -->
+<script src="i18n.js"></script>
 <script src="categories.js"></script>
 
 <script type="text/babel" src="heroes/color-reveal-bg.jsx"></script>
@@ -151,7 +152,8 @@ function SectionLink({ data, fonts, palette }) {
   );
 }
 
-function ContactCTA({ fonts }) {
+function ContactCTA({ fonts, lang }) {
+  const t = window.I18N[lang].contact;
   return (
     <section style={{
       minHeight: '80vh',
@@ -163,7 +165,7 @@ function ContactCTA({ fonts }) {
         fontFamily: fonts.mono, fontSize: 11, letterSpacing: '0.3em',
         textTransform: 'uppercase', color: 'rgba(255,255,255,0.5)', marginBottom: 32,
       }}>
-        Get in touch
+        {t.smallLabel}
       </div>
       <h2 style={{
         fontFamily: fonts.display,
@@ -172,7 +174,7 @@ function ContactCTA({ fonts }) {
         maxWidth: 1200,
         color: '#fff',
       }}>
-        Let's <em style={{ fontStyle: 'italic' }}>talk</em>.
+        {t.headingA} <em style={{ fontStyle: 'italic' }}>{t.headingB}</em>.
       </h2>
       <div style={{ marginTop: 40, display: 'flex', gap: 32, alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
         <a href="https://mail.google.com/mail/?view=cm&fs=1&to=jotapfilms@gmail.com"
@@ -192,7 +194,7 @@ function ContactCTA({ fonts }) {
           jotapfilms@gmail.com <span>↗</span>
         </a>
         <div style={{ fontFamily: fonts.mono, fontSize: 11, letterSpacing: '0.25em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.5)' }}>
-          Open for Q3 / Q4 — 2026
+          {t.openFor}
         </div>
       </div>
     </section>
@@ -200,9 +202,13 @@ function ContactCTA({ fonts }) {
 }
 
 function App() {
+  // Idioma vem de i18n.js — toggle no header da hero.
+  const [lang, setLangState] = React.useState(window.getInitialLang());
+  const setLang = (next) => { setLangState(next); window.persistLang(next); };
+
   return (
     <div style={{ width: '100%' }}>
-      <window.HeroProjector palette={PALETTE} fonts={FONTS} intensity={5} colorSrc="" bwSrc="" />
+      <window.HeroProjector palette={PALETTE} fonts={FONTS} intensity={5} colorSrc="" bwSrc="" lang={lang} setLang={setLang} />
 
       {/* Grid 2 colunas — 2 lado a lado, depois 2, e o 5° sozinho na última linha.
           Gradient overlay no topo suaviza a transição com a hero. */}
@@ -227,7 +233,7 @@ function App() {
         </div>
       </div>
 
-      <ContactCTA fonts={FONTS} />
+      <ContactCTA fonts={FONTS} lang={lang} />
     </div>
   );
 }

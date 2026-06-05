@@ -24,7 +24,8 @@
 <body>
 <div id="root"></div>
 
-<!-- Lista central de vídeos (script normal, roda antes do Babel) -->
+<!-- Traduções compartilhadas + lista de vídeos (scripts normais, antes do Babel) -->
+<script src="i18n.js"></script>
 <script src="videos.js"></script>
 
 <script type="text/babel" src="heroes/color-reveal-bg.jsx"></script>
@@ -157,6 +158,11 @@ function Card({ data, fonts, palette, fill }) {
 
 
 function App() {
+  // Idioma vem de i18n.js — toggle no header da hero.
+  const [lang, setLangState] = React.useState(window.getInitialLang());
+  const setLang = (next) => { setLangState(next); window.persistLang(next); };
+  const T = window.I18N[lang];
+
   return (
     <div style={{ width: '100%' }}>
       {/* Hero — 100vh.
@@ -171,6 +177,7 @@ function App() {
           heroHref="./video.html"
           heroThumbStream={LATEST_VIDEO.streamId ? streamUrl(LATEST_VIDEO.streamId) : ''}
           colorSrc="" bwSrc=""
+          lang={lang} setLang={setLang}
         />
       </div>
 
@@ -186,7 +193,7 @@ function App() {
         <div style={{
           display: 'flex', justifyContent: 'space-between', alignItems: 'center',
         }}>
-          <div style={labelStyle}>01 — Selected works</div>
+          <div style={labelStyle}>{T.reel.selectedWorks}</div>
           <a href="./works.html" style={{
             ...labelStyle,
             color: PALETTE.accent,
@@ -196,7 +203,7 @@ function App() {
           onMouseEnter={(e) => (e.currentTarget.style.opacity = 0.6)}
           onMouseLeave={(e) => (e.currentTarget.style.opacity = 1)}
           >
-            See all ↗
+            {T.reel.seeAll}
           </a>
         </div>
         <div style={{
@@ -236,7 +243,7 @@ function App() {
           fontFamily: FONTS.mono, fontSize: 11, letterSpacing: '0.3em',
           textTransform: 'uppercase', color: 'rgba(255,255,255,0.5)', marginBottom: 32,
         }}>
-          Get in touch
+          {T.contact.smallLabel}
         </div>
         <h2 style={{
           fontFamily: FONTS.display,
@@ -245,7 +252,7 @@ function App() {
           maxWidth: 1200,
           color: '#fff',
         }}>
-          Let's <em style={{ fontStyle: 'italic' }}>talk</em>.
+          {T.contact.headingA} <em style={{ fontStyle: 'italic' }}>{T.contact.headingB}</em>.
         </h2>
         <div style={{ marginTop: 40, display: 'flex', gap: 32, alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
           <a href="https://mail.google.com/mail/?view=cm&fs=1&to=jotapfilms@gmail.com"
@@ -265,7 +272,7 @@ function App() {
             jotapfilms@gmail.com <span>↗</span>
           </a>
           <div style={{ fontFamily: FONTS.mono, fontSize: 11, letterSpacing: '0.25em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.5)' }}>
-            Open for Q3 / Q4 — 2026
+            {T.contact.openFor}
           </div>
         </div>
       </section>

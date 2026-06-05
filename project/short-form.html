@@ -25,6 +25,9 @@
 <body>
 <div id="root"></div>
 
+<!-- Traduções compartilhadas (script normal, roda antes do Babel) -->
+<script src="i18n.js"></script>
+
 <script type="text/babel">
 const { useState, useEffect } = React;
 
@@ -66,7 +69,8 @@ function playerUrl(id) {
   return `https://${CF_CUSTOMER_CODE}.cloudflarestream.com/${id}/iframe?autoplay=true&muted=true&controls=true`;
 }
 
-function Header({ fonts }) {
+function Header({ fonts, palette, lang, setLang }) {
+  const N = window.I18N[lang].nav;
   return (
     <div style={{
       position: 'fixed', top: 0, left: 0, right: 0,
@@ -79,13 +83,21 @@ function Header({ fonts }) {
         fontFamily: fonts.display, fontSize: 16, letterSpacing: '-0.02em',
         textTransform: 'none', fontStyle: 'italic', color: '#fff', textDecoration: 'none',
       }}>Jotap Films</a>
+
+      {/* Toggle de idioma — centro */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+        <span onClick={() => setLang('en')} style={{ cursor: 'pointer', color: lang === 'en' ? palette.accent : 'inherit', opacity: lang === 'en' ? 1 : 0.55, transition: 'opacity 0.2s, color 0.2s' }}>EN</span>
+        <span style={{ opacity: 0.4 }}>·</span>
+        <span onClick={() => setLang('pt')} style={{ cursor: 'pointer', color: lang === 'pt' ? palette.accent : 'inherit', opacity: lang === 'pt' ? 1 : 0.55, transition: 'opacity 0.2s, color 0.2s' }}>PT</span>
+      </div>
+
       <div style={{ display: 'flex', gap: 32 }}>
-        <a href="./color.html" style={{ color: 'inherit', textDecoration: 'none' }}>Color</a>
-        <a href="./reel.html" style={{ color: 'inherit', textDecoration: 'none' }}>Reel</a>
+        <a href="./color.html" style={{ color: 'inherit', textDecoration: 'none' }}>{N.color}</a>
+        <a href="./reel.html" style={{ color: 'inherit', textDecoration: 'none' }}>{N.reel}</a>
         <a href="https://mail.google.com/mail/?view=cm&fs=1&to=jotapfilms@gmail.com"
           target="_blank" rel="noopener noreferrer"
           style={{ color: 'inherit', textDecoration: 'none' }}>
-          Contact
+          {N.contact}
         </a>
       </div>
     </div>
@@ -274,10 +286,13 @@ function Lightbox({ item, onClose, fonts }) {
 
 function App() {
   const [openIndex, setOpenIndex] = useState(null);
+  const [lang, setLangState] = useState(window.getInitialLang());
+  const setLang = (next) => { setLangState(next); window.persistLang(next); };
+  const T = window.I18N[lang];
 
   return (
     <div style={{ width: '100%' }}>
-      <Header fonts={FONTS} />
+      <Header fonts={FONTS} palette={PALETTE} lang={lang} setLang={setLang} />
 
       {/* Bloco de título */}
       <section style={{
@@ -287,21 +302,21 @@ function App() {
           fontFamily: FONTS.mono, fontSize: 11, letterSpacing: '0.3em',
           textTransform: 'uppercase', color: PALETTE.accent, marginBottom: 24,
         }}>
-          Vertical · Reels · Social
+          {T.shortform.smallLabel}
         </div>
         <h1 style={{
           fontFamily: FONTS.display,
           fontSize: 'clamp(56px, 9vw, 160px)',
           fontWeight: 300, lineHeight: 0.95, letterSpacing: '-0.04em', margin: 0,
         }}>
-          Short-form.
+          {T.shortform.heading}
         </h1>
         <p style={{
           marginTop: 28, maxWidth: 560,
           fontFamily: FONTS.sans, fontSize: 15, lineHeight: 1.7,
           color: 'rgba(245,241,232,0.7)',
         }}>
-          Vídeos curtos verticais — clipes para redes sociais. Clique pra assistir.
+          {T.shortform.intro}
         </p>
       </section>
 
@@ -332,7 +347,7 @@ function App() {
           fontFamily: FONTS.mono, fontSize: 11, letterSpacing: '0.3em',
           textTransform: 'uppercase', color: PALETTE.accent, textDecoration: 'none',
         }}>
-          ← Back to reel
+          {T.backToReel}
         </a>
       </section>
 
