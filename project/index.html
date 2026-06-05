@@ -88,8 +88,12 @@ function Header({ fonts, palette, lang, setLang }) {
         textDecoration: 'none',
       }}>Jotap Films</a>
 
-      {/* Centro — toggle de idioma */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+      {/* Centro — toggle de idioma centralizado no viewport (não no flex) */}
+      <div style={{
+        position: 'absolute', left: '50%', top: '50%',
+        transform: 'translate(-50%, -50%)',
+        display: 'flex', alignItems: 'center', gap: 10,
+      }}>
         {tab('en', 'EN')}
         <span style={{ opacity: 0.4 }}>·</span>
         {tab('pt', 'PT')}

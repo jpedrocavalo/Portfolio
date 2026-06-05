@@ -130,8 +130,8 @@ function HeroProjector({ palette, fonts, intensity, colorSrc, bwSrc, lang, setLa
       }}>
         <a href="./index.html" style={{ fontFamily: fonts.display, fontSize: 16, letterSpacing: '-0.02em', textTransform: 'none', fontStyle: 'italic', color: '#fff', textDecoration: 'none' }}>Jotap Films</a>
 
-        {/* Toggle de idioma — centro */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+        {/* Toggle de idioma — centralizado no viewport */}
+        <div style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)', display: 'flex', alignItems: 'center', gap: 10 }}>
           <span onClick={() => setLang && setLang('en')} style={{ cursor: 'pointer', color: lang === 'en' ? palette.accent : 'inherit', opacity: lang === 'en' ? 1 : 0.55, transition: 'opacity 0.2s, color 0.2s' }}>EN</span>
           <span style={{ opacity: 0.4 }}>·</span>
           <span onClick={() => setLang && setLang('pt')} style={{ cursor: 'pointer', color: lang === 'pt' ? palette.accent : 'inherit', opacity: lang === 'pt' ? 1 : 0.55, transition: 'opacity 0.2s, color 0.2s' }}>PT</span>
