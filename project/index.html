@@ -33,17 +33,46 @@ const FONTS = {
   mono: '"JetBrains Mono", monospace',
 };
 
-// ── BIO — edite este texto livremente ──
+// ── TEXTOS BILÍNGUES — edite os parágrafos da Bio nos dois idiomas. ──
+// O toggle EN · PT no header da about troca entre eles e salva no localStorage.
+const TEXTS = {
+  pt: {
+    bioLabel: '01 — Bio',
+    bioHeadingA: 'Finding',
+    bioHeadingB: 'the cut',
+    paragraphs: [
+      'Começou cedo, sem manual. A edição entrou como curiosidade — programa aberto, vídeo na timeline — e ficou. O olhar se afinou na repetição: assistir, refazer, refinar, até o corte deixar de ser exercício técnico e virar uma forma de pensar.',
+      'Hoje, divide o tempo entre marcas que pedem mais do que um filme bonito — pedem um filme certo — e projetos próprios, onde cor, estrutura e ritmo são decisões livres, não negociações.',
+      'Acredita que filme bom é feito de decisões pequenas: onde a câmera respira, qual frame fica, qual matiz se sustenta no preto. Cada projeto começa pela mesma pergunta — que sensação fica depois que a imagem sai do ar?',
+    ],
+    contactSmall: 'Get in touch',
+    contactA: "Let's",
+    contactB: 'talk',
+    openFor: 'Aberto para Q3 / Q4 — 2026',
+    rightsReserved: '© 2026 · Todos os direitos reservados',
+  },
+  en: {
+    bioLabel: '01 — Bio',
+    bioHeadingA: 'Finding',
+    bioHeadingB: 'the cut',
+    paragraphs: [
+      "Started early, no manual. Editing came in as curiosity — software open, footage on the timeline — and it stayed. The eye sharpened through repetition: watch, redo, refine, until the cut stopped being a technical exercise and became a way of thinking.",
+      "Today, time is split between brands that ask for more than a pretty film — they ask for the right film — and personal projects, where color, structure and rhythm are free decisions, not negotiations.",
+      "A good film is made of small decisions: where the camera breathes, which frame stays, which hue holds up against the black. Every project starts with the same question — what feeling remains after the image leaves the screen?",
+    ],
+    contactSmall: 'Get in touch',
+    contactA: "Let's",
+    contactB: 'talk',
+    openFor: 'Open for Q3 / Q4 — 2026',
+    rightsReserved: '© 2026 · All rights reserved',
+  },
+};
+
+// ── BIO — campos sem tradução (nome/role/localização). ──
 const BIO = {
   name: 'Jotap',
   role: 'Editor & Colorist',
   location: 'Natal, RN — Brasil',
-  intro: 'Editor e colorista baseado em Natal. Trabalha entre comerciais com identidade, filmes narrativos e ensaios pessoais — atrás, sempre, da imagem que carrega uma decisão.',
-  paragraphs: [
-    'Começou cedo, sem manual. A edição entrou como curiosidade — programa aberto, vídeo na timeline — e ficou. O olhar se afinou na repetição: assistir, refazer, refinar, até o corte deixar de ser exercício técnico e virar uma forma de pensar.',
-    'Hoje, divide o tempo entre marcas que pedem mais do que um filme bonito — pedem um filme certo — e projetos próprios, onde cor, estrutura e ritmo são decisões livres, não negociações.',
-    'Acredita que filme bom é feito de decisões pequenas: onde a câmera respira, qual frame fica, qual matiz se sustenta no preto. Cada projeto começa pela mesma pergunta — que sensação fica depois que a imagem sai do ar?',
-  ],
 };
 
 const SKILLS = [
@@ -61,7 +90,19 @@ const CREDITS = [
   { year: '2023', title: 'Penumbra',        role: 'Director',           type: 'Short film' },
 ];
 
-function Header({ fonts, palette }) {
+function Header({ fonts, palette, lang, setLang }) {
+  const tab = (code, label) => (
+    <span
+      onClick={() => setLang(code)}
+      style={{
+        cursor: 'pointer',
+        color: lang === code ? palette.accent : 'inherit',
+        opacity: lang === code ? 1 : 0.55,
+        transition: 'opacity 0.2s, color 0.2s',
+      }}
+    >{label}</span>
+  );
+
   return (
     <div style={{
       position: 'fixed', top: 0, left: 0, right: 0,
@@ -77,6 +118,14 @@ function Header({ fonts, palette }) {
         textTransform: 'none', fontStyle: 'italic', color: '#fff',
         textDecoration: 'none',
       }}>Jotap Films</a>
+
+      {/* Centro — toggle de idioma */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+        {tab('en', 'EN')}
+        <span style={{ opacity: 0.4 }}>·</span>
+        {tab('pt', 'PT')}
+      </div>
+
       <div style={{ display: 'flex', gap: 32 }}>
         <a href="./color.html" style={{ color: 'inherit', textDecoration: 'none' }}>Color</a>
         <a href="./reel.html" style={{ color: 'inherit', textDecoration: 'none' }}>Reel</a>
@@ -200,7 +249,8 @@ function RolesSection({ fonts, palette }) {
 }
 
 // ─── Seção 2: Bio + Foto ───────────────────────────────────────
-function BioSection({ fonts, palette }) {
+function BioSection({ fonts, palette, lang }) {
+  const t = TEXTS[lang];
   return (
     <section style={{
       minHeight: '100vh',
@@ -237,17 +287,17 @@ function BioSection({ fonts, palette }) {
           fontFamily: fonts.mono, fontSize: 11, letterSpacing: '0.3em',
           textTransform: 'uppercase', color: palette.muted, marginBottom: 16,
         }}>
-          01 — Bio
+          {t.bioLabel}
         </div>
         <h2 style={{
           fontFamily: fonts.display,
           fontSize: 'clamp(40px, 5vw, 72px)',
           fontWeight: 300, lineHeight: 1, letterSpacing: '-0.03em', margin: 0,
         }}>
-          Finding <em>the cut</em>.
+          {t.bioHeadingA} <em>{t.bioHeadingB}</em>.
         </h2>
         <div style={{ marginTop: 32, display: 'flex', flexDirection: 'column', gap: 20, fontSize: 16, lineHeight: 1.7, color: 'rgba(245,241,232,0.78)' }}>
-          {BIO.paragraphs.map((p, i) => <p key={i} style={{ margin: 0 }}>{p}</p>)}
+          {t.paragraphs.map((p, i) => <p key={i} style={{ margin: 0 }}>{p}</p>)}
         </div>
       </div>
     </section>
@@ -366,7 +416,8 @@ function CreditsSection({ fonts, palette }) {
 }
 
 // ─── Seção 5: CTA Contato (centralizado, branco) ──────────────
-function ContactSection({ fonts, palette }) {
+function ContactSection({ fonts, palette, lang }) {
+  const t = TEXTS[lang];
   return (
     <section style={{
       minHeight: '80vh',
@@ -378,7 +429,7 @@ function ContactSection({ fonts, palette }) {
         fontFamily: fonts.mono, fontSize: 11, letterSpacing: '0.3em',
         textTransform: 'uppercase', color: 'rgba(255,255,255,0.5)', marginBottom: 32,
       }}>
-        Get in touch
+        {t.contactSmall}
       </div>
       <h2 style={{
         fontFamily: fonts.display,
@@ -387,7 +438,7 @@ function ContactSection({ fonts, palette }) {
         maxWidth: 1200,
         color: '#fff',
       }}>
-        Let's <em style={{ fontStyle: 'italic' }}>talk</em>.
+        {t.contactA} <em style={{ fontStyle: 'italic' }}>{t.contactB}</em>.
       </h2>
       <div style={{ marginTop: 40, display: 'flex', gap: 32, alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
         <a href="https://mail.google.com/mail/?view=cm&fs=1&to=jotapfilms@gmail.com"
@@ -407,7 +458,7 @@ function ContactSection({ fonts, palette }) {
           jotapfilms@gmail.com <span>↗</span>
         </a>
         <div style={{ fontFamily: fonts.mono, fontSize: 11, letterSpacing: '0.25em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.5)' }}>
-          Open for Q3 / Q4 — 2026
+          {t.openFor}
         </div>
       </div>
     </section>
@@ -415,7 +466,8 @@ function ContactSection({ fonts, palette }) {
 }
 
 // ─── Footer ────────────────────────────────────────────────────
-function Footer({ fonts, palette }) {
+function Footer({ fonts, palette, lang }) {
+  const t = TEXTS[lang];
   return (
     <footer style={{
       padding: '32px 40px',
@@ -425,19 +477,31 @@ function Footer({ fonts, palette }) {
       textTransform: 'uppercase', color: palette.muted,
     }}>
       <span style={{ fontFamily: fonts.display, fontStyle: 'italic', textTransform: 'none', letterSpacing: '-0.02em', fontSize: 13 }}>Jotap Films</span>
-      <span>© 2026 · All rights reserved</span>
+      <span>{t.rightsReserved}</span>
     </footer>
   );
 }
 
 function App() {
+  // Idioma persiste no localStorage entre sessões. Default: pt.
+  const [lang, setLang] = React.useState(() => {
+    try {
+      const saved = localStorage.getItem('jotap_lang');
+      return (saved === 'en' || saved === 'pt') ? saved : 'pt';
+    } catch { return 'pt'; }
+  });
+
+  React.useEffect(() => {
+    try { localStorage.setItem('jotap_lang', lang); } catch {}
+  }, [lang]);
+
   return (
     <div style={{ width: '100%' }}>
-      <Header fonts={FONTS} palette={PALETTE} />
+      <Header fonts={FONTS} palette={PALETTE} lang={lang} setLang={setLang} />
       <RolesSection fonts={FONTS} palette={PALETTE} />
-      <BioSection fonts={FONTS} palette={PALETTE} />
-      <ContactSection fonts={FONTS} palette={PALETTE} />
-      <Footer fonts={FONTS} palette={PALETTE} />
+      <BioSection fonts={FONTS} palette={PALETTE} lang={lang} />
+      <ContactSection fonts={FONTS} palette={PALETTE} lang={lang} />
+      <Footer fonts={FONTS} palette={PALETTE} lang={lang} />
     </div>
   );
 }
