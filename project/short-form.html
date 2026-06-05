@@ -39,19 +39,22 @@ const CF_CUSTOMER_CODE = 'customer-x1j6qmqmv38ltwyr';
 
 // ════════════════════════════════════════════════════════════════
 // VÍDEOS SHORT-FORM
-// Cada item: { title, streamId }  (streamId = UID do Cloudflare Stream)
-// Adicione/edite à vontade — o grid se ajusta sozinho.
+// Cada item — 3 linhas de legenda + streamId:
+//   title    → linha 1 (Fraunces italic) — nome do trabalho
+//   subtitle → linha 2 (Inter, muted)    — cliente · projeto · contexto
+//   meta     → linha 3 (mono, accent)    — ano · duração · plataforma
+//   streamId → UID do Cloudflare Stream
 // ════════════════════════════════════════════════════════════════
 const SHORTFORM = [
-  { title: 'Reel 01', streamId: '' },
-  { title: 'Reel 02', streamId: '' },
-  { title: 'Reel 03', streamId: '' },
-  { title: 'Reel 04', streamId: '' },
-  { title: 'Reel 05', streamId: '' },
-  { title: 'Reel 06', streamId: '' },
-  { title: 'Reel 07', streamId: '' },
-  { title: 'Reel 08', streamId: '' },
-  { title: 'Reel 09', streamId: '' },
+  { title: 'Reel 01', subtitle: 'Cliente · Projeto', meta: '2026 · 00:42', streamId: '' },
+  { title: 'Reel 02', subtitle: 'Cliente · Projeto', meta: '2026 · 00:36', streamId: '' },
+  { title: 'Reel 03', subtitle: 'Cliente · Projeto', meta: '2026 · 00:58', streamId: '' },
+  { title: 'Reel 04', subtitle: 'Cliente · Projeto', meta: '2025 · 00:30', streamId: '' },
+  { title: 'Reel 05', subtitle: 'Cliente · Projeto', meta: '2025 · 01:12', streamId: '' },
+  { title: 'Reel 06', subtitle: 'Cliente · Projeto', meta: '2025 · 00:45', streamId: '' },
+  { title: 'Reel 07', subtitle: 'Cliente · Projeto', meta: '2025 · 00:24', streamId: '' },
+  { title: 'Reel 08', subtitle: 'Cliente · Projeto', meta: '2024 · 00:50', streamId: '' },
+  { title: 'Reel 09', subtitle: 'Cliente · Projeto', meta: '2024 · 00:38', streamId: '' },
 ];
 
 // Imagem-poster gerada pelo Cloudflare Stream (thumbnail estático do grid)
@@ -89,7 +92,7 @@ function Header({ fonts }) {
   );
 }
 
-// Thumbnail vertical 9:16 do grid — estático, clicável.
+// Card vertical 9:16 + 3 linhas de legenda. Clicável (abre lightbox).
 function GridItem({ item, index, onOpen, fonts, palette }) {
   const [hover, setHover] = useState(false);
   return (
@@ -98,48 +101,93 @@ function GridItem({ item, index, onOpen, fonts, palette }) {
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
       style={{
+        display: 'flex',
+        flexDirection: 'column',
+        cursor: 'pointer',
+      }}
+    >
+      {/* Thumbnail 9:16 */}
+      <div style={{
         position: 'relative',
         aspectRatio: '9 / 16',
         background: `linear-gradient(135deg, ${palette.accent}33, ${palette.fg}11)`,
         overflow: 'hidden',
-        cursor: 'pointer',
-      }}
-    >
-      {item.streamId ? (
-        <img
-          src={thumbUrl(item.streamId)}
-          alt={item.title}
-          style={{
-            position: 'absolute', inset: 0, width: '100%', height: '100%',
-            objectFit: 'cover',
-            transform: hover ? 'scale(1.05)' : 'scale(1)',
-            transition: 'transform 0.5s cubic-bezier(0.2,0.8,0.2,1)',
-          }}
-        />
-      ) : (
+      }}>
+        {item.streamId ? (
+          <img
+            src={thumbUrl(item.streamId)}
+            alt={item.title}
+            style={{
+              position: 'absolute', inset: 0, width: '100%', height: '100%',
+              objectFit: 'cover',
+              transform: hover ? 'scale(1.05)' : 'scale(1)',
+              transition: 'transform 0.5s cubic-bezier(0.2,0.8,0.2,1)',
+            }}
+          />
+        ) : (
+          <div style={{
+            position: 'absolute', inset: 0,
+            background: `repeating-linear-gradient(90deg, transparent, transparent 22px, ${palette.fg}08 22px, ${palette.fg}08 24px)`,
+          }} />
+        )}
+
+        {/* Overlay escuro + play no hover */}
         <div style={{
           position: 'absolute', inset: 0,
-          background: `repeating-linear-gradient(90deg, transparent, transparent 22px, ${palette.fg}08 22px, ${palette.fg}08 24px)`,
-        }} />
-      )}
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          background: hover ? 'rgba(10,10,10,0.35)' : 'rgba(10,10,10,0)',
+          transition: 'background 0.25s',
+        }}>
+          <div style={{
+            width: 0, height: 0,
+            borderLeft: `18px solid ${hover ? palette.accent : 'rgba(255,255,255,0.85)'}`,
+            borderTop: '12px solid transparent',
+            borderBottom: '12px solid transparent',
+            marginLeft: 5,
+            opacity: hover ? 1 : 0,
+            transform: hover ? 'scale(1)' : 'scale(0.7)',
+            transition: 'opacity 0.25s, transform 0.25s, border-color 0.25s',
+          }} />
+        </div>
+      </div>
 
-      {/* Overlay escuro + play no hover */}
+      {/* 3 linhas de legenda abaixo */}
       <div style={{
-        position: 'absolute', inset: 0,
-        display: 'flex', alignItems: 'center', justifyContent: 'center',
-        background: hover ? 'rgba(10,10,10,0.35)' : 'rgba(10,10,10,0)',
-        transition: 'background 0.25s',
+        marginTop: 12,
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 4,
       }}>
+        {/* Linha 1 — título (Fraunces italic) */}
         <div style={{
-          width: 0, height: 0,
-          borderLeft: `18px solid ${hover ? palette.accent : 'rgba(255,255,255,0.85)'}`,
-          borderTop: '12px solid transparent',
-          borderBottom: '12px solid transparent',
-          marginLeft: 5,
-          opacity: hover ? 1 : 0,
-          transform: hover ? 'scale(1)' : 'scale(0.7)',
-          transition: 'opacity 0.25s, transform 0.25s, border-color 0.25s',
-        }} />
+          fontFamily: fonts.display,
+          fontStyle: 'italic',
+          fontSize: 14,
+          lineHeight: 1.2,
+          color: palette.fg,
+        }}>
+          {item.title || '—'}
+        </div>
+        {/* Linha 2 — subtítulo (Inter, muted) */}
+        <div style={{
+          fontFamily: fonts.sans,
+          fontSize: 11,
+          lineHeight: 1.4,
+          color: palette.muted,
+        }}>
+          {item.subtitle || ''}
+        </div>
+        {/* Linha 3 — meta (mono, accent no hover) */}
+        <div style={{
+          fontFamily: fonts.mono,
+          fontSize: 9,
+          letterSpacing: '0.25em',
+          textTransform: 'uppercase',
+          color: hover ? palette.accent : 'rgba(245,241,232,0.4)',
+          transition: 'color 0.25s',
+        }}>
+          {item.meta || ''}
+        </div>
       </div>
     </div>
   );
@@ -263,7 +311,9 @@ function App() {
         <div style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))',
-          gap: 6,
+          // row gap maior pra dar espaço pras 3 linhas de texto; col gap apertado estilo IG
+          rowGap: 36,
+          columnGap: 6,
         }}>
           {SHORTFORM.map((item, i) => (
             <GridItem
