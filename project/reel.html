@@ -163,6 +163,18 @@ function App() {
   const setLang = (next) => { setLangState(next); window.persistLang(next); };
   const T = window.I18N[lang];
 
+  // Detecta mobile pra ajustar o grid de Selected Works
+  const [isMobile, setIsMobile] = React.useState(false);
+  React.useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
+
+  // No mobile: só os 3 primeiros vídeos. No desktop: tudo (5 vídeos + Short-form).
+  const featuredItems = isMobile ? FEATURED.slice(0, 3) : FEATURED;
+
   return (
     <div style={{ width: '100%' }}>
       {/* Hero — 100vh.
@@ -210,11 +222,13 @@ function App() {
           flex: 1,
           marginTop: LABEL_TO_GRID,
           display: 'grid',
-          gridTemplateColumns: `repeat(${COLS}, 1fr)`,
-          gridTemplateRows: `repeat(${ROWS}, 1fr)`,
+          // Mobile: 1 coluna, 3 fileiras (cards full-width, empilhados).
+          // Desktop: 3 colunas, 2 fileiras (grid 3×2 como antes).
+          gridTemplateColumns: isMobile ? '1fr' : `repeat(${COLS}, 1fr)`,
+          gridTemplateRows:    isMobile ? 'repeat(3, 1fr)' : `repeat(${ROWS}, 1fr)`,
           gap: GRID_GAP,
         }}>
-          {FEATURED.map((data, i) => (
+          {featuredItems.map((data, i) => (
             data.href ? (
               <a key={i} href={data.href} style={{
                 display: 'flex',
