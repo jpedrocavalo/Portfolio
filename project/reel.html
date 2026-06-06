@@ -244,6 +244,19 @@ function App() {
             )
           ))}
         </div>
+
+        {/* Mobile: link extra pra Short-form (no desktop o card já está no grid) */}
+        {isMobile && (
+          <a href="./short-form.html" style={{
+            marginTop: 18,
+            alignSelf: 'flex-end',
+            fontFamily: FONTS.mono, fontSize: 11, letterSpacing: '0.3em',
+            textTransform: 'uppercase', color: PALETTE.accent,
+            textDecoration: 'none',
+          }}>
+            Short-form ↗
+          </a>
+        )}
       </section>
 
       {/* Footer CTA — centralizado e branco */}
