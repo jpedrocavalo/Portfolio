@@ -100,7 +100,6 @@ function Header({ fonts, palette, lang, setLang }) {
       </div>
 
       <div style={{ display: 'flex', gap: 32 }}>
-        <a href="./color.html" style={{ color: 'inherit', textDecoration: 'none' }}>{window.I18N[lang].nav.color}</a>
         <a href="./reel.html" style={{ color: 'inherit', textDecoration: 'none' }}>{window.I18N[lang].nav.reel}</a>
         <a href="https://mail.google.com/mail/?view=cm&fs=1&to=jotapfilms@gmail.com"
           target="_blank" rel="noopener noreferrer"
@@ -117,7 +116,8 @@ function Header({ fonts, palette, lang, setLang }) {
 // Preencha o `cover` com o caminho da imagem da capa.
 const ROLES = [
   { title: 'Editor',   cover: './editor-cover.jpg',   href: './reel.html' },
-  { title: 'Colorist', cover: './colorist-cover.jpg', href: './color.html' },
+  // Colorist temporariamente oculto — re-adicionar quando o portfólio de color estiver pronto:
+  // { title: 'Colorist', cover: './colorist-cover.jpg', href: './color.html' },
 ];
 
 function RoleCard({ data, fonts, palette }) {
