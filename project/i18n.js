@@ -44,6 +44,7 @@ window.I18N = {
         'Hoje, divide o tempo entre marcas que pedem mais do que um filme bonito — pedem um filme certo — e projetos próprios, onde cor, estrutura e ritmo são decisões livres, não negociações.',
         'Acredita que filme bom é feito de decisões pequenas: onde a câmera respira, qual frame fica, qual matiz se sustenta no preto. Cada projeto começa pela mesma pergunta — que sensação fica depois que a imagem sai do ar?',
       ],
+      viewWork: 'Ver trabalho',
     },
 
     // ── Color (color.html / v4-projector) ──
@@ -124,6 +125,7 @@ window.I18N = {
         "Today, time is split between brands that ask for more than a pretty film — they ask for the right film — and personal projects, where color, structure and rhythm are free decisions, not negotiations.",
         "A good film is made of small decisions: where the camera breathes, which frame stays, which hue holds up against the black. Every project starts with the same question — what feeling remains after the image leaves the screen?",
       ],
+      viewWork: 'View work',
     },
 
     color: {
