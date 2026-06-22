@@ -236,8 +236,7 @@ function BioSection({ fonts, palette, lang }) {
       minHeight: '100vh',
       padding: '120px 40px',
       display: 'grid',
-      // Foto menor à esquerda, texto pega o resto.
-      gridTemplateColumns: 'clamp(220px, 26vw, 320px) 1fr',
+      gridTemplateColumns: '1fr 1fr',
       gap: 64,
       alignItems: 'center',
       borderBottom: '1px solid rgba(255,255,255,0.06)',
@@ -280,31 +279,6 @@ function BioSection({ fonts, palette, lang }) {
         <div style={{ marginTop: 32, display: 'flex', flexDirection: 'column', gap: 20, fontSize: 16, lineHeight: 1.7, color: 'rgba(245,241,232,0.78)' }}>
           {t.paragraphs.map((p, i) => <p key={i} style={{ margin: 0 }}>{p}</p>)}
         </div>
-
-        {/* Botão "Ver trabalho" — leva pra reel */}
-        <a
-          href="./reel.html"
-          style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: 10,
-            marginTop: 36,
-            padding: '14px 24px',
-            border: `1px solid ${palette.accent}`,
-            color: palette.accent,
-            fontFamily: fonts.mono,
-            fontSize: 11,
-            letterSpacing: '0.25em',
-            textTransform: 'uppercase',
-            textDecoration: 'none',
-            alignSelf: 'flex-start',
-            transition: 'background 0.3s, color 0.3s',
-          }}
-          onMouseEnter={(e) => { e.currentTarget.style.background = palette.accent; e.currentTarget.style.color = '#fff'; }}
-          onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = palette.accent; }}
-        >
-          {t.viewWork} <span style={{ fontSize: 13 }}>↗</span>
-        </a>
       </div>
     </section>
   );
@@ -496,7 +470,7 @@ function App() {
   return (
     <div style={{ width: '100%' }}>
       <Header fonts={FONTS} palette={PALETTE} lang={lang} setLang={setLang} />
-      {/* RolesSection removida temporariamente — re-adicionar quando tiver portfolio de Colorist */}
+      <RolesSection fonts={FONTS} palette={PALETTE} />
       <BioSection fonts={FONTS} palette={PALETTE} lang={lang} />
       <ContactSection fonts={FONTS} palette={PALETTE} lang={lang} />
       <Footer fonts={FONTS} palette={PALETTE} lang={lang} />
