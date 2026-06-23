@@ -79,10 +79,15 @@ const HERO_STREAM_ID = '';
 // Último vídeo = índice 0 de videos.js — alimenta o mini-card da hero.
 const LATEST_VIDEO = window.VIDEOS[0];
 
-// Helper — monta a URL do iframe do Cloudflare Stream
+// Helper — URL do iframe do Cloudflare Stream (hero / player)
 function streamUrl(id) {
   const params = 'autoplay=true&muted=true&loop=true&controls=false&preload=auto';
   return `https://${CF_CUSTOMER_CODE}.cloudflarestream.com/${id}/iframe?${params}`;
+}
+
+// Helper — thumbnail estático do Cloudflare Stream (usado nos cards do grid)
+function thumbUrl(id) {
+  return `https://${CF_CUSTOMER_CODE}.cloudflarestream.com/${id}/thumbnails/thumbnail.jpg`;
 }
 
 const COLS = 3;
@@ -90,9 +95,10 @@ const ROWS = 2;
 const LABEL_TO_GRID = 24;
 const GRID_GAP = 24;
 
-// Card — flex column. Quando fill=true preenche o container (usado no grid 3×2);
-// caso contrário usa aspectRatio 16:9.
+// Card — exibe thumbnail estático (mais leve no grid).
+// fill=true → preenche o container; false → usa aspectRatio 16:9.
 function Card({ data, fonts, palette, fill }) {
+  const hasMedia = data.streamId || data.videoSrc || data.imageSrc;
   return (
     <div style={{
       width: '100%',
@@ -110,11 +116,10 @@ function Card({ data, fonts, palette, fill }) {
         border: `1px solid ${palette.fg}1a`,
       }}>
         {data.streamId ? (
-          <iframe
-            src={streamUrl(data.streamId)}
-            allow="autoplay; encrypted-media; picture-in-picture"
-            allowFullScreen
-            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', border: 'none' }}
+          <img
+            src={thumbUrl(data.streamId)}
+            alt={data.title}
+            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
           />
         ) : data.videoSrc ? (
           <video src={data.videoSrc} autoPlay muted loop playsInline
@@ -173,21 +178,51 @@ function App() {
 
   return (
     <div style={{ width: '100%' }}>
-      {/* Hero — 100vh.
-          Se HERO_STREAM_ID estiver preenchido, usa Cloudflare Stream; senão usa videoSrc local. */}
-      <div style={{ width: '100%', height: '100vh' }}>
-        <window.HeroShowreel
-          palette={PALETTE} fonts={FONTS} intensity={1}
-          streamSrc={HERO_STREAM_ID ? streamUrl(HERO_STREAM_ID) : ''}
-          videoSrc="./reel.mp4"
-          heroTitle={LATEST_VIDEO.title}
-          heroDuration={LATEST_VIDEO.duration}
-          heroHref="./video.html"
-          heroThumbStream={LATEST_VIDEO.streamId ? streamUrl(LATEST_VIDEO.streamId) : ''}
-          colorSrc="" bwSrc=""
-          lang={lang} setLang={setLang}
-        />
-      </div>
+      {/* Hero — desktop: 100vh full-bleed. Mobile: nome pequeno + vídeo 16:9. */}
+      {isMobile ? (
+        <section style={{ paddingTop: 64, borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+          {/* Nome + label compactos */}
+          <div style={{ padding: '20px 20px 14px' }}>
+            <div style={{
+              fontFamily: FONTS.mono, fontSize: 10, letterSpacing: '0.3em',
+              textTransform: 'uppercase', color: PALETTE.muted, marginBottom: 8,
+            }}>
+              {T.reel.heroLabel}
+            </div>
+            <h1 style={{
+              fontFamily: FONTS.display, fontSize: 28, fontWeight: 300,
+              letterSpacing: '-0.03em', lineHeight: 1, margin: 0,
+            }}>
+              Jotap <em style={{ fontStyle: 'italic', color: PALETTE.accent }}>Films</em>
+            </h1>
+          </div>
+          {/* Vídeo 16:9 */}
+          <div style={{ position: 'relative', width: '100%', aspectRatio: '16 / 9', background: '#000' }}>
+            {HERO_STREAM_ID ? (
+              <iframe src={streamUrl(HERO_STREAM_ID)}
+                allow="autoplay; encrypted-media; picture-in-picture"
+                style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', border: 'none' }} />
+            ) : (
+              <video src="./reel.mp4" autoPlay muted loop playsInline
+                style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
+            )}
+          </div>
+        </section>
+      ) : (
+        <div style={{ width: '100%', height: '100vh' }}>
+          <window.HeroShowreel
+            palette={PALETTE} fonts={FONTS} intensity={1}
+            streamSrc={HERO_STREAM_ID ? streamUrl(HERO_STREAM_ID) : ''}
+            videoSrc="./reel.mp4"
+            heroTitle={LATEST_VIDEO.title}
+            heroDuration={LATEST_VIDEO.duration}
+            heroHref="./video.html"
+            heroThumbStream={LATEST_VIDEO.streamId ? streamUrl(LATEST_VIDEO.streamId) : ''}
+            colorSrc="" bwSrc=""
+            lang={lang} setLang={setLang}
+          />
+        </div>
+      )}
 
       {/* Selected Works — 100vh com 6 cards num grid 3×2, já no lugar (sem animação) */}
       <section id="selected" style={{
