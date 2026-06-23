@@ -178,6 +178,30 @@ function App() {
 
   return (
     <div style={{ width: '100%' }}>
+      {/* Header fixo — só no mobile (no desktop o header vem de dentro do HeroShowreel) */}
+      {isMobile && (
+        <div style={{
+          position: 'fixed', top: 0, left: 0, right: 0, zIndex: 20,
+          padding: '20px 20px',
+          display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+          fontFamily: FONTS.mono, fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase',
+          color: '#fff', mixBlendMode: 'difference',
+        }}>
+          <a href="./index.html" style={{
+            fontFamily: FONTS.display, fontSize: 16, letterSpacing: '-0.02em',
+            textTransform: 'none', fontStyle: 'italic', color: '#fff', textDecoration: 'none',
+          }}>Jotap Films</a>
+
+          <div style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)', display: 'flex', alignItems: 'center', gap: 10 }}>
+            <span onClick={() => setLang('en')} style={{ cursor: 'pointer', color: lang === 'en' ? PALETTE.accent : 'inherit', opacity: lang === 'en' ? 1 : 0.55, transition: 'opacity 0.2s, color 0.2s' }}>EN</span>
+            <span style={{ opacity: 0.4 }}>·</span>
+            <span onClick={() => setLang('pt')} style={{ cursor: 'pointer', color: lang === 'pt' ? PALETTE.accent : 'inherit', opacity: lang === 'pt' ? 1 : 0.55, transition: 'opacity 0.2s, color 0.2s' }}>PT</span>
+          </div>
+
+          <a href="./index.html" style={{ color: 'inherit', textDecoration: 'none' }}>{T.nav.about}</a>
+        </div>
+      )}
+
       {/* Hero — desktop: 100vh full-bleed. Mobile: nome pequeno + vídeo 16:9. */}
       {isMobile ? (
         <section style={{ paddingTop: 64, borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
