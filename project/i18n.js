@@ -27,7 +27,7 @@ window.I18N = {
       smallLabel: 'Entre em contato',
       headingA: 'Vamos',
       headingB: 'conversar',
-      openFor: 'Aberto para Q3 / Q4 — 2026',
+      openFor: 'Disponível para novos projetos',
     },
 
     // ── Links de voltar ──
@@ -61,7 +61,7 @@ window.I18N = {
     // ── Reel (reel.html / v1-showreel) ──
     reel: {
       heroLabel:       '[001] — Editor / Reel 2026',
-      heroDescription: 'Construindo histórias cinematográficas para marcas, artistas e o que está entre eles. Disponível para comissões Q3–Q4 2026.',
+      heroDescription: 'Construindo histórias cinematográficas para marcas, artistas e o que está entre eles. Disponível para novos projetos.',
       scroll:          'Rolar',
       latestWork:      '↗ Último trabalho',
       selectedWorks:   '01 — Trabalhos selecionados',
@@ -111,7 +111,7 @@ window.I18N = {
       smallLabel: 'Get in touch',
       headingA:   "Let's",
       headingB:   'talk',
-      openFor:    'Open for Q3 / Q4 — 2026',
+      openFor:    'Available for new projects',
     },
 
     backToReel:  '← Back to reel',
@@ -141,7 +141,7 @@ window.I18N = {
 
     reel: {
       heroLabel:       '[001] — Filmmaker & Editor / Reel 2026',
-      heroDescription: 'Crafting cinematic stories for brands, artists, and the in-between. Available for commissions Q3–Q4 2026.',
+      heroDescription: 'Crafting cinematic stories for brands, artists, and the in-between. Available for new projects.',
       scroll:          'Scroll',
       latestWork:      '↗ Latest work',
       selectedWorks:   '01 — Selected works',
