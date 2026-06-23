@@ -7,7 +7,15 @@ function HeroShowreel({ palette, fonts, intensity, colorSrc, bwSrc, videoSrc, st
   const T = (window.I18N && window.I18N[lang]) || { nav: { color: 'COLOR', about: 'ABOUT', contact: 'CONTACT' }, reel: { heroLabel: '[001] — Filmmaker & Editor / Reel 2026', heroDescription: '', scroll: 'Scroll', latestWork: '↗ Latest work' } };
   const [mouse, setMouse] = useState({ x: 0.5, y: 0.5 });
   const [thumbHover, setThumbHover] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const rootRef = useRef(null);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
 
   useEffect(() => {
     const el = rootRef.current;
@@ -96,7 +104,7 @@ function HeroShowreel({ palette, fonts, intensity, colorSrc, bwSrc, videoSrc, st
           top: 0,
           left: 0,
           right: 0,
-          padding: '28px 40px',
+          padding: isMobile ? '20px 20px' : '28px 40px',
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
@@ -122,9 +130,11 @@ function HeroShowreel({ palette, fonts, intensity, colorSrc, bwSrc, videoSrc, st
           <span onClick={() => setLang && setLang('pt')} style={{ cursor: 'pointer', color: lang === 'pt' ? palette.accent : 'inherit', opacity: lang === 'pt' ? 1 : 0.55, transition: 'opacity 0.2s, color 0.2s' }}>PT</span>
         </div>
 
-        <div style={{ display: 'flex', gap: 32 }}>
+        <div style={{ display: 'flex', gap: isMobile ? 20 : 32 }}>
           <a href="./index.html" style={{ color: 'inherit', textDecoration: 'none', cursor: 'pointer' }}>{(T.nav.about || 'ABOUT').toUpperCase()}</a>
-          <a href="https://mail.google.com/mail/?view=cm&fs=1&to=jotapfilms@gmail.com" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'none', cursor: 'pointer' }}>{(T.nav.contact || 'CONTACT').toUpperCase()}</a>
+          {!isMobile && (
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=jotapfilms@gmail.com" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'none', cursor: 'pointer' }}>{(T.nav.contact || 'CONTACT').toUpperCase()}</a>
+          )}
         </div>
       </div>
 
@@ -136,7 +146,7 @@ function HeroShowreel({ palette, fonts, intensity, colorSrc, bwSrc, videoSrc, st
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
-          padding: '0 40px',
+          padding: isMobile ? '0 20px' : '0 40px',
           zIndex: 5,
         }}
       >
@@ -147,7 +157,7 @@ function HeroShowreel({ palette, fonts, intensity, colorSrc, bwSrc, videoSrc, st
             letterSpacing: '0.3em',
             textTransform: 'uppercase',
             color: palette.muted,
-            marginBottom: 24,
+            marginBottom: 20,
           }}
         >
           {T.reel.heroLabel}
@@ -156,7 +166,7 @@ function HeroShowreel({ palette, fonts, intensity, colorSrc, bwSrc, videoSrc, st
         <h1
           style={{
             fontFamily: fonts.display,
-            fontSize: 'clamp(72px, 14vw, 240px)',
+            fontSize: isMobile ? 'clamp(56px, 18vw, 100px)' : 'clamp(72px, 14vw, 240px)',
             lineHeight: 0.85,
             margin: 0,
             fontWeight: 400,
@@ -171,7 +181,7 @@ function HeroShowreel({ palette, fonts, intensity, colorSrc, bwSrc, videoSrc, st
               fontStyle: 'italic',
               fontWeight: 300,
               color: palette.accent,
-              transform: `translateX(${(mouse.x - 0.5) * 30 * inten}px)`,
+              transform: isMobile ? 'none' : `translateX(${(mouse.x - 0.5) * 30 * inten}px)`,
               transition: 'transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1)',
             }}
           >
@@ -179,21 +189,23 @@ function HeroShowreel({ palette, fonts, intensity, colorSrc, bwSrc, videoSrc, st
           </span>
         </h1>
 
-        <div
-          style={{
-            marginTop: 40,
-            display: 'flex',
-            gap: 80,
-            fontFamily: fonts.sans,
-            fontSize: 13,
-            color: palette.muted,
-            maxWidth: 720,
-          }}
-        >
-          <div style={{ flex: 1, lineHeight: 1.6 }}>
-            {T.reel.heroDescription}
+        {!isMobile && (
+          <div
+            style={{
+              marginTop: 40,
+              display: 'flex',
+              gap: 80,
+              fontFamily: fonts.sans,
+              fontSize: 13,
+              color: palette.muted,
+              maxWidth: 720,
+            }}
+          >
+            <div style={{ flex: 1, lineHeight: 1.6 }}>
+              {T.reel.heroDescription}
+            </div>
           </div>
-        </div>
+        )}
       </div>
 
 
@@ -218,8 +230,8 @@ function HeroShowreel({ palette, fonts, intensity, colorSrc, bwSrc, videoSrc, st
         <div style={{ width: 1, height: 60, background: `linear-gradient(${palette.muted}, transparent)`, animation: 'jp-scroll 2.2s ease-in-out infinite' }} />
       </div>
 
-      {/* Mini-vídeo clicável — sempre o último trabalho. Leva pra página do vídeo. */}
-      {(heroTitle || heroThumbStream) && (
+      {/* Mini-vídeo clicável — só no desktop. No mobile ocupa espaço demais. */}
+      {!isMobile && (heroTitle || heroThumbStream) && (
         <a
           href={heroHref || './video.html'}
           onMouseEnter={() => setThumbHover(true)}
