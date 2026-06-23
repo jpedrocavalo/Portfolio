@@ -40,7 +40,8 @@ window.I18N = {
       bioHeadingA: 'Finding',
       bioHeadingB: 'the cut',
       paragraphs: [
-        'Comecei querendo um canal no YouTube. Passei pelos highlights de Fortnite — frame a frame, sem manual, só tentativa. A edição entrou como brincadeira e ficou como linguagem.',
+        'Comecei querendo um canal no YouTube — tinha menos de dez anos e já montava vídeos no celular sem saber o nome do que fazia. Passei pelos highlights de Fortnite, frame a frame, sem manual, só tentativa. A edição entrou como brincadeira e ficou como linguagem.',
+        'Por muito tempo deixei o audiovisual de lado. Outras prioridades, outros caminhos. Mas ele nunca foi embora de verdade — ficou em segundo plano, esperando.',
         'Hoje sou editor freelancer. A escala mudou, a obsessão não — cor, ritmo, o momento exato em que o corte respira certo.',
         'Mais do que técnica, é criação. A pergunta que guia cada projeto não é "como fica bonito?" — é "o que fica quando a imagem some?"',
       ],
@@ -121,7 +122,8 @@ window.I18N = {
       bioHeadingA: 'Finding',
       bioHeadingB: 'the cut',
       paragraphs: [
-        "I started with a dream of a YouTube channel. Then came the Fortnite highlight edits — frame by frame, no manual, just trial. Editing came in as play and stayed as language.",
+        "It started with a dream of a YouTube channel — I was under ten, already cutting videos on my phone without knowing what it was called. Then came the Fortnite highlight edits, frame by frame, no manual, just trial. Editing came in as play and stayed as language.",
+        "For a long time I set it aside. Other priorities, other paths. But it never really left — it stayed in the background, waiting.",
         "Today I work as a freelance editor. The scale changed, the obsession didn't — color, rhythm, the exact moment a cut breathes right.",
         'More than technique, it\'s creation. The question driving each project isn\'t "how does it look?" — it\'s "what stays when the image fades?"',
       ],
