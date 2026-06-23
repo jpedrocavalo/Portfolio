@@ -178,75 +178,79 @@ function App() {
 
   return (
     <div style={{ width: '100%' }}>
-      {/* Header fixo — só no mobile (no desktop o header vem de dentro do HeroShowreel) */}
-      {isMobile && (
-        <div style={{
-          position: 'fixed', top: 0, left: 0, right: 0, zIndex: 20,
-          padding: '20px 20px',
-          display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-          fontFamily: FONTS.mono, fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase',
-          color: '#fff', mixBlendMode: 'difference',
-        }}>
-          <a href="./index.html" style={{
-            fontFamily: FONTS.display, fontSize: 16, letterSpacing: '-0.02em',
-            textTransform: 'none', fontStyle: 'italic', color: '#fff', textDecoration: 'none',
-          }}>Jotap Films</a>
 
-          <div style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)', display: 'flex', alignItems: 'center', gap: 10 }}>
-            <span onClick={() => setLang('en')} style={{ cursor: 'pointer', color: lang === 'en' ? PALETTE.accent : 'inherit', opacity: lang === 'en' ? 1 : 0.55, transition: 'opacity 0.2s, color 0.2s' }}>EN</span>
-            <span style={{ opacity: 0.4 }}>·</span>
-            <span onClick={() => setLang('pt')} style={{ cursor: 'pointer', color: lang === 'pt' ? PALETTE.accent : 'inherit', opacity: lang === 'pt' ? 1 : 0.55, transition: 'opacity 0.2s, color 0.2s' }}>PT</span>
-          </div>
+      {/* Header fixo — desktop e mobile */}
+      <div style={{
+        position: 'fixed', top: 0, left: 0, right: 0, zIndex: 20,
+        padding: isMobile ? '20px 20px' : '28px 40px',
+        display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+        fontFamily: FONTS.mono, fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase',
+        color: '#fff', mixBlendMode: 'difference',
+      }}>
+        <a href="./index.html" style={{
+          fontFamily: FONTS.display, fontSize: 16, letterSpacing: '-0.02em',
+          textTransform: 'none', fontStyle: 'italic', color: '#fff', textDecoration: 'none',
+        }}>Jotap Films</a>
 
+        <div style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)', display: 'flex', alignItems: 'center', gap: 10 }}>
+          <span onClick={() => setLang('en')} style={{ cursor: 'pointer', color: lang === 'en' ? PALETTE.accent : 'inherit', opacity: lang === 'en' ? 1 : 0.55, transition: 'opacity 0.2s, color 0.2s' }}>EN</span>
+          <span style={{ opacity: 0.4 }}>·</span>
+          <span onClick={() => setLang('pt')} style={{ cursor: 'pointer', color: lang === 'pt' ? PALETTE.accent : 'inherit', opacity: lang === 'pt' ? 1 : 0.55, transition: 'opacity 0.2s, color 0.2s' }}>PT</span>
+        </div>
+
+        <div style={{ display: 'flex', gap: isMobile ? 20 : 32 }}>
           <a href="./index.html" style={{ color: 'inherit', textDecoration: 'none' }}>{T.nav.about}</a>
+          {!isMobile && (
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=jotapfilms@gmail.com"
+              target="_blank" rel="noopener noreferrer"
+              style={{ color: 'inherit', textDecoration: 'none' }}>{T.nav.contact}
+            </a>
+          )}
         </div>
-      )}
+      </div>
 
-      {/* Hero — desktop: 100vh full-bleed. Mobile: nome pequeno + vídeo 16:9. */}
-      {isMobile ? (
-        <section style={{ paddingTop: 64, borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
-          {/* Nome + label compactos */}
-          <div style={{ padding: '20px 20px 14px' }}>
-            <div style={{
-              fontFamily: FONTS.mono, fontSize: 10, letterSpacing: '0.3em',
-              textTransform: 'uppercase', color: PALETTE.muted, marginBottom: 8,
-            }}>
-              {T.reel.heroLabel}
-            </div>
-            <h1 style={{
-              fontFamily: FONTS.display, fontSize: 28, fontWeight: 300,
-              letterSpacing: '-0.03em', lineHeight: 1, margin: 0,
-            }}>
-              Jotap <em style={{ fontStyle: 'italic', color: PALETTE.accent }}>Films</em>
-            </h1>
-          </div>
-          {/* Vídeo 16:9 */}
-          <div style={{ position: 'relative', width: '100%', aspectRatio: '16 / 9', background: '#000' }}>
-            {HERO_STREAM_ID ? (
-              <iframe src={streamUrl(HERO_STREAM_ID)}
-                allow="autoplay; encrypted-media; picture-in-picture"
-                style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', border: 'none' }} />
-            ) : (
-              <video src="./reel.mp4" autoPlay muted loop playsInline
-                style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
-            )}
-          </div>
-        </section>
-      ) : (
-        <div style={{ width: '100%', height: '100vh' }}>
-          <window.HeroShowreel
-            palette={PALETTE} fonts={FONTS} intensity={1}
-            streamSrc={HERO_STREAM_ID ? streamUrl(HERO_STREAM_ID) : ''}
-            videoSrc="./reel.mp4"
-            heroTitle={LATEST_VIDEO.title}
-            heroDuration={LATEST_VIDEO.duration}
-            heroHref="./video.html"
-            heroThumbStream={LATEST_VIDEO.streamId ? streamUrl(LATEST_VIDEO.streamId) : ''}
-            colorSrc="" bwSrc=""
-            lang={lang} setLang={setLang}
-          />
+      {/* Hero — gancho de texto, sem vídeo */}
+      <section style={{
+        minHeight: isMobile ? '55vh' : '65vh',
+        padding: isMobile ? '100px 20px 48px' : '160px 40px 64px',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'flex-end',
+        borderBottom: '1px solid rgba(255,255,255,0.06)',
+      }}>
+        <div style={{
+          fontFamily: FONTS.mono, fontSize: 11, letterSpacing: '0.3em',
+          textTransform: 'uppercase', color: PALETTE.muted, marginBottom: 20,
+        }}>
+          {T.reel.heroLabel}
         </div>
-      )}
+        <h1 style={{
+          fontFamily: FONTS.display,
+          fontSize: isMobile ? 'clamp(52px, 16vw, 80px)' : 'clamp(80px, 12vw, 180px)',
+          fontWeight: 300, lineHeight: 0.9, letterSpacing: '-0.04em', margin: 0,
+        }}>
+          Jotap<br />
+          <em style={{ fontStyle: 'italic', color: PALETTE.accent }}>Films.</em>
+        </h1>
+        <div style={{
+          marginTop: isMobile ? 28 : 40,
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16,
+        }}>
+          <p style={{
+            fontFamily: FONTS.sans, fontSize: isMobile ? 13 : 15, lineHeight: 1.6,
+            color: 'rgba(245,241,232,0.6)', margin: 0, maxWidth: 480,
+          }}>
+            {T.reel.heroDescription}
+          </p>
+          <a href="#selected" style={{
+            fontFamily: FONTS.mono, fontSize: 11, letterSpacing: '0.3em',
+            textTransform: 'uppercase', color: PALETTE.accent, textDecoration: 'none',
+            display: 'flex', alignItems: 'center', gap: 8, flexShrink: 0,
+          }}>
+            {T.reel.selectedWorks} ↓
+          </a>
+        </div>
+      </section>
 
       {/* Selected Works — 100vh com 6 cards num grid 3×2, já no lugar (sem animação) */}
       <section id="selected" style={{
