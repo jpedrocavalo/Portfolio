@@ -275,13 +275,14 @@ function App() {
           </a>
         </div>
         <div style={{
-          flex: 1,
+          flex: isMobile ? 'none' : 1,
           marginTop: LABEL_TO_GRID,
           display: 'grid',
-          // Mobile: 2 colunas, 2 fileiras (4 cards). Desktop: 3×2.
+          // Mobile: 2 colunas, cards com aspecto 16:9 natural (fill=false).
+          // Desktop: 3×2, fill=true preenche a altura da seção.
           gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : `repeat(${COLS}, 1fr)`,
-          gridTemplateRows:    isMobile ? 'repeat(2, 1fr)' : `repeat(${ROWS}, 1fr)`,
-          gap: GRID_GAP,
+          gridTemplateRows:    isMobile ? 'auto' : `repeat(${ROWS}, 1fr)`,
+          gap: isMobile ? 12 : GRID_GAP,
         }}>
           {featuredItems.map((data, i) => (
             data.href ? (
@@ -292,10 +293,10 @@ function App() {
                 color: 'inherit',
                 cursor: 'pointer',
               }}>
-                <Card data={data} fonts={FONTS} palette={PALETTE} fill />
+                <Card data={data} fonts={FONTS} palette={PALETTE} fill={!isMobile} />
               </a>
             ) : (
-              <Card key={i} data={data} fonts={FONTS} palette={PALETTE} fill />
+              <Card key={i} data={data} fonts={FONTS} palette={PALETTE} fill={!isMobile} />
             )
           ))}
         </div>
