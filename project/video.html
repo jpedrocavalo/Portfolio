@@ -52,12 +52,24 @@ function streamPlayerUrl(id) {
   return `https://${CF_CUSTOMER_CODE}.cloudflarestream.com/${id}/iframe?controls=true&preload=auto`;
 }
 
+function useIsMobile() {
+  const [isMobile, setIsMobile] = React.useState(false);
+  React.useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
+  return isMobile;
+}
+
 function Header({ fonts, palette, lang, setLang }) {
+  const isMobile = useIsMobile();
   const N = window.I18N[lang].nav;
   return (
     <div style={{
       position: 'fixed', top: 0, left: 0, right: 0,
-      padding: '28px 40px',
+      padding: isMobile ? '20px 20px' : '28px 40px',
       display: 'flex', justifyContent: 'space-between', alignItems: 'center',
       fontFamily: fonts.mono, fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase',
       color: '#fff',
@@ -76,13 +88,15 @@ function Header({ fonts, palette, lang, setLang }) {
         <span onClick={() => setLang('pt')} style={{ cursor: 'pointer', color: lang === 'pt' ? palette.accent : 'inherit', opacity: lang === 'pt' ? 1 : 0.55, transition: 'opacity 0.2s, color 0.2s' }}>PT</span>
       </div>
 
-      <div style={{ display: 'flex', gap: 32 }}>
+      <div style={{ display: 'flex', gap: isMobile ? 20 : 32 }}>
         <a href="./reel.html" style={{ color: 'inherit', textDecoration: 'none' }}>{N.reel}</a>
-        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=jotapfilms@gmail.com"
-          target="_blank" rel="noopener noreferrer"
-          style={{ color: 'inherit', textDecoration: 'none' }}>
-          {N.contact}
-        </a>
+        {!isMobile && (
+          <a href="https://mail.google.com/mail/?view=cm&fs=1&to=jotapfilms@gmail.com"
+            target="_blank" rel="noopener noreferrer"
+            style={{ color: 'inherit', textDecoration: 'none' }}>
+            {N.contact}
+          </a>
+        )}
       </div>
     </div>
   );
@@ -90,6 +104,7 @@ function Header({ fonts, palette, lang, setLang }) {
 
 function App() {
   const v = VIDEO;
+  const isMobile = useIsMobile();
   const [lang, setLangState] = React.useState(window.getInitialLang());
   const setLang = (next) => { setLangState(next); window.persistLang(next); };
   const T = window.I18N[lang];
@@ -99,7 +114,7 @@ function App() {
 
       <section style={{
         minHeight: '100vh',
-        padding: '140px 40px 80px',
+        padding: isMobile ? '100px 20px 60px' : '140px 40px 80px',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -162,13 +177,13 @@ function App() {
 
         {/* Info do vídeo */}
         <div style={{
-          width: '100%', maxWidth: 1100, marginTop: 40,
-          display: 'flex', flexDirection: 'column', gap: 24,
+          width: '100%', maxWidth: 1100, marginTop: isMobile ? 24 : 40,
+          display: 'flex', flexDirection: 'column', gap: 20,
         }}>
-          <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16 }}>
+          <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12 }}>
             <h1 style={{
               fontFamily: FONTS.display,
-              fontSize: 'clamp(40px, 6vw, 88px)',
+              fontSize: isMobile ? 'clamp(32px, 9vw, 56px)' : 'clamp(40px, 6vw, 88px)',
               fontWeight: 300, fontStyle: 'italic',
               letterSpacing: '-0.03em', lineHeight: 1, margin: 0,
             }}>
@@ -183,18 +198,19 @@ function App() {
           </div>
 
           <p style={{
-            fontFamily: FONTS.sans, fontSize: 16, lineHeight: 1.7,
+            fontFamily: FONTS.sans, fontSize: isMobile ? 15 : 16, lineHeight: 1.7,
             color: 'rgba(245,241,232,0.78)', maxWidth: 640, margin: 0,
           }}>
             {v.description}
           </p>
 
-          <a href="./reel.html" style={{
+          {/* Botão voltar → works.html (mesma página do "Ver tudo") */}
+          <a href="./works.html" style={{
             fontFamily: FONTS.mono, fontSize: 11, letterSpacing: '0.3em',
             textTransform: 'uppercase', color: PALETTE.accent,
             textDecoration: 'none', marginTop: 8,
           }}>
-            {T.backToReel}
+            ← {T.works.allWorks}
           </a>
         </div>
       </section>

@@ -169,7 +169,7 @@ function App() {
   }, []);
 
   // No mobile: só os 3 primeiros vídeos. No desktop: tudo (5 vídeos + Short-form).
-  const featuredItems = isMobile ? FEATURED.slice(0, 3) : FEATURED;
+  const featuredItems = isMobile ? FEATURED.slice(0, 4) : FEATURED;
 
   return (
     <div style={{ width: '100%' }}>
@@ -218,10 +218,9 @@ function App() {
           flex: 1,
           marginTop: LABEL_TO_GRID,
           display: 'grid',
-          // Mobile: 1 coluna, 3 fileiras (cards full-width, empilhados).
-          // Desktop: 3 colunas, 2 fileiras (grid 3×2 como antes).
-          gridTemplateColumns: isMobile ? '1fr' : `repeat(${COLS}, 1fr)`,
-          gridTemplateRows:    isMobile ? 'repeat(3, 1fr)' : `repeat(${ROWS}, 1fr)`,
+          // Mobile: 2 colunas, 2 fileiras (4 cards). Desktop: 3×2.
+          gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : `repeat(${COLS}, 1fr)`,
+          gridTemplateRows:    isMobile ? 'repeat(2, 1fr)' : `repeat(${ROWS}, 1fr)`,
           gap: GRID_GAP,
         }}>
           {featuredItems.map((data, i) => (
