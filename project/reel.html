@@ -209,13 +209,15 @@ function App() {
         </div>
       </div>
 
-      {/* Hero — gancho de texto, sem vídeo */}
+      {/* Hero — gancho de texto, sem vídeo, centralizado */}
       <section style={{
         minHeight: isMobile ? '55vh' : '65vh',
         padding: isMobile ? '100px 20px 48px' : '160px 40px 64px',
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'flex-end',
+        justifyContent: 'center',
+        alignItems: 'center',
+        textAlign: 'center',
         borderBottom: '1px solid rgba(255,255,255,0.06)',
       }}>
         <div style={{
@@ -232,24 +234,19 @@ function App() {
           Jotap<br />
           <em style={{ fontStyle: 'italic', color: PALETTE.accent }}>Films.</em>
         </h1>
-        <div style={{
-          marginTop: isMobile ? 28 : 40,
-          display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16,
+        <p style={{
+          fontFamily: FONTS.sans, fontSize: isMobile ? 13 : 15, lineHeight: 1.6,
+          color: 'rgba(245,241,232,0.6)', margin: '28px 0 0', maxWidth: 480,
         }}>
-          <p style={{
-            fontFamily: FONTS.sans, fontSize: isMobile ? 13 : 15, lineHeight: 1.6,
-            color: 'rgba(245,241,232,0.6)', margin: 0, maxWidth: 480,
-          }}>
-            {T.reel.heroDescription}
-          </p>
-          <a href="#selected" style={{
-            fontFamily: FONTS.mono, fontSize: 11, letterSpacing: '0.3em',
-            textTransform: 'uppercase', color: PALETTE.accent, textDecoration: 'none',
-            display: 'flex', alignItems: 'center', gap: 8, flexShrink: 0,
-          }}>
-            {T.reel.selectedWorks} ↓
-          </a>
-        </div>
+          {T.reel.heroDescription}
+        </p>
+        <a href="#selected" style={{
+          marginTop: isMobile ? 28 : 36,
+          fontFamily: FONTS.mono, fontSize: 11, letterSpacing: '0.3em',
+          textTransform: 'uppercase', color: PALETTE.accent, textDecoration: 'none',
+        }}>
+          {T.reel.selectedWorks} ↓
+        </a>
       </section>
 
       {/* Selected Works — 100vh com 6 cards num grid 3×2, já no lugar (sem animação) */}
