@@ -255,41 +255,6 @@ function App() {
         )}
       </section>
 
-      {/* Mobile: "tela" da capa do Short-form abaixo do link, mesmo tamanho dos cards de vídeo.
-          Pra adicionar a capa: troque o conteúdo do <a> por <img src="./sua-capa.jpg" /> */}
-      {isMobile && (
-        <div style={{ padding: '0 20px 20px' }}>
-          <a href="./short-form.html" style={{
-            display: 'block',
-            width: '100%',
-            aspectRatio: '16 / 9',
-            position: 'relative',
-            background: `linear-gradient(135deg, ${PALETTE.accent}22, ${PALETTE.fg}08)`,
-            border: `1px solid ${PALETTE.fg}1a`,
-            overflow: 'hidden',
-            textDecoration: 'none',
-          }}>
-            {/* Placeholder enquanto não tem capa — filmstrip + play (igual aos cards de vídeo) */}
-            <div style={{
-              position: 'absolute', inset: 0,
-              background: `repeating-linear-gradient(90deg, transparent, transparent 28px, ${PALETTE.fg}08 28px, ${PALETTE.fg}08 30px)`,
-            }} />
-            <div style={{
-              position: 'absolute', inset: '24% 35%',
-              border: `1px solid ${PALETTE.accent}`,
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-            }}>
-              <div style={{
-                width: 0, height: 0,
-                borderLeft: `14px solid ${PALETTE.accent}`,
-                borderTop: '9px solid transparent',
-                borderBottom: '9px solid transparent',
-                marginLeft: 4,
-              }} />
-            </div>
-          </a>
-        </div>
-      )}
 
       {/* Footer CTA — centralizado e branco */}
       <section id="contact" style={{
