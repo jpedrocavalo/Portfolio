@@ -17,7 +17,7 @@ window.VIDEOS = [
     year: '2025',
     category: 'Wedding film',
     youtubeId: 'uMAAN81NUl4',
-    description: 'Trabalho freelancer de edição para Frame Company. Direção, direção de fotografia e operação de câmera: Frame Company.',
+    description: 'Trabalho freelancer de edição para Frame Company.\nDireção, direção de fotografia e operação de câmera: Frame Company.',
   },
   {
     title: 'São Julião do Riachuelo Contact Center',
@@ -25,7 +25,7 @@ window.VIDEOS = [
     year: '2025',
     category: 'Commercial',
     youtubeId: 'KyalhB1Udh4',
-    description: 'Trabalho freelancer de edição para Frame Company. Direção, direção de fotografia e operação de câmera: Frame Company.',
+    description: 'Trabalho freelancer de edição para Frame Company.\nDireção, direção de fotografia e operação de câmera: Frame Company.',
   },
   {
     title: 'Vento Norte — clip',
