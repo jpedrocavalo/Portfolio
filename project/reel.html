@@ -30,6 +30,7 @@
 
 <script type="text/babel" src="heroes/color-reveal-bg.jsx"></script>
 <script type="text/babel" src="heroes/v1-showreel.jsx"></script>
+<script type="text/babel" src="contact-modal.jsx"></script>
 
 <script type="text/babel">
 const PALETTE = { bg: '#0a0a0a', fg: '#f5f1e8', muted: '#8a8580', accent: '#7a00d8' };
@@ -158,6 +159,8 @@ function App() {
   const [lang, setLangState] = React.useState(window.getInitialLang());
   const setLang = (next) => { setLangState(next); window.persistLang(next); };
   const T = window.I18N[lang];
+  const [contactOpen, setContactOpen] = React.useState(false);
+  const ContactModal = window.ContactModal;
 
   // Detecta mobile pra ajustar o grid de Selected Works
   const [isMobile, setIsMobile] = React.useState(false);
@@ -173,6 +176,7 @@ function App() {
 
   return (
     <div style={{ width: '100%' }}>
+      {ContactModal && <ContactModal open={contactOpen} onClose={() => setContactOpen(false)} lang={lang} />}
 
       {/* Header fixo — desktop e mobile */}
       <div style={{
@@ -196,10 +200,7 @@ function App() {
         <div style={{ display: 'flex', gap: isMobile ? 20 : 32 }}>
           <a href="./index.html" style={{ color: 'inherit', textDecoration: 'none' }}>{T.nav.about}</a>
           {!isMobile && (
-            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=jotapfilms@gmail.com"
-              target="_blank" rel="noopener noreferrer"
-              style={{ color: 'inherit', textDecoration: 'none' }}>{T.nav.contact}
-            </a>
+            <span onClick={() => setContactOpen(true)} style={{ cursor: 'pointer' }}>{T.nav.contact}</span>
           )}
         </div>
       </div>

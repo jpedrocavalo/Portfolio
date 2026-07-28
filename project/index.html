@@ -27,6 +27,7 @@
 
 <!-- Traduções compartilhadas (script normal, roda antes do Babel) -->
 <script src="i18n.js"></script>
+<script type="text/babel" src="contact-modal.jsx"></script>
 
 <script type="text/babel">
 const PALETTE = { bg: '#0a0a0a', fg: '#f5f1e8', muted: '#8a8580', accent: '#7a00d8' };
@@ -70,7 +71,7 @@ function useIsMobile() {
   return isMobile;
 }
 
-function Header({ fonts, palette, lang, setLang }) {
+function Header({ fonts, palette, lang, setLang, onContactOpen }) {
   const isMobile = useIsMobile();
 
   const tab = (code, label) => (
@@ -116,11 +117,7 @@ function Header({ fonts, palette, lang, setLang }) {
       <div style={{ display: 'flex', gap: isMobile ? 20 : 32 }}>
         <a href="./reel.html" style={{ color: 'inherit', textDecoration: 'none' }}>{window.I18N[lang].nav.reel}</a>
         {!isMobile && (
-          <a href="https://mail.google.com/mail/?view=cm&fs=1&to=jotapfilms@gmail.com"
-            target="_blank" rel="noopener noreferrer"
-            style={{ color: 'inherit', textDecoration: 'none' }}>
-            {window.I18N[lang].nav.contact}
-          </a>
+          <span onClick={onContactOpen} style={{ cursor: 'pointer' }}>{window.I18N[lang].nav.contact}</span>
         )}
       </div>
     </div>
@@ -520,13 +517,15 @@ function Footer({ fonts, palette, lang }) {
 }
 
 function App() {
-  // Idioma vem de i18n.js (window.getInitialLang/persistLang).
   const [lang, setLangState] = React.useState(window.getInitialLang());
   const setLang = (next) => { setLangState(next); window.persistLang(next); };
+  const [contactOpen, setContactOpen] = React.useState(false);
+  const ContactModal = window.ContactModal;
 
   return (
     <div style={{ width: '100%' }}>
-      <Header fonts={FONTS} palette={PALETTE} lang={lang} setLang={setLang} />
+      {ContactModal && <ContactModal open={contactOpen} onClose={() => setContactOpen(false)} lang={lang} />}
+      <Header fonts={FONTS} palette={PALETTE} lang={lang} setLang={setLang} onContactOpen={() => setContactOpen(true)} />
       {/* RolesSection removida temporariamente — re-adicionar quando tiver portfolio de Colorist */}
       <BioSection fonts={FONTS} palette={PALETTE} lang={lang} />
       <ContactSection fonts={FONTS} palette={PALETTE} lang={lang} />

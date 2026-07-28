@@ -28,6 +28,7 @@
 <!-- Traduções compartilhadas + lista de vídeos (scripts normais, antes do Babel) -->
 <script src="i18n.js"></script>
 <script src="videos.js"></script>
+<script type="text/babel" src="contact-modal.jsx"></script>
 
 <script type="text/babel">
 const PALETTE = { bg: '#0a0a0a', fg: '#f5f1e8', muted: '#8a8580', accent: '#7a00d8' };
@@ -61,7 +62,7 @@ function useIsMobile() {
   return isMobile;
 }
 
-function Header({ fonts, palette, lang, setLang }) {
+function Header({ fonts, palette, lang, setLang, onContactOpen }) {
   const isMobile = useIsMobile();
   const N = window.I18N[lang].nav;
   return (
@@ -89,11 +90,7 @@ function Header({ fonts, palette, lang, setLang }) {
       <div style={{ display: 'flex', gap: isMobile ? 20 : 32 }}>
         <a href="./reel.html" style={{ color: 'inherit', textDecoration: 'none' }}>{N.reel}</a>
         {!isMobile && (
-          <a href="https://mail.google.com/mail/?view=cm&fs=1&to=jotapfilms@gmail.com"
-            target="_blank" rel="noopener noreferrer"
-            style={{ color: 'inherit', textDecoration: 'none' }}>
-            {N.contact}
-          </a>
+          <span onClick={onContactOpen} style={{ cursor: 'pointer' }}>{N.contact}</span>
         )}
       </div>
     </div>
@@ -106,9 +103,12 @@ function App() {
   const [lang, setLangState] = React.useState(window.getInitialLang());
   const setLang = (next) => { setLangState(next); window.persistLang(next); };
   const T = window.I18N[lang];
+  const [contactOpen, setContactOpen] = React.useState(false);
+  const ContactModal = window.ContactModal;
   return (
     <div style={{ width: '100%' }}>
-      <Header fonts={FONTS} palette={PALETTE} lang={lang} setLang={setLang} />
+      {ContactModal && <ContactModal open={contactOpen} onClose={() => setContactOpen(false)} lang={lang} />}
+      <Header fonts={FONTS} palette={PALETTE} lang={lang} setLang={setLang} onContactOpen={() => setContactOpen(true)} />
 
       <section style={{
         minHeight: '100vh',
