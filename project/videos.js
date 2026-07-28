@@ -12,12 +12,12 @@
    ════════════════════════════════════════════════════════════════ */
 window.VIDEOS = [
   {
-    title: 'Aurora — short film',
-    duration: '04:32',
-    year: '2026',
-    category: 'Short film',
-    youtubeId: '',
-    description: 'Descrição do projeto — contexto, papel do Jotap, o que o trabalho representa. Edite este texto livremente.',
+    title: 'Casamento Guará & Graziele',
+    duration: '',
+    year: '2025',
+    category: 'Wedding film',
+    youtubeId: 'uMAAN81NUl4',
+    description: 'Trabalho freelancer de edição para Frame Company. Direção, direção de fotografia e operação de câmera: Frame Company.',
   },
   {
     title: 'Marés — commercial',
