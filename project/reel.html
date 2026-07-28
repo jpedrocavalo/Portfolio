@@ -333,15 +333,30 @@ function App() {
         }}>
           {T.contact.headingA} <em style={{ fontStyle: 'italic' }}>{T.contact.headingB}</em>.
         </h2>
-        <div style={{ marginTop: 36, display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: isMobile ? 16 : 32, alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ marginTop: 36, display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: 16, alignItems: 'center', justifyContent: 'center', flexWrap: 'wrap' }}>
+          <a href="https://wa.me/5584988370946"
+            target="_blank" rel="noopener noreferrer"
+            style={{
+              display: 'inline-flex', alignItems: 'center', gap: 12,
+              padding: isMobile ? '14px 20px' : '18px 28px',
+              border: '1px solid #fff', color: '#fff',
+              fontFamily: FONTS.mono, fontSize: isMobile ? 11 : 12, letterSpacing: '0.2em',
+              textTransform: 'uppercase', textDecoration: 'none',
+              transition: 'background 0.3s, color 0.3s',
+            }}
+            onMouseEnter={(e) => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.color = '#0a0a0a'; }}
+            onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = '#fff'; }}
+          >
+            WhatsApp <span>↗</span>
+          </a>
           <a href="https://mail.google.com/mail/?view=cm&fs=1&to=jotapfilms@gmail.com"
             target="_blank" rel="noopener noreferrer"
             style={{
               display: 'inline-flex', alignItems: 'center', gap: 12,
               padding: isMobile ? '14px 20px' : '18px 28px',
-              border: '1px solid #fff',
+              border: '1px solid rgba(255,255,255,0.35)',
               color: '#fff',
-              fontFamily: FONTS.mono, fontSize: isMobile ? 10 : 12, letterSpacing: '0.2em',
+              fontFamily: FONTS.mono, fontSize: isMobile ? 11 : 12, letterSpacing: '0.2em',
               textTransform: 'uppercase', textDecoration: 'none',
               transition: 'background 0.3s, color 0.3s',
             }}
@@ -350,9 +365,9 @@ function App() {
           >
             jotapfilms@gmail.com <span>↗</span>
           </a>
-          <div style={{ fontFamily: FONTS.mono, fontSize: 11, letterSpacing: '0.25em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.5)' }}>
-            {T.contact.openFor}
-          </div>
+        </div>
+        <div style={{ marginTop: 20, fontFamily: FONTS.mono, fontSize: 11, letterSpacing: '0.25em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.4)' }}>
+          {T.contact.openFor}
         </div>
       </section>
     </div>
