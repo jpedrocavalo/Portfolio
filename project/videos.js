@@ -28,12 +28,12 @@ window.VIDEOS = [
     description: 'Trabalho freelancer de edição para Frame Company.\nDireção, direção de fotografia e operação de câmera: Frame Company.',
   },
   {
-    title: 'Vento Norte — clip',
-    duration: '03:05',
+    title: 'Formatura da Gio',
+    duration: '',
     year: '2025',
-    category: 'Music video',
-    youtubeId: '',
-    description: 'Descrição do projeto. Edite livremente.',
+    category: 'Graduation film',
+    youtubeId: 'i2zMYQGhsQU',
+    description: 'Trabalho freelancer de edição para Frame Company.\nDireção, direção de fotografia e operação de câmera: Frame Company.',
   },
   {
     title: 'Solstício — documentary',
