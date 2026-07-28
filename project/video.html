@@ -37,19 +37,17 @@ const FONTS = {
   mono: '"JetBrains Mono", monospace',
 };
 
-const CF_CUSTOMER_CODE = 'customer-x1j6qmqmv38ltwyr';
-
 // Qual vídeo mostrar: lê ?v=<índice> da URL (vindo do grid da reel).
 // Sem parâmetro (ou inválido) → mostra o último vídeo (índice 0).
 const VIDEO_INDEX = parseInt(new URLSearchParams(location.search).get('v'), 10);
 const IS_LATEST = !Number.isInteger(VIDEO_INDEX) || VIDEO_INDEX === 0;
 const VIDEO = (window.VIDEOS && window.VIDEOS[VIDEO_INDEX])
   || (window.VIDEOS && window.VIDEOS[0])
-  || { title: 'Vídeo', duration: '', year: '', category: '', streamId: '', description: '' };
+  || { title: 'Vídeo', duration: '', year: '', category: '', youtubeId: '', description: '' };
 
-// URL do player do Cloudflare Stream — com controles (página de assistir)
-function streamPlayerUrl(id) {
-  return `https://${CF_CUSTOMER_CODE}.cloudflarestream.com/${id}/iframe?controls=true&preload=auto`;
+// URL do player do YouTube
+function youtubePlayerUrl(id) {
+  return `https://www.youtube.com/embed/${id}?rel=0&modestbranding=1`;
 }
 
 function useIsMobile() {
@@ -139,10 +137,10 @@ function App() {
           overflow: 'hidden',
           position: 'relative',
         }}>
-          {v.streamId ? (
+          {v.youtubeId ? (
             <iframe
-              src={streamPlayerUrl(v.streamId)}
-              allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+              src={youtubePlayerUrl(v.youtubeId)}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               allowFullScreen
               style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', border: 'none' }}
             />
@@ -168,7 +166,7 @@ function App() {
                   fontFamily: FONTS.mono, fontSize: 10, letterSpacing: '0.3em',
                   textTransform: 'uppercase', color: 'rgba(255,255,255,0.4)',
                 }}>
-                  Cole o streamId do Cloudflare
+                  Adicione o youtubeId em videos.js
                 </div>
               </div>
             </>

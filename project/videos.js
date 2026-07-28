@@ -8,7 +8,7 @@
    Índice 0 = mais recente. Ao adicionar um trabalho novo, coloque-o
    no TOPO da lista — ele vira automaticamente o "Latest work" da hero.
 
-   streamId = UID do vídeo no Cloudflare Stream (copie do painel).
+   youtubeId = ID do vídeo no YouTube (youtube.com/watch?v=ESTE_AQUI).
    ════════════════════════════════════════════════════════════════ */
 window.VIDEOS = [
   {
@@ -16,7 +16,7 @@ window.VIDEOS = [
     duration: '04:32',
     year: '2026',
     category: 'Short film',
-    streamId: '',
+    youtubeId: '',
     description: 'Descrição do projeto — contexto, papel do Jotap, o que o trabalho representa. Edite este texto livremente.',
   },
   {
@@ -24,7 +24,7 @@ window.VIDEOS = [
     duration: '01:18',
     year: '2025',
     category: 'Commercial',
-    streamId: '',
+    youtubeId: '',
     description: 'Descrição do projeto. Edite livremente.',
   },
   {
@@ -32,7 +32,7 @@ window.VIDEOS = [
     duration: '03:05',
     year: '2025',
     category: 'Music video',
-    streamId: '',
+    youtubeId: '',
     description: 'Descrição do projeto. Edite livremente.',
   },
   {
@@ -40,7 +40,7 @@ window.VIDEOS = [
     duration: '12:00',
     year: '2024',
     category: 'Documentary',
-    streamId: '',
+    youtubeId: '',
     description: 'Descrição do projeto. Edite livremente.',
   },
   {
@@ -48,7 +48,7 @@ window.VIDEOS = [
     duration: '03:48',
     year: '2024',
     category: 'Music video',
-    streamId: '',
+    youtubeId: '',
     description: 'Descrição do projeto. Edite livremente.',
   },
 ];
