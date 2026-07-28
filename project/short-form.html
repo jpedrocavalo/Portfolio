@@ -38,35 +38,23 @@ const FONTS = {
   mono: '"JetBrains Mono", monospace',
 };
 
-const CF_CUSTOMER_CODE = 'customer-x1j6qmqmv38ltwyr';
-
 // ════════════════════════════════════════════════════════════════
 // VÍDEOS SHORT-FORM
-// Cada item — 3 linhas de legenda + streamId:
 //   title    → linha 1 (Fraunces italic) — nome do trabalho
-//   subtitle → linha 2 (Inter, muted)    — cliente · projeto · contexto
-//   meta     → linha 3 (mono, accent)    — ano · duração · plataforma
-//   streamId → UID do Cloudflare Stream
+//   subtitle → linha 2 (Inter, muted)    — cliente · contexto
+//   meta     → linha 3 (mono)            — ano · plataforma
+//   youtubeId → ID do vídeo no YouTube
 // ════════════════════════════════════════════════════════════════
 const SHORTFORM = [
-  { title: 'Reel 01', subtitle: 'Cliente · Projeto', meta: '2026 · 00:42', streamId: '' },
-  { title: 'Reel 02', subtitle: 'Cliente · Projeto', meta: '2026 · 00:36', streamId: '' },
-  { title: 'Reel 03', subtitle: 'Cliente · Projeto', meta: '2026 · 00:58', streamId: '' },
-  { title: 'Reel 04', subtitle: 'Cliente · Projeto', meta: '2025 · 00:30', streamId: '' },
-  { title: 'Reel 05', subtitle: 'Cliente · Projeto', meta: '2025 · 01:12', streamId: '' },
-  { title: 'Reel 06', subtitle: 'Cliente · Projeto', meta: '2025 · 00:45', streamId: '' },
-  { title: 'Reel 07', subtitle: 'Cliente · Projeto', meta: '2025 · 00:24', streamId: '' },
-  { title: 'Reel 08', subtitle: 'Cliente · Projeto', meta: '2024 · 00:50', streamId: '' },
-  { title: 'Reel 09', subtitle: 'Cliente · Projeto', meta: '2024 · 00:38', streamId: '' },
+  { title: 'Formatura da Gio', subtitle: 'Frame Company', meta: '2025', youtubeId: 'i2zMYQGhsQU' },
+  { title: 'Reels Test', subtitle: 'Material do Lucas haither', meta: '2025', youtubeId: 'OS2igPCMd6Y' },
 ];
 
-// Imagem-poster gerada pelo Cloudflare Stream (thumbnail estático do grid)
 function thumbUrl(id) {
-  return `https://${CF_CUSTOMER_CODE}.cloudflarestream.com/${id}/thumbnails/thumbnail.jpg`;
+  return `https://img.youtube.com/vi/${id}/maxresdefault.jpg`;
 }
-// Player do lightbox — autoplay mudo, com controles (usuário desmuta)
 function playerUrl(id) {
-  return `https://${CF_CUSTOMER_CODE}.cloudflarestream.com/${id}/iframe?autoplay=true&muted=true&controls=true`;
+  return `https://www.youtube.com/embed/${id}?autoplay=1&rel=0&modestbranding=1`;
 }
 
 function Header({ fonts, palette, lang, setLang }) {
@@ -124,10 +112,11 @@ function GridItem({ item, index, onOpen, fonts, palette }) {
         background: `linear-gradient(135deg, ${palette.accent}33, ${palette.fg}11)`,
         overflow: 'hidden',
       }}>
-        {item.streamId ? (
+        {item.youtubeId ? (
           <img
-            src={thumbUrl(item.streamId)}
+            src={thumbUrl(item.youtubeId)}
             alt={item.title}
+            onError={(e) => { e.currentTarget.src = `https://img.youtube.com/vi/${item.youtubeId}/hqdefault.jpg`; e.currentTarget.onerror = null; }}
             style={{
               position: 'absolute', inset: 0, width: '100%', height: '100%',
               objectFit: 'cover',
@@ -253,31 +242,12 @@ function Lightbox({ item, onClose, fonts }) {
           boxShadow: '0 30px 90px rgba(0,0,0,0.6)',
         }}
       >
-        {item.streamId ? (
-          <iframe
-            src={playerUrl(item.streamId)}
-            allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
-            allowFullScreen
-            style={{ width: '100%', height: '100%', border: 'none' }}
-          />
-        ) : (
-          <div style={{
-            width: '100%', height: '100%',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            flexDirection: 'column', gap: 14,
-            fontFamily: fonts.mono, fontSize: 11, letterSpacing: '0.25em',
-            textTransform: 'uppercase', color: 'rgba(255,255,255,0.4)',
-            background: 'linear-gradient(135deg, #1a1a1a, #0a0a0a)',
-          }}>
-            <div style={{
-              width: 0, height: 0,
-              borderLeft: '22px solid #7a00d8',
-              borderTop: '15px solid transparent',
-              borderBottom: '15px solid transparent',
-            }} />
-            Sem streamId
-          </div>
-        )}
+        <iframe
+          src={playerUrl(item.youtubeId)}
+          allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+          allowFullScreen
+          style={{ width: '100%', height: '100%', border: 'none' }}
+        />
       </div>
     </div>
   );
