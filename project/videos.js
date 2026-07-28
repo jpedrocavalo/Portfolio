@@ -35,20 +35,4 @@ window.VIDEOS = [
     youtubeId: 'i2zMYQGhsQU',
     description: 'Trabalho freelancer de edição para Frame Company.\nDireção, direção de fotografia e operação de câmera: Frame Company.',
   },
-  {
-    title: 'Solstício — documentary',
-    duration: '12:00',
-    year: '2024',
-    category: 'Documentary',
-    youtubeId: '',
-    description: 'Descrição do projeto. Edite livremente.',
-  },
-  {
-    title: 'Eclipse — music video',
-    duration: '03:48',
-    year: '2024',
-    category: 'Music video',
-    youtubeId: '',
-    description: 'Descrição do projeto. Edite livremente.',
-  },
 ];
