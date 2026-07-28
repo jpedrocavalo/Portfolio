@@ -20,12 +20,12 @@ window.VIDEOS = [
     description: 'Trabalho freelancer de edição para Frame Company. Direção, direção de fotografia e operação de câmera: Frame Company.',
   },
   {
-    title: 'Marés — commercial',
-    duration: '01:18',
+    title: 'São Julião do Riachuelo Contact Center',
+    duration: '',
     year: '2025',
     category: 'Commercial',
-    youtubeId: '',
-    description: 'Descrição do projeto. Edite livremente.',
+    youtubeId: 'KyalhB1Udh4',
+    description: 'Trabalho freelancer de edição para Frame Company. Direção, direção de fotografia e operação de câmera: Frame Company.',
   },
   {
     title: 'Vento Norte — clip',
