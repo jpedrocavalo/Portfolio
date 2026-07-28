@@ -112,6 +112,7 @@ function Card({ data, fonts, palette, fill }) {
         {data.youtubeId ? (
           <img
             src={thumbUrl(data.youtubeId)}
+            onError={(e) => { e.currentTarget.src = `https://img.youtube.com/vi/${data.youtubeId}/hqdefault.jpg`; e.currentTarget.onerror = null; }}
             alt={data.title}
             style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
           />
