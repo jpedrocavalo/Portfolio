@@ -16,7 +16,7 @@ window.CATEGORIES = [
     title: 'Commercials',
     subtitle: 'Brand films',
     cover: './Captura de tela 2026-03-14 101310.jpg',
-    intro: 'Filmes publicitários para marcas que querem mais do que um filme bonito — querem o filme certo.',
+    intro: 'Filmes publicitários para marcas que querem mais do que um filme bonito, querem o filme certo.',
     works: [],
   },
   {
@@ -24,7 +24,7 @@ window.CATEGORIES = [
     title: 'Music Videos',
     subtitle: 'Visual scores',
     cover: './Captura de tela 2026-03-30 113939.jpg',
-    intro: 'Videoclipes onde a imagem responde à música — cor, ritmo e atmosfera a serviço da faixa.',
+    intro: 'Videoclipes onde a imagem responde à música, cor, ritmo e atmosfera a serviço da faixa.',
     works: [],
   },
   {
@@ -32,7 +32,7 @@ window.CATEGORIES = [
     title: 'Short Films',
     subtitle: 'Narrative work',
     cover: './Captura de tela 2026-04-25 092041.jpg',
-    intro: 'Curtas narrativos — histórias inteiras contadas no espaço de poucos minutos.',
+    intro: 'Curtas narrativos, histórias inteiras contadas no espaço de poucos minutos.',
     works: [],
   },
   {
@@ -48,7 +48,7 @@ window.CATEGORIES = [
     title: 'Selected Stills',
     subtitle: 'Photography archive',
     cover: './Captura de tela 2026-03-14 085100.jpg',
-    intro: 'Frames e fotografias selecionadas — o olhar parado, entre um corte e outro.',
+    intro: 'Frames e fotografias selecionadas, o olhar parado, entre um corte e outro.',
     works: [],
   },
   {
