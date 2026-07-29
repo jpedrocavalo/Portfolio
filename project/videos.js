@@ -23,7 +23,7 @@ window.VIDEOS = [
     title: 'São Julião do Riachuelo Contact Center',
     duration: '',
     year: '2026',
-    category: 'Commercial',
+    category: 'Aftermovie',
     youtubeId: 'KyalhB1Udh4',
     description: 'Trabalho freelancer de edição para Frame Company.\nDireção, direção de fotografia e operação de câmera: Frame Company.',
   },
