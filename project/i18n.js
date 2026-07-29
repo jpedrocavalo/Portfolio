@@ -60,7 +60,7 @@ window.I18N = {
 
     // ── Reel (reel.html / v1-showreel) ──
     reel: {
-      heroLabel:       '[001], Editor / Reel 2026',
+      heroLabel:       '[001], Editor / Reel',
       heroDescription: 'Construindo histórias cinematográficas para marcas, artistas e o que está entre eles. Disponível para novos projetos.',
       scroll:          'Rolar',
       latestWork:      '↗ Último trabalho',
@@ -140,7 +140,7 @@ window.I18N = {
     },
 
     reel: {
-      heroLabel:       '[001], Filmmaker & Editor / Reel 2026',
+      heroLabel:       '[001], Filmmaker & Editor / Reel',
       heroDescription: 'Crafting cinematic stories for brands, artists, and the in-between. Available for new projects.',
       scroll:          'Scroll',
       latestWork:      '↗ Latest work',

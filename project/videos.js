@@ -14,7 +14,7 @@ window.VIDEOS = [
   {
     title: 'Casamento Guará & Graziele',
     duration: '',
-    year: '2025',
+    year: '2026',
     category: 'Wedding film',
     youtubeId: 'uMAAN81NUl4',
     description: 'Trabalho freelancer de edição para Frame Company.\nDireção, direção de fotografia e operação de câmera: Frame Company.',
@@ -22,7 +22,7 @@ window.VIDEOS = [
   {
     title: 'São Julião do Riachuelo Contact Center',
     duration: '',
-    year: '2025',
+    year: '2026',
     category: 'Commercial',
     youtubeId: 'KyalhB1Udh4',
     description: 'Trabalho freelancer de edição para Frame Company.\nDireção, direção de fotografia e operação de câmera: Frame Company.',
@@ -30,7 +30,7 @@ window.VIDEOS = [
   {
     title: 'Formatura da Gio',
     duration: '',
-    year: '2025',
+    year: '2026',
     category: 'Graduation film',
     youtubeId: 'i2zMYQGhsQU',
     description: 'Trabalho freelancer de edição para Frame Company.\nDireção, direção de fotografia e operação de câmera: Frame Company.',
