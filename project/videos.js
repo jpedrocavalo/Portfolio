@@ -35,4 +35,12 @@ window.VIDEOS = [
     youtubeId: 'i2zMYQGhsQU',
     description: 'Trabalho freelancer de edição para Frame Company.\nDireção, direção de fotografia e operação de câmera: Frame Company.',
   },
+  {
+    title: 'Pre Wedding Thaynara e Ruan',
+    duration: '',
+    year: '2026',
+    category: 'Pre Wedding Session',
+    youtubeId: 'IzkRaAMCK7E',
+    description: 'Trabalho freelancer de edição para Frame Company.\nDireção, direção de fotografia e operação de câmera: Frame Company.',
+  }
 ];
