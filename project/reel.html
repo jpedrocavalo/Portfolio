@@ -27,10 +27,12 @@
 <!-- Traduções compartilhadas + lista de vídeos (scripts normais, antes do Babel) -->
 <script src="i18n.js"></script>
 <script src="videos.js"></script>
+<script src="shortform.js"></script>
 
 <script type="text/babel" src="heroes/color-reveal-bg.jsx"></script>
 <script type="text/babel" src="heroes/v1-showreel.jsx"></script>
 <script type="text/babel" src="contact-modal.jsx"></script>
+<script type="text/babel" src="shortform-section.jsx"></script>
 
 <script type="text/babel">
 const PALETTE = { bg: '#0a0a0a', fg: '#f5f1e8', muted: '#8a8580', accent: '#7a00d8' };
@@ -68,11 +70,8 @@ const labelStyle = {
 const CF_CUSTOMER_CODE = 'customer-x1j6qmqmv38ltwyr';
 
 // Grid "Selected Works" = todos os vídeos de videos.js (cada um clicável,
-// leva pra ./video.html?v=<índice>) + o card Short-form no final.
-const FEATURED = [
-  ...window.VIDEOS.map((v, i) => ({ ...v, href: './video.html?v=' + i })),
-  { title: 'Short-form ↗', duration: '', imageSrc: '', href: './short-form.html' },
-];
+// leva pra ./video.html?v=<índice>). O short-form tem seção própria abaixo.
+const FEATURED = window.VIDEOS.map((v, i) => ({ ...v, href: './video.html?v=' + i }));
 
 // ID do vídeo do hero (fundo) — deixe vazio pra usar o MP4 local "./reel.mp4"
 const HERO_STREAM_ID = '';
@@ -161,6 +160,7 @@ function App() {
   const T = window.I18N[lang];
   const [contactOpen, setContactOpen] = React.useState(false);
   const ContactModal = window.ContactModal;
+  const ShortformSection = window.ShortformSection;
 
   // Detecta mobile pra ajustar o grid de Selected Works
   const [isMobile, setIsMobile] = React.useState(false);
@@ -297,20 +297,10 @@ function App() {
           ))}
         </div>
 
-        {/* Mobile: link extra pra Short-form (no desktop o card já está no grid) */}
-        {isMobile && (
-          <a href="./short-form.html" style={{
-            marginTop: 18,
-            alignSelf: 'flex-end',
-            fontFamily: FONTS.mono, fontSize: 11, letterSpacing: '0.3em',
-            textTransform: 'uppercase', color: PALETTE.accent,
-            textDecoration: 'none',
-          }}>
-            Short-form ↗
-          </a>
-        )}
       </section>
 
+      {/* Short-form — seção pinada, cards 9:16 deslizam com o scroll */}
+      {ShortformSection && <ShortformSection isMobile={isMobile} lang={lang} />}
 
       {/* Footer CTA — centralizado e branco */}
       <section id="contact" style={{
