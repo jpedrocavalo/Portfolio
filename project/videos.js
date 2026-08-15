@@ -8,7 +8,11 @@
    Índice 0 = mais recente. Ao adicionar um trabalho novo, coloque-o
    no TOPO da lista — ele vira automaticamente o "Latest work" da hero.
 
-   youtubeId = ID do vídeo no YouTube (youtube.com/watch?v=ESTE_AQUI).
+   De onde vem o vídeo (ver media.js):
+     streamId  = UID do Cloudflare Stream — tem prioridade
+     youtubeId = ID do YouTube (youtube.com/watch?v=ESTE_AQUI)
+
+   Preencha o streamId pra mover um vídeo do YouTube pro Cloudflare.
    ════════════════════════════════════════════════════════════════ */
 window.VIDEOS = [
   {
@@ -16,6 +20,7 @@ window.VIDEOS = [
     duration: '',
     year: '2026',
     category: 'Wedding film',
+    streamId: '',
     youtubeId: 'uMAAN81NUl4',
     description: 'Trabalho freelancer de edição para Frame Company.\nDireção, direção de fotografia e operação de câmera: Frame Company.',
   },
@@ -24,6 +29,7 @@ window.VIDEOS = [
     duration: '',
     year: '2026',
     category: 'Aftermovie',
+    streamId: '',
     youtubeId: 'KyalhB1Udh4',
     description: 'Trabalho freelancer de edição para Frame Company.\nDireção, direção de fotografia e operação de câmera: Frame Company.',
   },
@@ -32,6 +38,7 @@ window.VIDEOS = [
     duration: '',
     year: '2026',
     category: 'Graduation film',
+    streamId: '',
     youtubeId: 'i2zMYQGhsQU',
     description: 'Trabalho freelancer de edição para Frame Company.\nDireção, direção de fotografia e operação de câmera: Frame Company.',
   },
@@ -40,6 +47,7 @@ window.VIDEOS = [
     duration: '',
     year: '2026',
     category: 'Pre Wedding Session',
+    streamId: '',
     youtubeId: 'IzkRaAMCK7E',
     description: 'Trabalho freelancer de edição para Frame Company.\nDireção, direção de fotografia e operação de câmera: Frame Company.',
   }

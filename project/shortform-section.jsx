@@ -18,12 +18,8 @@ const SF_FONTS = {
   mono: '"JetBrains Mono", monospace',
 };
 
-function sfThumb(id) {
-  return `https://img.youtube.com/vi/${id}/maxresdefault.jpg`;
-}
-function sfPlayer(id) {
-  return `https://www.youtube.com/embed/${id}?autoplay=1&rel=0&modestbranding=1&playsinline=1`;
-}
+// Capa e player vêm de media.js — Cloudflare Stream quando o vídeo tem
+// streamId, YouTube caso contrário.
 
 // ─── Modal estilo Instagram ────────────────────────────────────
 function ShortformModal({ item, onClose, isMobile }) {
@@ -95,8 +91,8 @@ function ShortformModal({ item, onClose, isMobile }) {
           background: '#000',
         }}>
           <iframe
-            src={sfPlayer(item.youtubeId)}
-            allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+            src={window.mediaPlayer(item, { autoplay: true })}
+            allow={window.MEDIA_IFRAME_ALLOW}
             allowFullScreen
             style={{ width: '100%', height: '100%', border: 'none', display: 'block' }}
           />
@@ -139,21 +135,24 @@ function ShortformModal({ item, onClose, isMobile }) {
             {item.description}
           </p>
 
-          <a
-            href={`https://www.youtube.com/watch?v=${item.youtubeId}`}
-            target="_blank" rel="noopener noreferrer"
-            style={{
-              marginTop: isMobile ? 24 : 36,
-              alignSelf: 'flex-start',
-              fontFamily: SF_FONTS.mono, fontSize: 10, letterSpacing: '0.25em',
-              textTransform: 'uppercase', color: 'rgba(245,241,232,0.45)',
-              textDecoration: 'none', transition: 'color 0.2s',
-            }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = SF_PALETTE.fg)}
-            onMouseLeave={(e) => (e.currentTarget.style.color = 'rgba(245,241,232,0.45)')}
-          >
-            Ver no YouTube ↗
-          </a>
+          {/* Só faz sentido pra vídeo hospedado no YouTube */}
+          {window.mediaSource(item) === 'youtube' && (
+            <a
+              href={`https://www.youtube.com/watch?v=${item.youtubeId}`}
+              target="_blank" rel="noopener noreferrer"
+              style={{
+                marginTop: isMobile ? 24 : 36,
+                alignSelf: 'flex-start',
+                fontFamily: SF_FONTS.mono, fontSize: 10, letterSpacing: '0.25em',
+                textTransform: 'uppercase', color: 'rgba(245,241,232,0.45)',
+                textDecoration: 'none', transition: 'color 0.2s',
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = SF_PALETTE.fg)}
+              onMouseLeave={(e) => (e.currentTarget.style.color = 'rgba(245,241,232,0.45)')}
+            >
+              Ver no YouTube ↗
+            </a>
+          )}
         </div>
       </div>
     </div>
@@ -186,9 +185,9 @@ function SfCard({ item, index, onOpen, width }) {
         onMouseLeave={() => setHover(false)}
       >
         <img
-          src={sfThumb(item.youtubeId)}
+          src={window.mediaThumb(item)}
           alt={item.title}
-          onError={(e) => { e.currentTarget.src = `https://img.youtube.com/vi/${item.youtubeId}/hqdefault.jpg`; e.currentTarget.onerror = null; }}
+          onError={window.mediaThumbOnError(item)}
           style={{
             position: 'absolute', inset: 0, width: '100%', height: '100%',
             objectFit: 'cover',

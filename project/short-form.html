@@ -27,6 +27,7 @@
 
 <!-- Traduções compartilhadas (script normal, roda antes do Babel) -->
 <script src="i18n.js"></script>
+<script src="media.js"></script>
 <script src="shortform.js"></script>
 <script type="text/babel" src="contact-modal.jsx"></script>
 <script type="text/babel" src="shortform-section.jsx"></script>
@@ -41,12 +42,9 @@ const FONTS = {
   mono: '"JetBrains Mono", monospace',
 };
 
-// Dados vêm de shortform.js (fonte única, compartilhada com reel.html)
+// Dados vêm de shortform.js (fonte única, compartilhada com reel.html).
+// Capa e player vêm de media.js (Cloudflare Stream ou YouTube).
 const SHORTFORM = window.SHORTFORM || [];
-
-function thumbUrl(id) {
-  return `https://img.youtube.com/vi/${id}/maxresdefault.jpg`;
-}
 
 function Header({ fonts, palette, lang, setLang, onContactOpen }) {
   const N = window.I18N[lang].nav;
@@ -99,11 +97,11 @@ function GridItem({ item, index, onOpen, fonts, palette }) {
         background: `linear-gradient(135deg, ${palette.accent}33, ${palette.fg}11)`,
         overflow: 'hidden',
       }}>
-        {item.youtubeId ? (
+        {window.hasMedia(item) ? (
           <img
-            src={thumbUrl(item.youtubeId)}
+            src={window.mediaThumb(item)}
             alt={item.title}
-            onError={(e) => { e.currentTarget.src = `https://img.youtube.com/vi/${item.youtubeId}/hqdefault.jpg`; e.currentTarget.onerror = null; }}
+            onError={window.mediaThumbOnError(item)}
             style={{
               position: 'absolute', inset: 0, width: '100%', height: '100%',
               objectFit: 'cover',
