@@ -185,9 +185,8 @@ function SfCard({ item, index, onOpen, width }) {
         onMouseLeave={() => setHover(false)}
       >
         <img
-          src={window.mediaThumb(item)}
+          {...window.mediaThumbProps(item)}
           alt={item.title}
-          onError={window.mediaThumbOnError(item)}
           style={{
             position: 'absolute', inset: 0, width: '100%', height: '100%',
             objectFit: 'cover',

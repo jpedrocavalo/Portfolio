@@ -98,8 +98,7 @@ function VideoCard({ video, index, fonts, palette }) {
       }}>
         {window.hasMedia(video) ? (
           <img
-            src={window.mediaThumb(video)}
-            onError={window.mediaThumbOnError(video)}
+            {...window.mediaThumbProps(video)}
             alt={video.title}
             style={{
               position: 'absolute', inset: 0, width: '100%', height: '100%',

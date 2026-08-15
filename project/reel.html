@@ -104,8 +104,7 @@ function Card({ data, fonts, palette, fill }) {
       }}>
         {window.hasMedia(data) ? (
           <img
-            src={window.mediaThumb(data)}
-            onError={window.mediaThumbOnError(data)}
+            {...window.mediaThumbProps(data)}
             alt={data.title}
             style={{
               position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover',

@@ -8,6 +8,8 @@
 
    Basta preencher o streamId de um vídeo pra ele passar a tocar pelo
    Cloudflare. Quem ainda só tem youtubeId continua tocando pelo YouTube.
+
+   A CAPA é independente de onde o vídeo toca — ver THUMB_SOURCE abaixo.
    ════════════════════════════════════════════════════════════════ */
 
 // Customer Code do Cloudflare Stream (painel → Stream → qualquer vídeo)
@@ -26,33 +28,83 @@ window.mediaSource = function (item) {
   return null;
 };
 
-// URL da imagem de capa
-window.mediaThumb = function (item) {
-  if (!item) return '';
-  if (item.streamId) {
-    return `https://${window.CF_CUSTOMER_CODE}.cloudflarestream.com/${item.streamId}/thumbnails/thumbnail.jpg`;
-  }
+// ── CAPA ────────────────────────────────────────────────────────
+// De onde vem a imagem de capa quando o vídeo tem as duas fontes.
+// A capa NÃO precisa vir de onde o vídeo toca: dá pra usar a capa que
+// você subiu no YouTube com o vídeo tocando pelo Cloudflare.
+//   'youtube' → a capa que você definiu no YouTube
+//   'stream'  → um frame do vídeo no Cloudflare
+// Cada vídeo pode sobrescrever com thumbFrom: 'stream'.
+window.THUMB_SOURCE = 'youtube';
+
+// Largura pedida pra capa do Cloudflare (o padrão dele é 640px, meio mole
+// em tela retina). Cada vídeo pode sobrescrever com thumbWidth.
+window.CF_THUMB_WIDTH = 1280;
+
+function ytThumb(id, size) {
+  return `https://img.youtube.com/vi/${id}/${size}.jpg`;
+}
+
+function cfThumb(item) {
+  const p = new URLSearchParams();
+  if (item.thumbTime) p.set('time', item.thumbTime);
+  p.set('width', item.thumbWidth || window.CF_THUMB_WIDTH);
+  return `https://${window.CF_CUSTOMER_CODE}.cloudflarestream.com/${item.streamId}/thumbnails/thumbnail.jpg?${p}`;
+}
+
+// Capas em ordem de preferência. A <img> começa na primeira e desce a
+// lista conforme uma falha — o maxresdefault do YouTube, por exemplo,
+// só existe pra vídeo enviado em 720p+.
+//
+//   1. item.poster → imagem sua (ex: './capas/casamento.jpg'), ganha de tudo
+//   2. a fonte escolhida em thumbFrom / THUMB_SOURCE
+//   3. o que sobrar, como rede de segurança
+window.mediaThumbChain = function (item) {
+  if (!item) return [];
+  const urls = [];
+
+  if (item.poster) urls.push(item.poster);
+
+  const from = item.thumbFrom || window.THUMB_SOURCE;
+  if (from === 'youtube' && item.youtubeId) urls.push(ytThumb(item.youtubeId, 'maxresdefault'));
+
+  if (item.streamId) urls.push(cfThumb(item));
   if (item.youtubeId) {
-    return `https://img.youtube.com/vi/${item.youtubeId}/maxresdefault.jpg`;
+    urls.push(ytThumb(item.youtubeId, 'maxresdefault'));
+    urls.push(ytThumb(item.youtubeId, 'hqdefault'));
   }
-  return '';
+
+  return [...new Set(urls)];
 };
 
-// Capa alternativa: o maxresdefault do YouTube nem sempre existe.
-// Retorna null quando não há fallback (Cloudflare sempre gera a capa).
-window.mediaThumbFallback = function (item) {
-  if (item && !item.streamId && item.youtubeId) {
-    return `https://img.youtube.com/vi/${item.youtubeId}/hqdefault.jpg`;
-  }
-  return null;
+// URL da capa
+window.mediaThumb = function (item) {
+  return window.mediaThumbChain(item)[0] || '';
 };
 
-// Handler pronto pro onError da <img>
-window.mediaThumbOnError = function (item) {
-  return function (e) {
-    const alt = window.mediaThumbFallback(item);
-    e.currentTarget.onerror = null;
-    if (alt) e.currentTarget.src = alt;
+// Pula pra próxima capa da lista. Retorna false quando acabou.
+function nextThumb(item, el) {
+  const chain = window.mediaThumbChain(item);
+  const i = chain.indexOf(el.getAttribute('src'));
+  const next = i >= 0 ? chain[i + 1] : null;
+  if (next) { el.src = next; return true; }
+  return false;
+}
+
+// Props prontas pra <img> da capa: {...window.mediaThumbProps(video)}
+window.mediaThumbProps = function (item) {
+  return {
+    src: window.mediaThumb(item),
+
+    onError: function (e) { nextThumb(item, e.currentTarget); },
+
+    // Quando não existe capa, o YouTube às vezes devolve um placeholder
+    // cinza de 120x90 com status 200 em vez de 404 — aí o onError não
+    // dispara. Detecta pelo tamanho e segue pra próxima da lista.
+    onLoad: function (e) {
+      const el = e.currentTarget;
+      if (el.naturalWidth <= 120 && el.naturalHeight <= 90) nextThumb(item, el);
+    },
   };
 };
 
@@ -64,6 +116,10 @@ window.mediaPlayer = function (item, opts) {
   if (item.streamId) {
     const p = new URLSearchParams({ controls: 'true' });
     if (opts.autoplay) { p.set('autoplay', 'true'); p.set('muted', 'true'); }
+    // Mesma capa do card, pra não trocar de imagem antes do play.
+    // O player precisa de URL absoluta.
+    const thumb = window.mediaThumb(item);
+    if (thumb) p.set('poster', new URL(thumb, location.href).href);
     return `https://${window.CF_CUSTOMER_CODE}.cloudflarestream.com/${item.streamId}/iframe?${p}`;
   }
 

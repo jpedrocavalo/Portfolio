@@ -99,9 +99,8 @@ function GridItem({ item, index, onOpen, fonts, palette }) {
       }}>
         {window.hasMedia(item) ? (
           <img
-            src={window.mediaThumb(item)}
+            {...window.mediaThumbProps(item)}
             alt={item.title}
-            onError={window.mediaThumbOnError(item)}
             style={{
               position: 'absolute', inset: 0, width: '100%', height: '100%',
               objectFit: 'cover',

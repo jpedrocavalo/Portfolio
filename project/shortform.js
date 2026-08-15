@@ -5,9 +5,16 @@
      • reel.html       — seção "Short-form" com scroll horizontal
      • short-form.html — grid completo estilo Instagram
 
+   streamId    = UID do Cloudflare Stream — tem prioridade
    youtubeId   = ID do vídeo/Short no YouTube
    subtitle    = linha curta (cliente · contexto)
    description = texto do modal. Use \n pra quebrar linha.
+
+   ── CAPA (opcional) ──
+   Padrão: vem do YouTube, mesmo tocando pelo Cloudflare.
+   thumbFrom: 'stream'      → usa um frame do vídeo no Cloudflare
+   thumbTime: '4s'          → com 'stream', escolhe qual frame
+   poster: './capas/x.jpg'  → imagem sua, ganha de tudo
    ════════════════════════════════════════════════════════════════ */
 window.SHORTFORM = [
   {

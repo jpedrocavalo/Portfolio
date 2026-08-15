@@ -13,6 +13,16 @@
      youtubeId = ID do YouTube (youtube.com/watch?v=ESTE_AQUI)
 
    Preencha o streamId pra mover um vídeo do YouTube pro Cloudflare.
+
+   ── CAPA (opcional) ──
+   Por padrão a capa vem do YouTube (a que você subiu lá), mesmo com o
+   vídeo tocando pelo Cloudflare. Pra mudar isso num vídeo só:
+
+   thumbFrom: 'stream'  → usa um frame do vídeo no Cloudflare
+   thumbTime: '4s'      → com thumbFrom 'stream', escolhe qual frame.
+                          Aceita '4s', '90s', '1m20s'.
+   poster: './capas/nome.jpg'
+                        → imagem sua, ganha de tudo. Coloque em project/.
    ════════════════════════════════════════════════════════════════ */
 window.VIDEOS = [
   {
