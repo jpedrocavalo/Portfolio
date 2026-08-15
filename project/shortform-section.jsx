@@ -241,7 +241,6 @@ function ShortformSection({ isMobile, lang }) {
   const { useState, useEffect, useRef } = React;
   const items = window.SHORTFORM || [];
   const [openIndex, setOpenIndex] = useState(null);
-  const [shift, setShift] = useState(0);
   const [maxShift, setMaxShift] = useState(0);
 
   const wrapRef = useRef(null);
@@ -268,29 +267,34 @@ function ShortformSection({ isMobile, lang }) {
     return () => window.removeEventListener('resize', measure);
   }, [isMobile, items.length, PAD]);
 
-  // Converte scroll vertical em deslocamento horizontal
+  // Converte scroll vertical em deslocamento horizontal.
+  // Escreve o transform direto no nó: evita um re-render do React por frame.
   useEffect(() => {
-    if (isMobile || maxShift <= 0) { setShift(0); return; }
-    let raf = null;
+    const track = trackRef.current;
+    if (!track) return;
+    if (isMobile || maxShift <= 0) {
+      track.style.transform = 'translate3d(0, 0, 0)';
+      return;
+    }
+    let queued = false;
+    const apply = () => {
+      queued = false;
+      const wrap = wrapRef.current;
+      if (!wrap) return;
+      const rect = wrap.getBoundingClientRect();
+      const scrollable = rect.height - window.innerHeight;
+      if (scrollable <= 0) return;
+      const p = Math.min(1, Math.max(0, -rect.top / scrollable));
+      track.style.transform = `translate3d(${-p * maxShift}px, 0, 0)`;
+    };
     const onScroll = () => {
-      if (raf) return;
-      raf = requestAnimationFrame(() => {
-        raf = null;
-        const wrap = wrapRef.current;
-        if (!wrap) return;
-        const rect = wrap.getBoundingClientRect();
-        const scrollable = rect.height - window.innerHeight;
-        if (scrollable <= 0) return;
-        const p = Math.min(1, Math.max(0, -rect.top / scrollable));
-        setShift(p * maxShift);
-      });
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(apply);
     };
-    onScroll();
+    apply();
     window.addEventListener('scroll', onScroll, { passive: true });
-    return () => {
-      window.removeEventListener('scroll', onScroll);
-      if (raf) cancelAnimationFrame(raf);
-    };
+    return () => window.removeEventListener('scroll', onScroll);
   }, [isMobile, maxShift]);
 
   if (!items.length) return null;
@@ -385,7 +389,6 @@ function ShortformSection({ isMobile, lang }) {
               display: 'flex', gap: GAP,
               padding: `0 ${PAD}px`,
               width: 'max-content',
-              transform: `translate3d(${-shift}px, 0, 0)`,
               willChange: 'transform',
             }}
           >
