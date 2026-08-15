@@ -335,10 +335,12 @@ function ShortformSection({ isMobile, lang }) {
       }}>
         <div style={{ padding: `0 ${PAD}px` }}>{Header}</div>
         <div style={{
-          marginTop: 28,
+          marginTop: 8,
           display: 'flex', gap: GAP,
-          padding: `0 ${PAD}px`,
+          // overflow-x: auto força overflow-y a "auto" → precisa de folga vertical
+          padding: `20px ${PAD}px`,
           overflowX: 'auto',
+          overflowY: 'hidden',
           scrollSnapType: 'x mandatory',
           WebkitOverflowScrolling: 'touch',
           scrollbarWidth: 'none',
@@ -382,7 +384,9 @@ function ShortformSection({ isMobile, lang }) {
       }}>
         <div style={{ padding: `0 ${PAD}px`, flexShrink: 0 }}>{Header}</div>
 
-        <div style={{ marginTop: 40, overflow: 'hidden' }}>
+        {/* Folga vertical: o recorte horizontal também corta em cima/embaixo,
+            e os cards crescem no hover (scale) e flutuam (translateY). */}
+        <div style={{ marginTop: 16, padding: '24px 0', overflow: 'hidden' }}>
           <div
             ref={trackRef}
             style={{
