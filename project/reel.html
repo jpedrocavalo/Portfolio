@@ -63,9 +63,15 @@ const labelStyle = {
   color: 'rgba(245,241,232,0.35)',
 };
 
-// Grid "Selected Works" = todos os vídeos de videos.js (cada um clicável,
-// leva pra ./video.html?v=<índice>). O short-form tem seção própria abaixo.
-const FEATURED = window.VIDEOS.map((v, i) => ({ ...v, href: './video.html?v=' + i }));
+// Grid "Selected Works" = vídeos de videos.js (cada um clicável, leva pra
+// ./video.html?v=<índice>). O short-form tem seção própria abaixo.
+//
+// Quem tem `featured: false` fica de fora daqui, mas continua aparecendo
+// no "Ver tudo" (works.html). O map vem antes do filter pro href guardar
+// o índice real dentro de window.VIDEOS.
+const FEATURED = window.VIDEOS
+  .map((v, i) => ({ ...v, href: './video.html?v=' + i }))
+  .filter((v) => v.featured !== false);
 
 // Último vídeo = índice 0 de videos.js — alimenta o mini-card da hero.
 const LATEST_VIDEO = window.VIDEOS[0];

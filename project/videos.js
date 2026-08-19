@@ -14,6 +14,12 @@
 
    Preencha o streamId pra mover um vídeo do YouTube pro Cloudflare.
 
+   ── ONDE APARECE ──
+   Por padrão o vídeo entra nos dois lugares: "Trabalhos selecionados"
+   (reel.html) e "Ver tudo" (works.html).
+
+   featured: false  → tira só dos selecionados; continua no "Ver tudo".
+
    ── CAPA (opcional) ──
    Por padrão a capa vem do YouTube (a que você subiu lá), mesmo com o
    vídeo tocando pelo Cloudflare. Pra mudar isso num vídeo só:
@@ -60,5 +66,16 @@ window.VIDEOS = [
     streamId: '44d487d915c51a3b1dd41d3d9ee425cc',
     youtubeId: 'IzkRaAMCK7E',
     description: 'Trabalho freelancer de edição para Frame Company.\nDireção, direção de fotografia e operação de câmera: Frame Company.',
+  },
+  {
+    title: 'Corte Pastor Edson - Igreja ADPAZ',
+    duration: '',
+    year: '2026',
+    category: 'Corte',
+    streamId: '91bd705f3afb67bbe3940b1c89725477',
+    youtubeId: 'tXvVcFDQ8v0',
+    // Fica fora do "Trabalhos selecionados" do reel, mas aparece no "Ver tudo".
+    featured: false,
+    description: '',
   }
 ];
