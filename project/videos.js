@@ -76,6 +76,6 @@ window.VIDEOS = [
     youtubeId: 'tXvVcFDQ8v0',
     // Fica fora do "Trabalhos selecionados" do reel, mas aparece no "Ver tudo".
     featured: false,
-    description: '',
+    description: 'Trabalho voluntário de edição para a igreja ADPaz - Campus Zona Sul',
   }
 ];
