@@ -326,28 +326,6 @@ function ColorSection({ color, isMobile, T }) {
         {t.heading}
       </h2>
 
-      {/* Crédito do PowerGrade usado como base, quando houver */}
-      {color.powergrade && color.powergrade.name && (
-        <div style={{
-          marginTop: 14,
-          fontFamily: FONTS.mono, fontSize: 10, letterSpacing: '0.2em',
-          textTransform: 'uppercase', color: PALETTE.muted,
-        }}>
-          {t.powergrade}:{' '}
-          {color.powergrade.url ? (
-            <a
-              href={color.powergrade.url}
-              target="_blank" rel="noopener noreferrer"
-              style={{ color: PALETTE.fg, textDecoration: 'none', borderBottom: `1px solid ${PALETTE.fg}40` }}
-              onMouseEnter={(e) => { e.currentTarget.style.color = PALETTE.accent; e.currentTarget.style.borderBottomColor = PALETTE.accent; }}
-              onMouseLeave={(e) => { e.currentTarget.style.color = PALETTE.fg; e.currentTarget.style.borderBottomColor = PALETTE.fg + '40'; }}
-            >
-              {color.powergrade.name} ↗
-            </a>
-          ) : color.powergrade.name}
-        </div>
-      )}
-
       {/* Antes / depois. Com as duas imagens vira comparador arrastável;
           faltando alguma, cai nas molduras lado a lado pra mostrar o que
           ainda não foi preenchido. */}
@@ -387,6 +365,28 @@ function ColorSection({ color, isMobile, T }) {
         <ColorSlot label={t.nodes} src={color.nodes} alt={t.nodes}
           ratio={isMobile ? '16 / 9' : '21 / 9'} isMobile={isMobile}
           soonLabel={t.soon} fit="contain" />
+
+        {/* Crédito do PowerGrade — fica com os nodes porque é parte deles */}
+        {color.powergrade && color.powergrade.name && (
+          <div style={{
+            marginTop: 12,
+            fontFamily: FONTS.mono, fontSize: 10, letterSpacing: '0.2em',
+            textTransform: 'uppercase', color: PALETTE.muted,
+          }}>
+            {t.powergrade}:{' '}
+            {color.powergrade.url ? (
+              <a
+                href={color.powergrade.url}
+                target="_blank" rel="noopener noreferrer"
+                style={{ color: PALETTE.fg, textDecoration: 'none', borderBottom: `1px solid ${PALETTE.fg}40` }}
+                onMouseEnter={(e) => { e.currentTarget.style.color = PALETTE.accent; e.currentTarget.style.borderBottomColor = PALETTE.accent; }}
+                onMouseLeave={(e) => { e.currentTarget.style.color = PALETTE.fg; e.currentTarget.style.borderBottomColor = PALETTE.fg + '40'; }}
+              >
+                {color.powergrade.name} ↗
+              </a>
+            ) : color.powergrade.name}
+          </div>
+        )}
       </div>
 
       {/* Vídeo do breakdown */}
