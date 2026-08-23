@@ -293,6 +293,32 @@ function BeforeAfterSlider({ before, after, labelBefore, labelAfter, isMobile })
   );
 }
 
+// Linha de crédito da base usada no tratamento (PowerGrade, LUT...).
+// Some quando o campo não foi preenchido; vira link quando tem url.
+function CreditoBase({ label, item, primeiro }) {
+  if (!item || !item.name) return null;
+  return (
+    <div style={{
+      marginTop: primeiro ? 12 : 6,
+      fontFamily: FONTS.mono, fontSize: 10, letterSpacing: '0.2em',
+      textTransform: 'uppercase', color: PALETTE.muted,
+    }}>
+      {label}:{' '}
+      {item.url ? (
+        <a
+          href={item.url}
+          target="_blank" rel="noopener noreferrer"
+          style={{ color: PALETTE.fg, textDecoration: 'none', borderBottom: `1px solid ${PALETTE.fg}40` }}
+          onMouseEnter={(e) => { e.currentTarget.style.color = PALETTE.accent; e.currentTarget.style.borderBottomColor = PALETTE.accent; }}
+          onMouseLeave={(e) => { e.currentTarget.style.color = PALETTE.fg; e.currentTarget.style.borderBottomColor = PALETTE.fg + '40'; }}
+        >
+          {item.name} ↗
+        </a>
+      ) : item.name}
+    </div>
+  );
+}
+
 function ColorSection({ color, isMobile, T }) {
   if (!color) return null;
 
@@ -366,27 +392,9 @@ function ColorSection({ color, isMobile, T }) {
           ratio={isMobile ? '16 / 9' : '21 / 9'} isMobile={isMobile}
           soonLabel={t.soon} fit="contain" />
 
-        {/* Crédito do PowerGrade — fica com os nodes porque é parte deles */}
-        {color.powergrade && color.powergrade.name && (
-          <div style={{
-            marginTop: 12,
-            fontFamily: FONTS.mono, fontSize: 10, letterSpacing: '0.2em',
-            textTransform: 'uppercase', color: PALETTE.muted,
-          }}>
-            {t.powergrade}:{' '}
-            {color.powergrade.url ? (
-              <a
-                href={color.powergrade.url}
-                target="_blank" rel="noopener noreferrer"
-                style={{ color: PALETTE.fg, textDecoration: 'none', borderBottom: `1px solid ${PALETTE.fg}40` }}
-                onMouseEnter={(e) => { e.currentTarget.style.color = PALETTE.accent; e.currentTarget.style.borderBottomColor = PALETTE.accent; }}
-                onMouseLeave={(e) => { e.currentTarget.style.color = PALETTE.fg; e.currentTarget.style.borderBottomColor = PALETTE.fg + '40'; }}
-              >
-                {color.powergrade.name} ↗
-              </a>
-            ) : color.powergrade.name}
-          </div>
-        )}
+        {/* Base usada — fica com os nodes porque é parte deles */}
+        <CreditoBase label={t.powergrade} item={color.powergrade} primeiro />
+        <CreditoBase label={t.lut} item={color.lut} />
       </div>
 
       {/* Vídeo do breakdown */}

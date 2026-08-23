@@ -84,6 +84,7 @@ window.I18N = {
       breakdown: 'Breakdown da cor',
       drag:      'arraste para comparar',
       powergrade: 'PowerGrade',
+      lut:        'LUT',
       soon:      'Em breve',
     },
 
@@ -175,6 +176,7 @@ window.I18N = {
       breakdown: 'Grade breakdown',
       drag:      'drag to compare',
       powergrade: 'PowerGrade',
+      lut:        'LUT',
       soon:      'Coming soon',
     },
 

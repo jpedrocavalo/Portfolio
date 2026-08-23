@@ -30,7 +30,9 @@
        after:  './color/nome-depois.jpg',  // frame tratado
        nodes:  './color/nome-nodes.jpg',   // print da árvore de nodes
        breakdown: { streamId: '', youtubeId: '' },  // vídeo do processo
-       powergrade: { name: '', url: '' },  // powergrade usado como base
+       // Bases usadas — aparecem abaixo do print de nodes. Pode ter as duas.
+       powergrade: { name: '', url: '' },
+       lut:        { name: '', url: '' },
      },
 
    ── CAPA (opcional) ──
@@ -90,6 +92,10 @@ window.VIDEOS = [
       before: './color/Antes-FormaturaGio.png',
       after:  './color/Depois-FormaturaGio.png',
       nodes:  './color/Node-FormaturaGio.png',
+      lut: {
+        name: 'La Crème',
+        url: 'https://looks.fjr.io/',
+      },
       breakdown: { streamId: '', youtubeId: '' },
     },
     description: 'Trabalho freelancer de edição para Frame Company.\nDireção, direção de fotografia e operação de câmera: Frame Company.',
