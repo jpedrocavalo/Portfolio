@@ -53,12 +53,12 @@ window.VIDEOS = [
     description: 'Trabalho freelancer de edição para Frame Company.\nDireção, direção de fotografia e operação de câmera: Frame Company.',
   },
   {
-    title: 'São Julhão do Riachuelo Contact Center',
+    title: 'Desfile Riachuelo Contact Center',
     duration: '',
     year: '2026',
-    category: 'Aftermovie',
-    streamId: 'fd615f2e70246c9f3922cfcf86b58086',
-    youtubeId: 'KyalhB1Udh4',
+    category: 'Desfile',
+    streamId: '',
+    youtubeId: '4FjEpWqRnqs',
     description: 'Trabalho freelancer de edição para Frame Company.\nDireção, direção de fotografia e operação de câmera: Frame Company.',
   },
   {
@@ -68,6 +68,15 @@ window.VIDEOS = [
     category: 'Graduation film',
     streamId: 'e18e064a56ced6553e0ec220def58618',
     youtubeId: 'i2zMYQGhsQU',
+    description: 'Trabalho freelancer de edição para Frame Company.\nDireção, direção de fotografia e operação de câmera: Frame Company.',
+  },
+  {
+    title: 'São Julhão do Riachuelo Contact Center',
+    duration: '',
+    year: '2026',
+    category: 'Aftermovie',
+    streamId: 'fd615f2e70246c9f3922cfcf86b58086',
+    youtubeId: 'KyalhB1Udh4',
     description: 'Trabalho freelancer de edição para Frame Company.\nDireção, direção de fotografia e operação de câmera: Frame Company.',
   },
   {
