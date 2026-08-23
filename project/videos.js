@@ -57,7 +57,7 @@ window.VIDEOS = [
     duration: '',
     year: '2026',
     category: 'Desfile',
-    streamId: '',
+    streamId: '2f0edcdeec3d19dfdc37d62c0458d121',
     youtubeId: '4FjEpWqRnqs',
     description: 'Trabalho freelancer de edição para Frame Company.\nDireção, direção de fotografia e operação de câmera: Frame Company.',
   },
