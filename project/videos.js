@@ -93,7 +93,7 @@ window.VIDEOS = [
       after:  './color/Depois-FormaturaGio.png',
       nodes:  './color/Node-FormaturaGio.png',
       lut: {
-        name: 'La Crème',
+        name: 'LA CREME',
         url: 'https://looks.fjr.io/',
       },
       breakdown: { streamId: '', youtubeId: '' },
