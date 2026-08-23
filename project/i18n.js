@@ -83,6 +83,7 @@ window.I18N = {
       nodes:     'Estrutura de nodes',
       breakdown: 'Breakdown da cor',
       drag:      'arraste para comparar',
+      powergrade: 'PowerGrade',
       soon:      'Em breve',
     },
 
@@ -173,6 +174,7 @@ window.I18N = {
       nodes:     'Node tree',
       breakdown: 'Grade breakdown',
       drag:      'drag to compare',
+      powergrade: 'PowerGrade',
       soon:      'Coming soon',
     },
 

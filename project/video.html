@@ -315,14 +315,38 @@ function ColorSection({ color, isMobile, T }) {
       }}>
         {t.label}
       </div>
+      {/* Inter, não Fraunces: o bloco é técnico e o serifado editorial
+          fica reservado pro título do trabalho. */}
       <h2 style={{
-        fontFamily: FONTS.display,
-        fontSize: isMobile ? 'clamp(28px, 8vw, 40px)' : 'clamp(36px, 3.4vw, 60px)',
-        fontWeight: 300, fontStyle: 'italic',
-        letterSpacing: '-0.03em', lineHeight: 1, margin: 0,
+        fontFamily: FONTS.sans,
+        fontSize: isMobile ? 'clamp(24px, 6.5vw, 32px)' : 'clamp(28px, 2.6vw, 44px)',
+        fontWeight: 500,
+        letterSpacing: '-0.02em', lineHeight: 1.05, margin: 0,
       }}>
         {t.heading}
       </h2>
+
+      {/* Crédito do PowerGrade usado como base, quando houver */}
+      {color.powergrade && color.powergrade.name && (
+        <div style={{
+          marginTop: 14,
+          fontFamily: FONTS.mono, fontSize: 10, letterSpacing: '0.2em',
+          textTransform: 'uppercase', color: PALETTE.muted,
+        }}>
+          {t.powergrade}:{' '}
+          {color.powergrade.url ? (
+            <a
+              href={color.powergrade.url}
+              target="_blank" rel="noopener noreferrer"
+              style={{ color: PALETTE.fg, textDecoration: 'none', borderBottom: `1px solid ${PALETTE.fg}40` }}
+              onMouseEnter={(e) => { e.currentTarget.style.color = PALETTE.accent; e.currentTarget.style.borderBottomColor = PALETTE.accent; }}
+              onMouseLeave={(e) => { e.currentTarget.style.color = PALETTE.fg; e.currentTarget.style.borderBottomColor = PALETTE.fg + '40'; }}
+            >
+              {color.powergrade.name} ↗
+            </a>
+          ) : color.powergrade.name}
+        </div>
+      )}
 
       {/* Antes / depois. Com as duas imagens vira comparador arrastável;
           faltando alguma, cai nas molduras lado a lado pra mostrar o que

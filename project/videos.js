@@ -30,6 +30,7 @@
        after:  './color/nome-depois.jpg',  // frame tratado
        nodes:  './color/nome-nodes.jpg',   // print da árvore de nodes
        breakdown: { streamId: '', youtubeId: '' },  // vídeo do processo
+       powergrade: { name: '', url: '' },  // powergrade usado como base
      },
 
    ── CAPA (opcional) ──
@@ -54,6 +55,10 @@ window.VIDEOS = [
       before: './color/Antes-CasamentoGrazi.png',
       after:  './color/Depois-CasamentoGrazi.png',
       nodes:  './color/Node-CasamentoGrazi.png',
+      powergrade: {
+        name: 'VCF PowerGrade V02',
+        url: 'https://vincentcolorfilm.com/products/vcf-powergrade-v02',
+      },
       breakdown: { streamId: '', youtubeId: '' },
     },
     description: 'Trabalho freelancer de edição para Frame Company.\nDireção, direção de fotografia e operação de câmera: Frame Company.',
