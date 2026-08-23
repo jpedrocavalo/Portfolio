@@ -50,6 +50,12 @@ window.VIDEOS = [
     category: 'Wedding film',
     streamId: '9e9771ce9e088a4aa0f8ae636945b9eb',
     youtubeId: 'uMAAN81NUl4',
+    color: {
+      before: './color/Antes-CasamentoGrazi.png',
+      after:  './color/Depois-CasamentoGrazi.png',
+      nodes:  './color/Node-CasamentoGrazi.png',
+      breakdown: { streamId: '', youtubeId: '' },
+    },
     description: 'Trabalho freelancer de edição para Frame Company.\nDireção, direção de fotografia e operação de câmera: Frame Company.',
   },
   {
@@ -59,6 +65,12 @@ window.VIDEOS = [
     category: 'Desfile',
     streamId: '2f0edcdeec3d19dfdc37d62c0458d121',
     youtubeId: '4FjEpWqRnqs',
+    color: {
+      before: './color/Antes-DesfileCCR.png',
+      after:  './color/Depois-DesfileCCR.png',
+      nodes:  './color/Node-DesfileCCR.png',
+      breakdown: { streamId: '', youtubeId: '' },
+    },
     description: 'Trabalho freelancer de edição para Frame Company.\nDireção, direção de fotografia e operação de câmera: Frame Company.',
   },
   {
@@ -68,6 +80,13 @@ window.VIDEOS = [
     category: 'Graduation film',
     streamId: 'e18e064a56ced6553e0ec220def58618',
     youtubeId: 'i2zMYQGhsQU',
+    // Frames verticais (9:16) — a moldura se adapta sozinha.
+    color: {
+      before: './color/Antes-FormaturaGio.png',
+      after:  './color/Depois-FormaturaGio.png',
+      nodes:  './color/Node-FormaturaGio.png',
+      breakdown: { streamId: '', youtubeId: '' },
+    },
     description: 'Trabalho freelancer de edição para Frame Company.\nDireção, direção de fotografia e operação de câmera: Frame Company.',
   },
   {

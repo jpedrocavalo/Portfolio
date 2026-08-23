@@ -100,8 +100,37 @@ function Header({ fonts, palette, lang, setLang, onContactOpen }) {
 // Some inteiro quando nada foi preenchido ainda; o que faltar dentro
 // de um bloco já iniciado aparece como espaço reservado.
 
+// Descobre a proporção real da imagem. Assim a moldura se molda ao
+// arquivo em vez de recortá-lo: frame vertical, print de node largo,
+// cada um entra inteiro sem precisar de configuração.
+function useImageRatio(src, fallback) {
+  const [ratio, setRatio] = React.useState(null);
+  React.useEffect(() => {
+    setRatio(null);
+    if (!src) return;
+    let vivo = true;
+    const im = new Image();
+    im.onload = () => { if (vivo && im.naturalHeight) setRatio(im.naturalWidth / im.naturalHeight); };
+    im.src = src;
+    return () => { vivo = false; };
+  }, [src]);
+  return ratio || fallback;
+}
+
+// Limita a altura pra um frame vertical não virar uma coluna gigante.
+function molduraFluida(ratio) {
+  return {
+    width: '100%',
+    maxWidth: `min(100%, calc(78vh * ${ratio}))`,
+    aspectRatio: String(ratio),
+    margin: '0 auto',
+  };
+}
+
 // Moldura com legenda em cima. Mostra a imagem ou o espaço vazio.
-function ColorSlot({ label, src, alt, ratio, isMobile, soonLabel }) {
+function ColorSlot({ label, src, alt, ratio, isMobile, soonLabel, fit }) {
+  const real = useImageRatio(src, null);
+  const usada = real || ratio;
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minWidth: 0 }}>
       <div style={{
@@ -112,14 +141,14 @@ function ColorSlot({ label, src, alt, ratio, isMobile, soonLabel }) {
       </div>
       <div style={{
         position: 'relative',
-        aspectRatio: ratio,
+        ...(real ? molduraFluida(real) : { aspectRatio: usada }),
         background: src ? '#000' : `linear-gradient(135deg, ${PALETTE.accent}18, ${PALETTE.fg}06)`,
         border: `1px solid ${PALETTE.fg}1a`,
         overflow: 'hidden',
       }}>
         {src ? (
           <img src={src} alt={alt}
-            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
+            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: fit || 'cover' }} />
         ) : (
           <>
             <div style={{
@@ -180,6 +209,10 @@ function BeforeAfterSlider({ before, after, labelBefore, labelAfter, isMobile })
     if (e.key === 'End') { setPos(100); e.preventDefault(); }
   };
 
+  // A moldura assume a proporção do arquivo — serve frame 16:9 e vertical
+  // sem recortar nenhum dos dois.
+  const ratio = useImageRatio(after, null) || 16 / 9;
+
   const imgStyle = {
     position: 'absolute', inset: 0, width: '100%', height: '100%',
     objectFit: 'cover', userSelect: 'none', pointerEvents: 'none',
@@ -208,7 +241,7 @@ function BeforeAfterSlider({ before, after, labelBefore, labelAfter, isMobile })
       onKeyDown={onKeyDown}
       style={{
         position: 'relative',
-        aspectRatio: '16 / 9',
+        ...molduraFluida(ratio),
         background: '#000',
         border: `1px solid ${PALETTE.fg}1a`,
         overflow: 'hidden',
@@ -325,10 +358,11 @@ function ColorSection({ color, isMobile, T }) {
         )}
       </div>
 
-      {/* Estrutura de nodes — larga, ocupa a linha inteira */}
+      {/* Estrutura de nodes — contain pra não cortar nenhum node */}
       <div style={{ marginTop: isMobile ? 24 : 32 }}>
         <ColorSlot label={t.nodes} src={color.nodes} alt={t.nodes}
-          ratio={isMobile ? '16 / 9' : '21 / 9'} isMobile={isMobile} soonLabel={t.soon} />
+          ratio={isMobile ? '16 / 9' : '21 / 9'} isMobile={isMobile}
+          soonLabel={t.soon} fit="contain" />
       </div>
 
       {/* Vídeo do breakdown */}
