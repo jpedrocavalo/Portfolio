@@ -21,8 +21,13 @@ casamento-guara-nodes.jpg
 | `-depois`  | o mesmo frame, tratado           | JPG 1920×1080           |
 | `-nodes`   | print da árvore de nodes         | PNG, largo (21:9 fica melhor) |
 
-O **antes** e o **depois** precisam ser exatamente o mesmo frame — a
-comparação só funciona se nada além da cor mudar entre os dois.
+O **antes** e o **depois** precisam ser exatamente o mesmo frame, no
+mesmo tamanho. As duas ficam sobrepostas num comparador com divisória
+arrastável, então qualquer diferença de enquadramento ou de resolução
+aparece como um "pulo" na imagem ao arrastar.
+
+Com só uma das duas preenchidas, o comparador não aparece — as molduras
+ficam lado a lado até a outra chegar.
 
 O vídeo do breakdown não vem daqui: sobe pro Cloudflare Stream (ou
 YouTube) e entra como `breakdown: { streamId: '...' }`.

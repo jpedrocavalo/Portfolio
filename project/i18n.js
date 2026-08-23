@@ -82,6 +82,7 @@ window.I18N = {
       after:     'Depois',
       nodes:     'Estrutura de nodes',
       breakdown: 'Breakdown da cor',
+      drag:      'arraste para comparar',
       soon:      'Em breve',
     },
 
@@ -171,6 +172,7 @@ window.I18N = {
       after:     'After',
       nodes:     'Node tree',
       breakdown: 'Grade breakdown',
+      drag:      'drag to compare',
       soon:      'Coming soon',
     },
 

@@ -141,6 +141,125 @@ function ColorSlot({ label, src, alt, ratio, isMobile, soonLabel }) {
   );
 }
 
+// Comparador antes/depois: as duas imagens sobrepostas, com uma divisória
+// arrastável. A da esquerda é o "antes", recortada até a posição da alça.
+function BeforeAfterSlider({ before, after, labelBefore, labelAfter, isMobile }) {
+  const [pos, setPos] = React.useState(50);
+  // O ref é a fonte da verdade do arrasto; o state só muda o cursor.
+  // Depender do state aqui abriria uma corrida: entre soltar e o React
+  // re-renderizar, o listener antigo ainda pegaria um pointermove.
+  const draggingRef = React.useRef(false);
+  const [dragging, setDragging] = React.useState(false);
+  const boxRef = React.useRef(null);
+
+  const posFromX = React.useCallback((clientX) => {
+    const el = boxRef.current;
+    if (!el) return;
+    const r = el.getBoundingClientRect();
+    setPos(Math.min(100, Math.max(0, ((clientX - r.left) / r.width) * 100)));
+  }, []);
+
+  React.useEffect(() => {
+    const move = (e) => { if (draggingRef.current) posFromX(e.clientX); };
+    const stop = () => { draggingRef.current = false; setDragging(false); };
+    window.addEventListener('pointermove', move);
+    window.addEventListener('pointerup', stop);
+    window.addEventListener('pointercancel', stop);
+    return () => {
+      window.removeEventListener('pointermove', move);
+      window.removeEventListener('pointerup', stop);
+      window.removeEventListener('pointercancel', stop);
+    };
+  }, [posFromX]);
+
+  const onKeyDown = (e) => {
+    const passo = e.shiftKey ? 10 : 2;
+    if (e.key === 'ArrowLeft') { setPos((p) => Math.max(0, p - passo)); e.preventDefault(); }
+    if (e.key === 'ArrowRight') { setPos((p) => Math.min(100, p + passo)); e.preventDefault(); }
+    if (e.key === 'Home') { setPos(0); e.preventDefault(); }
+    if (e.key === 'End') { setPos(100); e.preventDefault(); }
+  };
+
+  const imgStyle = {
+    position: 'absolute', inset: 0, width: '100%', height: '100%',
+    objectFit: 'cover', userSelect: 'none', pointerEvents: 'none',
+  };
+
+  const tag = (lado) => ({
+    position: 'absolute', top: 12, [lado]: 12,
+    padding: '5px 9px',
+    background: 'rgba(10,10,10,0.6)',
+    backdropFilter: 'blur(6px)', WebkitBackdropFilter: 'blur(6px)',
+    fontFamily: FONTS.mono, fontSize: 9, letterSpacing: '0.25em',
+    textTransform: 'uppercase', color: 'rgba(245,241,232,0.9)',
+    pointerEvents: 'none',
+  });
+
+  return (
+    <div
+      ref={boxRef}
+      role="slider"
+      tabIndex={0}
+      aria-label={`${labelBefore} / ${labelAfter}`}
+      aria-valuemin={0}
+      aria-valuemax={100}
+      aria-valuenow={Math.round(pos)}
+      onPointerDown={(e) => { draggingRef.current = true; setDragging(true); posFromX(e.clientX); }}
+      onKeyDown={onKeyDown}
+      style={{
+        position: 'relative',
+        aspectRatio: '16 / 9',
+        background: '#000',
+        border: `1px solid ${PALETTE.fg}1a`,
+        overflow: 'hidden',
+        cursor: dragging ? 'grabbing' : 'ew-resize',
+        // pan-y deixa o dedo rolar a página na vertical e só captura o
+        // arrasto horizontal, que é o que a divisória usa.
+        touchAction: 'pan-y',
+        outline: 'none',
+      }}
+    >
+      {/* Depois — base, ocupa tudo */}
+      <img src={after} alt={labelAfter} draggable={false} style={imgStyle} />
+
+      {/* Antes — por cima, recortada até a divisória */}
+      <img
+        src={before} alt={labelBefore} draggable={false}
+        style={{ ...imgStyle, clipPath: `inset(0 ${100 - pos}% 0 0)` }}
+      />
+
+      <div style={tag('left')}>{labelBefore}</div>
+      <div style={tag('right')}>{labelAfter}</div>
+
+      {/* Divisória */}
+      <div style={{
+        position: 'absolute', top: 0, bottom: 0, left: `${pos}%`,
+        width: 2, marginLeft: -1,
+        background: PALETTE.fg,
+        boxShadow: '0 0 12px rgba(0,0,0,0.5)',
+        pointerEvents: 'none',
+      }} />
+
+      {/* Alça */}
+      <div style={{
+        position: 'absolute', top: '50%', left: `${pos}%`,
+        transform: 'translate(-50%, -50%)',
+        width: isMobile ? 36 : 42, height: isMobile ? 36 : 42,
+        borderRadius: '50%',
+        border: `1.5px solid ${PALETTE.fg}`,
+        background: 'rgba(10,10,10,0.55)',
+        backdropFilter: 'blur(6px)', WebkitBackdropFilter: 'blur(6px)',
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        gap: 5,
+        color: PALETTE.fg, fontSize: 11, lineHeight: 1,
+        pointerEvents: 'none',
+      }}>
+        <span>‹</span><span>›</span>
+      </div>
+    </div>
+  );
+}
+
 function ColorSection({ color, isMobile, T }) {
   if (!color) return null;
 
@@ -172,17 +291,38 @@ function ColorSection({ color, isMobile, T }) {
         {t.heading}
       </h2>
 
-      {/* Antes / depois, lado a lado no desktop */}
-      <div style={{
-        marginTop: isMobile ? 32 : 44,
-        display: 'grid',
-        gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
-        gap: isMobile ? 20 : 24,
-      }}>
-        <ColorSlot label={t.before} src={color.before} alt={t.before}
-          ratio="16 / 9" isMobile={isMobile} soonLabel={t.soon} />
-        <ColorSlot label={t.after} src={color.after} alt={t.after}
-          ratio="16 / 9" isMobile={isMobile} soonLabel={t.soon} />
+      {/* Antes / depois. Com as duas imagens vira comparador arrastável;
+          faltando alguma, cai nas molduras lado a lado pra mostrar o que
+          ainda não foi preenchido. */}
+      <div style={{ marginTop: isMobile ? 32 : 44 }}>
+        {color.before && color.after ? (
+          <>
+            <div style={{
+              fontFamily: FONTS.mono, fontSize: 10, letterSpacing: '0.25em',
+              textTransform: 'uppercase', color: PALETTE.muted, marginBottom: 10,
+            }}>
+              {t.before} / {t.after} — {t.drag}
+            </div>
+            <BeforeAfterSlider
+              before={color.before}
+              after={color.after}
+              labelBefore={t.before}
+              labelAfter={t.after}
+              isMobile={isMobile}
+            />
+          </>
+        ) : (
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
+            gap: isMobile ? 20 : 24,
+          }}>
+            <ColorSlot label={t.before} src={color.before} alt={t.before}
+              ratio="16 / 9" isMobile={isMobile} soonLabel={t.soon} />
+            <ColorSlot label={t.after} src={color.after} alt={t.after}
+              ratio="16 / 9" isMobile={isMobile} soonLabel={t.soon} />
+          </div>
+        )}
       </div>
 
       {/* Estrutura de nodes — larga, ocupa a linha inteira */}
