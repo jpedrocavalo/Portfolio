@@ -74,6 +74,17 @@ window.I18N = {
       selectedWork: 'Trabalho selecionado',
     },
 
+    // ── Bloco de color na página de vídeo ──
+    colorGrade: {
+      label:     'Color',
+      heading:   'Tratamento de cor.',
+      before:    'Antes',
+      after:     'Depois',
+      nodes:     'Estrutura de nodes',
+      breakdown: 'Breakdown da cor',
+      soon:      'Em breve',
+    },
+
     // ── Página de todos os trabalhos (works.html) ──
     works: {
       allWorks:        'Todos os trabalhos',
@@ -151,6 +162,16 @@ window.I18N = {
     video: {
       latestWork:   'Latest work',
       selectedWork: 'Selected work',
+    },
+
+    colorGrade: {
+      label:     'Color',
+      heading:   'Color grade.',
+      before:    'Before',
+      after:     'After',
+      nodes:     'Node tree',
+      breakdown: 'Grade breakdown',
+      soon:      'Coming soon',
     },
 
     works: {

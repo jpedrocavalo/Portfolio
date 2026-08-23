@@ -20,6 +20,18 @@
 
    featured: false  → tira só dos selecionados; continua no "Ver tudo".
 
+   ── COLOR (opcional) ──
+   Aparece na página do vídeo, abaixo da descrição. Preencha só o que
+   já tiver — o resto vira espaço reservado. Se nada estiver preenchido,
+   a seção inteira não aparece.
+
+     color: {
+       before: './color/nome-antes.jpg',   // frame sem tratamento
+       after:  './color/nome-depois.jpg',  // frame tratado
+       nodes:  './color/nome-nodes.jpg',   // print da árvore de nodes
+       breakdown: { streamId: '', youtubeId: '' },  // vídeo do processo
+     },
+
    ── CAPA (opcional) ──
    Por padrão a capa vem do YouTube (a que você subiu lá), mesmo com o
    vídeo tocando pelo Cloudflare. Pra mudar isso num vídeo só:

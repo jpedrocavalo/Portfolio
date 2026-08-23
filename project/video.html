@@ -93,6 +93,147 @@ function Header({ fonts, palette, lang, setLang, onContactOpen }) {
   );
 }
 
+// ─── Bloco de COLOR ────────────────────────────────────────────
+// Alimentado pelo campo `color` do vídeo em videos.js:
+//   before / after / nodes → caminhos de imagem
+//   breakdown              → { streamId } ou { youtubeId }
+// Some inteiro quando nada foi preenchido ainda; o que faltar dentro
+// de um bloco já iniciado aparece como espaço reservado.
+
+// Moldura com legenda em cima. Mostra a imagem ou o espaço vazio.
+function ColorSlot({ label, src, alt, ratio, isMobile, soonLabel }) {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', minWidth: 0 }}>
+      <div style={{
+        fontFamily: FONTS.mono, fontSize: 10, letterSpacing: '0.25em',
+        textTransform: 'uppercase', color: PALETTE.muted, marginBottom: 10,
+      }}>
+        {label}
+      </div>
+      <div style={{
+        position: 'relative',
+        aspectRatio: ratio,
+        background: src ? '#000' : `linear-gradient(135deg, ${PALETTE.accent}18, ${PALETTE.fg}06)`,
+        border: `1px solid ${PALETTE.fg}1a`,
+        overflow: 'hidden',
+      }}>
+        {src ? (
+          <img src={src} alt={alt}
+            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
+        ) : (
+          <>
+            <div style={{
+              position: 'absolute', inset: 0,
+              background: `repeating-linear-gradient(90deg, transparent, transparent 26px, ${PALETTE.fg}08 26px, ${PALETTE.fg}08 28px)`,
+            }} />
+            <div style={{
+              position: 'absolute', inset: 0,
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              fontFamily: FONTS.mono, fontSize: 9, letterSpacing: '0.3em',
+              textTransform: 'uppercase', color: 'rgba(245,241,232,0.3)',
+            }}>
+              {soonLabel}
+            </div>
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function ColorSection({ color, isMobile, T }) {
+  if (!color) return null;
+
+  const breakdown = color.breakdown;
+  const temAlgo = !!(color.before || color.after || color.nodes || window.hasMedia(breakdown));
+  if (!temAlgo) return null;
+
+  const t = T.colorGrade;
+
+  return (
+    <div style={{
+      width: '100%', maxWidth: 1100,
+      marginTop: isMobile ? 48 : 80,
+      paddingTop: isMobile ? 40 : 56,
+      borderTop: '1px solid rgba(255,255,255,0.08)',
+    }}>
+      <div style={{
+        fontFamily: FONTS.mono, fontSize: 11, letterSpacing: '0.3em',
+        textTransform: 'uppercase', color: PALETTE.accent, marginBottom: 14,
+      }}>
+        {t.label}
+      </div>
+      <h2 style={{
+        fontFamily: FONTS.display,
+        fontSize: isMobile ? 'clamp(28px, 8vw, 40px)' : 'clamp(36px, 3.4vw, 60px)',
+        fontWeight: 300, fontStyle: 'italic',
+        letterSpacing: '-0.03em', lineHeight: 1, margin: 0,
+      }}>
+        {t.heading}
+      </h2>
+
+      {/* Antes / depois, lado a lado no desktop */}
+      <div style={{
+        marginTop: isMobile ? 32 : 44,
+        display: 'grid',
+        gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
+        gap: isMobile ? 20 : 24,
+      }}>
+        <ColorSlot label={t.before} src={color.before} alt={t.before}
+          ratio="16 / 9" isMobile={isMobile} soonLabel={t.soon} />
+        <ColorSlot label={t.after} src={color.after} alt={t.after}
+          ratio="16 / 9" isMobile={isMobile} soonLabel={t.soon} />
+      </div>
+
+      {/* Estrutura de nodes — larga, ocupa a linha inteira */}
+      <div style={{ marginTop: isMobile ? 24 : 32 }}>
+        <ColorSlot label={t.nodes} src={color.nodes} alt={t.nodes}
+          ratio={isMobile ? '16 / 9' : '21 / 9'} isMobile={isMobile} soonLabel={t.soon} />
+      </div>
+
+      {/* Vídeo do breakdown */}
+      <div style={{ marginTop: isMobile ? 24 : 32 }}>
+        <div style={{
+          fontFamily: FONTS.mono, fontSize: 10, letterSpacing: '0.25em',
+          textTransform: 'uppercase', color: PALETTE.muted, marginBottom: 10,
+        }}>
+          {t.breakdown}
+        </div>
+        <div style={{
+          position: 'relative', aspectRatio: '16 / 9',
+          background: `linear-gradient(135deg, ${PALETTE.accent}18, ${PALETTE.fg}06)`,
+          border: `1px solid ${PALETTE.fg}1a`,
+          overflow: 'hidden',
+        }}>
+          {window.hasMedia(breakdown) ? (
+            <iframe
+              src={window.mediaPlayer(breakdown)}
+              allow={window.MEDIA_IFRAME_ALLOW}
+              allowFullScreen
+              style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', border: 'none' }}
+            />
+          ) : (
+            <>
+              <div style={{
+                position: 'absolute', inset: 0,
+                background: `repeating-linear-gradient(90deg, transparent, transparent 32px, ${PALETTE.fg}08 32px, ${PALETTE.fg}08 34px)`,
+              }} />
+              <div style={{
+                position: 'absolute', inset: 0,
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                fontFamily: FONTS.mono, fontSize: 9, letterSpacing: '0.3em',
+                textTransform: 'uppercase', color: 'rgba(245,241,232,0.3)',
+              }}>
+                {t.soon}
+              </div>
+            </>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function App() {
   const v = VIDEO;
   const isMobile = useIsMobile();
@@ -198,12 +339,17 @@ function App() {
           }}>
             {v.description}
           </p>
+        </div>
 
-          {/* Botão voltar → works.html (mesma página do "Ver tudo") */}
+        {/* Color — antes, depois, nodes e breakdown */}
+        <ColorSection color={v.color} isMobile={isMobile} T={T} />
+
+        {/* Botão voltar → works.html (mesma página do "Ver tudo") */}
+        <div style={{ width: '100%', maxWidth: 1100, marginTop: isMobile ? 40 : 56 }}>
           <a href="./works.html" style={{
             fontFamily: FONTS.mono, fontSize: 11, letterSpacing: '0.3em',
             textTransform: 'uppercase', color: PALETTE.accent,
-            textDecoration: 'none', marginTop: 8,
+            textDecoration: 'none',
           }}>
             ← {T.works.allWorks}
           </a>
