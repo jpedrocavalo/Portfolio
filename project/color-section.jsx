@@ -327,7 +327,9 @@ function ColorSection({ color, isMobile, lang, compact }) {
         <CreditoBase label={t.lut} item={color.lut} />
       </div>
 
-      {/* Vídeo do breakdown */}
+      {/* Vídeo do breakdown. Só entra quando o trabalho declara o campo:
+          sem a chave `breakdown`, nem o espaço reservado aparece. */}
+      {breakdown && (
       <div style={{ marginTop: isMobile ? 24 : 32 }}>
         <div style={{
           fontFamily: CS_FONTS.mono, fontSize: 10, letterSpacing: '0.25em',
@@ -366,6 +368,7 @@ function ColorSection({ color, isMobile, lang, compact }) {
           )}
         </div>
       </div>
+      )}
     </div>
   );
 }

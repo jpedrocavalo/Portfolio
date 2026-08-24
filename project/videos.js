@@ -29,7 +29,8 @@
        before: './color/nome-antes.jpg',   // frame sem tratamento
        after:  './color/nome-depois.jpg',  // frame tratado
        nodes:  './color/nome-nodes.jpg',   // print da árvore de nodes
-       breakdown: { streamId: '', youtubeId: '' },  // vídeo do processo
+       // vídeo do processo — sem esta chave o bloco nem aparece
+       breakdown: { streamId: '' },
        // Bases usadas — aparecem abaixo do print de nodes. Pode ter as duas.
        powergrade: { name: '', url: '' },
        lut:        { name: '', url: '' },
@@ -61,7 +62,7 @@ window.VIDEOS = [
         name: 'VCF PowerGrade V02',
         url: 'https://vincentcolorfilm.com/products/vcf-powergrade-v02',
       },
-      breakdown: { streamId: '', youtubeId: '' },
+      breakdown: { streamId: 'f0a000100232ad45614997b60eafa9e8' },
     },
     description: 'Trabalho freelancer de edição para Frame Company.\nDireção, direção de fotografia e operação de câmera: Frame Company.',
   },
@@ -76,7 +77,7 @@ window.VIDEOS = [
       before: './color/Antes-DesfileCCR.png',
       after:  './color/Depois-DesfileCCR.png',
       nodes:  './color/Node-DesfileCCR.png',
-      breakdown: { streamId: '', youtubeId: '' },
+      breakdown: { streamId: '8f60ffde5c574b441c8f7cfb0fa993ce' },
     },
     description: 'Trabalho freelancer de edição para Frame Company.\nDireção, direção de fotografia e operação de câmera: Frame Company.',
   },
@@ -96,7 +97,7 @@ window.VIDEOS = [
         name: 'LA CREME',
         url: 'https://looks.fjr.io/',
       },
-      breakdown: { streamId: '', youtubeId: '' },
+      // Sem breakdown ainda — sem a chave, o bloco nem aparece.
     },
     description: 'Trabalho freelancer de edição para Frame Company.\nDireção, direção de fotografia e operação de câmera: Frame Company.',
   },

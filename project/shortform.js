@@ -26,7 +26,8 @@
        nodes:  './color/nome-nodes.png',
        powergrade: { name: '', url: '' },
        lut:        { name: '', url: '' },
-       breakdown: { streamId: '', youtubeId: '' },
+       // opcional: sem esta chave, o bloco do breakdown nem aparece
+       breakdown: { streamId: '' },
      },
    ════════════════════════════════════════════════════════════════ */
 window.SHORTFORM = [
@@ -45,7 +46,6 @@ window.SHORTFORM = [
         name: 'LA CREME',
         url: 'https://looks.fjr.io/',
       },
-      breakdown: { streamId: '', youtubeId: '' },
     },
     description: 'Trabalho freelancer de edição para Frame Company.\nDireção, direção de fotografia e operação de câmera: Frame Company.',
   },
@@ -63,7 +63,6 @@ window.SHORTFORM = [
         name: 'LA CREME',
         url: 'https://looks.fjr.io/',
       },
-      breakdown: { streamId: '', youtubeId: '' },
     },
     description: 'Material do Lucas haither.',
   },
