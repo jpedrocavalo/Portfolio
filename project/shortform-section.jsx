@@ -22,7 +22,7 @@ const SF_FONTS = {
 // streamId, YouTube caso contrário.
 
 // ─── Modal estilo Instagram ────────────────────────────────────
-function ShortformModal({ item, onClose, isMobile }) {
+function ShortformModal({ item, onClose, isMobile, lang }) {
   const { useEffect } = React;
 
   useEffect(() => {
@@ -152,6 +152,11 @@ function ShortformModal({ item, onClose, isMobile }) {
             >
               Ver no YouTube ↗
             </a>
+          )}
+
+          {/* Bloco de color, quando o short-form tem tratamento documentado */}
+          {window.ColorSection && (
+            <window.ColorSection color={item.color} isMobile={isMobile} lang={lang} compact />
           )}
         </div>
       </div>
@@ -355,6 +360,7 @@ function ShortformSection({ isMobile, lang }) {
           item={openIndex !== null ? items[openIndex] : null}
           onClose={() => setOpenIndex(null)}
           isMobile={isMobile}
+          lang={lang}
         />
         <style>{`
           .sf-noscrollbar::-webkit-scrollbar { display: none; }
@@ -413,6 +419,7 @@ function ShortformSection({ isMobile, lang }) {
         item={openIndex !== null ? items[openIndex] : null}
         onClose={() => setOpenIndex(null)}
         isMobile={isMobile}
+        lang={lang}
       />
 
       <style>{`

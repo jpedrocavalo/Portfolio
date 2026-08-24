@@ -30,6 +30,7 @@
 <script src="media.js"></script>
 <script src="shortform.js"></script>
 <script type="text/babel" src="contact-modal.jsx"></script>
+<script type="text/babel" src="color-section.jsx"></script>
 <script type="text/babel" src="shortform-section.jsx"></script>
 
 <script type="text/babel">
@@ -261,6 +262,7 @@ function App() {
           item={openIndex !== null ? SHORTFORM[openIndex] : null}
           onClose={() => setOpenIndex(null)}
           isMobile={isMobile}
+          lang={lang}
         />
       )}
     </div>
