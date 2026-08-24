@@ -59,6 +59,10 @@ window.SHORTFORM = [
       before: './color/Antes-ReelsLucas.png',
       after:  './color/Depois-ReelsLucas.png',
       nodes:  './color/Node-ReelsLucas.png',
+      lut: {
+        name: 'LA CREME',
+        url: 'https://looks.fjr.io/',
+      },
       breakdown: { streamId: '', youtubeId: '' },
     },
     description: 'Material do Lucas haither.',
