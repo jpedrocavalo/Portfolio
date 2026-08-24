@@ -47,7 +47,10 @@ function ShortformModal({ item, onClose, isMobile, lang }) {
         background: 'rgba(8,8,8,0.86)',
         backdropFilter: 'blur(28px)',
         WebkitBackdropFilter: 'blur(28px)',
-        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        // flex-start + margin:auto no filho em vez de align-items:center.
+        // Centralizado, "center" corta o topo quando o conteúdo passa da
+        // altura da tela e essa parte fica impossível de alcançar rolando.
+        display: 'flex', alignItems: 'flex-start', justifyContent: 'center',
         padding: isMobile ? 16 : 40,
         overflowY: 'auto',
       }}
@@ -67,12 +70,14 @@ function ShortformModal({ item, onClose, isMobile, lang }) {
         onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
       >×</button>
 
-      {/* Quadro: vídeo à esquerda, texto à direita */}
+      {/* Quadro: vídeo + texto em cima, color ocupando a largura embaixo */}
       <div
         onClick={(e) => e.stopPropagation()}
         style={{
+          // margin auto centraliza quando sobra espaço, sem prender o topo
+          margin: 'auto',
           display: 'flex',
-          flexDirection: isMobile ? 'column' : 'row',
+          flexDirection: 'column',
           background: '#0d0d0d',
           border: '1px solid rgba(255,255,255,0.1)',
           borderRadius: 4,
@@ -82,6 +87,7 @@ function ShortformModal({ item, onClose, isMobile, lang }) {
           boxShadow: '0 30px 90px rgba(0,0,0,0.65)',
         }}
       >
+        <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row' }}>
         {/* Vídeo 9:16 */}
         <div style={{
           flexShrink: 0,
@@ -153,12 +159,16 @@ function ShortformModal({ item, onClose, isMobile, lang }) {
               Ver no YouTube ↗
             </a>
           )}
-
-          {/* Bloco de color, quando o short-form tem tratamento documentado */}
-          {window.ColorSection && (
-            <window.ColorSection color={item.color} isMobile={isMobile} lang={lang} compact />
-          )}
         </div>
+        </div>
+
+        {/* Color — largura inteira embaixo, pra não esticar a coluna do texto
+            e deixar a do vídeo vazia */}
+        {window.ColorSection && item.color && (
+          <div style={{ padding: isMobile ? '0 20px 28px' : '0 44px 48px' }}>
+            <window.ColorSection color={item.color} isMobile={isMobile} lang={lang} compact />
+          </div>
+        )}
       </div>
     </div>
   );
