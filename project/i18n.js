@@ -58,7 +58,7 @@ window.I18N = {
       nowShowing: 'Em cena agora',
     },
 
-    // ── Reel (reel.html / v1-showreel) ──
+    // ── Reel (index.html, a home / v1-showreel) ──
     reel: {
       heroLabel:       '[001], Editor / Reel',
       heroDescription: 'Construindo histórias cinematográficas para marcas, artistas e o que está entre eles. Disponível para novos projetos.',

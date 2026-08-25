@@ -85,7 +85,8 @@ function Header({ fonts, palette, lang, setLang, onContactOpen }) {
       </div>
 
       <div style={{ display: 'flex', gap: isMobile ? 20 : 32 }}>
-        <a href="./reel.html" style={{ color: 'inherit', textDecoration: 'none' }}>{N.reel}</a>
+        <a href="./index.html" style={{ color: 'inherit', textDecoration: 'none' }}>{N.reel}</a>
+        <a href="./about.html" style={{ color: 'inherit', textDecoration: 'none' }}>{N.about}</a>
         {!isMobile && (
           <span onClick={onContactOpen} style={{ cursor: 'pointer' }}>{N.contact}</span>
         )}

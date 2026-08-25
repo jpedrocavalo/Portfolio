@@ -131,7 +131,7 @@ function HeroShowreel({ palette, fonts, intensity, colorSrc, bwSrc, videoSrc, st
         </div>
 
         <div style={{ display: 'flex', gap: isMobile ? 20 : 32 }}>
-          <a href="./index.html" style={{ color: 'inherit', textDecoration: 'none', cursor: 'pointer' }}>{(T.nav.about || 'ABOUT').toUpperCase()}</a>
+          <a href="./about.html" style={{ color: 'inherit', textDecoration: 'none', cursor: 'pointer' }}>{(T.nav.about || 'ABOUT').toUpperCase()}</a>
           {!isMobile && (
             <a href="https://mail.google.com/mail/?view=cm&fs=1&to=jotapfilms@gmail.com" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'none', cursor: 'pointer' }}>{(T.nav.contact || 'CONTACT').toUpperCase()}</a>
           )}

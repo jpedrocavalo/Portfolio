@@ -138,8 +138,8 @@ function HeroProjector({ palette, fonts, intensity, colorSrc, bwSrc, lang, setLa
         </div>
 
         <div style={{ display: 'flex', gap: 32 }}>
-          <a href="./reel.html" style={{ color: 'inherit', textDecoration: 'none', cursor: 'pointer' }}>{T.nav.reel}</a>
-          <a href="./index.html" style={{ color: 'inherit', textDecoration: 'none', cursor: 'pointer' }}>{T.nav.about}</a>
+          <a href="./index.html" style={{ color: 'inherit', textDecoration: 'none', cursor: 'pointer' }}>{T.nav.reel}</a>
+          <a href="./about.html" style={{ color: 'inherit', textDecoration: 'none', cursor: 'pointer' }}>{T.nav.about}</a>
           <a href="https://mail.google.com/mail/?view=cm&fs=1&to=jotapfilms@gmail.com" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'none', cursor: 'pointer' }}>{T.nav.contact}</a>
         </div>
       </div>

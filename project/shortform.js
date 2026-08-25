@@ -2,7 +2,7 @@
    LISTA CENTRAL DE VÍDEOS SHORT-FORM (verticais 9:16)
    --------------------------------------------------------------
    Fonte única usada por:
-     • reel.html       — seção "Short-form" com scroll horizontal
+     • index.html (home) — seção "Short-form" com scroll horizontal
      • short-form.html — grid completo estilo Instagram
 
    streamId    = UID do Cloudflare Stream — tem prioridade

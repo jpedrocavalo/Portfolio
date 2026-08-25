@@ -2,7 +2,7 @@
    LISTA CENTRAL DE VÍDEOS DO PORTFÓLIO
    --------------------------------------------------------------
    Fonte única usada por:
-     • reel.html  — monta o grid "Selected Works" (cada card é clicável)
+     • index.html — a home, monta o grid "Selected Works" (cards clicáveis)
      • video.html — exibe a página de um vídeo (?v=índice)
 
    Índice 0 = mais recente. Ao adicionar um trabalho novo, coloque-o
@@ -16,7 +16,7 @@
 
    ── ONDE APARECE ──
    Por padrão o vídeo entra nos dois lugares: "Trabalhos selecionados"
-   (reel.html) e "Ver tudo" (works.html).
+   (na home) e "Ver tudo" (works.html).
 
    featured: false  → tira só dos selecionados; continua no "Ver tudo".
 

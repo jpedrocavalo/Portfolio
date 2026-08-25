@@ -43,7 +43,7 @@ const FONTS = {
   mono: '"JetBrains Mono", monospace',
 };
 
-// Dados vêm de shortform.js (fonte única, compartilhada com reel.html).
+// Dados vêm de shortform.js (fonte única, compartilhada com a home).
 // Capa e player vêm de media.js (Cloudflare Stream ou YouTube).
 const SHORTFORM = window.SHORTFORM || [];
 
@@ -70,7 +70,8 @@ function Header({ fonts, palette, lang, setLang, onContactOpen }) {
       </div>
 
       <div style={{ display: 'flex', gap: 32 }}>
-        <a href="./reel.html" style={{ color: 'inherit', textDecoration: 'none' }}>{N.reel}</a>
+        <a href="./index.html" style={{ color: 'inherit', textDecoration: 'none' }}>{N.reel}</a>
+        <a href="./about.html" style={{ color: 'inherit', textDecoration: 'none' }}>{N.about}</a>
         <span onClick={onContactOpen} style={{ cursor: 'pointer' }}>{N.contact}</span>
       </div>
     </div>
@@ -247,7 +248,7 @@ function App() {
           ))}
         </div>
 
-        <a href="./reel.html" style={{
+        <a href="./index.html" style={{
           display: 'inline-block', marginTop: 48,
           fontFamily: FONTS.mono, fontSize: 11, letterSpacing: '0.3em',
           textTransform: 'uppercase', color: PALETTE.accent, textDecoration: 'none',

@@ -68,7 +68,8 @@ function Header({ fonts, palette, lang, setLang, onContactOpen }) {
       </div>
 
       <div style={{ display: 'flex', gap: 32 }}>
-        <a href="./reel.html" style={{ color: 'inherit', textDecoration: 'none' }}>{N.reel}</a>
+        <a href="./index.html" style={{ color: 'inherit', textDecoration: 'none' }}>{N.reel}</a>
+        <a href="./about.html" style={{ color: 'inherit', textDecoration: 'none' }}>{N.about}</a>
         <span onClick={onContactOpen} style={{ cursor: 'pointer' }}>{N.contact}</span>
       </div>
     </div>
@@ -221,7 +222,7 @@ function App() {
           ))}
         </div>
 
-        <a href="./reel.html" style={{
+        <a href="./index.html" style={{
           display: 'inline-block', marginTop: 56,
           fontFamily: FONTS.mono, fontSize: 11, letterSpacing: '0.3em',
           textTransform: 'uppercase', color: PALETTE.accent, textDecoration: 'none',
