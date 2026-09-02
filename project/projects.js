@@ -20,19 +20,18 @@
 window.PROJECTS = [
   {
     title: 'COBRAC',
-    subtitle: '',
+    subtitle: 'Frame Company',
     year: '2026',
     cover: '',
-    description: '',
+    description: 'Congresso Brasileiro de Cirurgia e Traumatologia Buco-Maxilo-Facial.',
     videos: [
-      // Cada vídeo entra aqui, por exemplo:
-      // {
-      //   title: 'Abertura',
-      //   duration: '',
-      //   streamId: '',
-      //   youtubeId: '',
-      //   description: '',
-      // },
+      {
+        title: 'Abertura COBRAC',
+        duration: '',
+        streamId: '',
+        youtubeId: 'Lvz-7CaKMTU',
+        description: 'Trabalho de edição para o Congresso Brasileiro de cirurgia e traumatologia buco-maxilo facial.\n\nrepresentando a Frame Company',
+      },
     ],
   },
 ];
