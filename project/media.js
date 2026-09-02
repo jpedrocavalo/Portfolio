@@ -69,9 +69,15 @@ window.mediaThumbChain = function (item) {
   if (from === 'youtube' && item.youtubeId) urls.push(ytThumb(item.youtubeId, 'maxresdefault'));
 
   if (item.streamId) urls.push(cfThumb(item));
+
+  // Da melhor pra pior. Num vídeo recém-enviado o YouTube ainda não gerou
+  // todos os tamanhos e devolve o placeholder cinza nos que faltam — daí
+  // valer a pena listar os quatro em vez de só maxres e hq.
   if (item.youtubeId) {
-    urls.push(ytThumb(item.youtubeId, 'maxresdefault'));
-    urls.push(ytThumb(item.youtubeId, 'hqdefault'));
+    urls.push(ytThumb(item.youtubeId, 'maxresdefault')); // 1280x720
+    urls.push(ytThumb(item.youtubeId, 'sddefault'));     // 640x480
+    urls.push(ytThumb(item.youtubeId, 'hqdefault'));     // 480x360
+    urls.push(ytThumb(item.youtubeId, 'mqdefault'));     // 320x180
   }
 
   return [...new Set(urls)];

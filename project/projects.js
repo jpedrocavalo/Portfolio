@@ -26,10 +26,31 @@ window.PROJECTS = [
     description: 'Congresso Brasileiro de Cirurgia e Traumatologia Buco-Maxilo-Facial.',
     videos: [
       {
-        title: 'Abertura COBRAC',
+        title: 'Abertura - COBRAC',
         duration: '',
         streamId: '',
         youtubeId: 'Lvz-7CaKMTU',
+        description: 'Trabalho de edição para o Congresso Brasileiro de cirurgia e traumatologia buco-maxilo facial.\n\nrepresentando a Frame Company',
+      },
+      {
+        title: 'Dia 1 - COBRAC',
+        duration: '',
+        streamId: '',
+        youtubeId: 'My95rPharFA',
+        description: 'Trabalho de edição para o Congresso Brasileiro de cirurgia e traumatologia buco-maxilo facial.\n\nrepresentando a Frame Company',
+      },
+      {
+        title: 'Dia 2 - COBRAC',
+        duration: '',
+        streamId: '',
+        youtubeId: 'om_1w1xagQU',
+        description: 'Trabalho de edição para o Congresso Brasileiro de cirurgia e traumatologia buco-maxilo facial.\n\nrepresentando a Frame Company',
+      },
+      {
+        title: 'Dia 3 - COBRAC',
+        duration: '',
+        streamId: '',
+        youtubeId: 'QUlrdJqv6qU',
         description: 'Trabalho de edição para o Congresso Brasileiro de cirurgia e traumatologia buco-maxilo facial.\n\nrepresentando a Frame Company',
       },
     ],
