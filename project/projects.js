@@ -28,7 +28,7 @@ window.PROJECTS = [
     year: '2026',
     cover: './projects/cobrac.png',
     coverFit: 'contain',
-    description: 'Congresso Brasileiro de Cirurgia e Traumatologia Buco-Maxilo-Facial.',
+    description: 'Cobertura de edição Real Time e pós-evento no Congresso Brasileiro de Cirurgia e Traumatologia Buco-Maxilo-Facial.',
     videos: [
       {
         title: 'Abertura - COBRAC',
