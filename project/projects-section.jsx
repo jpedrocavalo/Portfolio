@@ -15,17 +15,27 @@ const PJ_FONTS = {
   mono: '"JetBrains Mono", monospace',
 };
 
+// Capa do primeiro vídeo do projeto — a reserva quando não há arte própria.
+function capaDoPrimeiroVideo(proj) {
+  const primeiro = ((proj && proj.videos) || []).find((v) => window.hasMedia(v));
+  return primeiro ? window.mediaThumb(primeiro) : '';
+}
+
 // Capa do projeto: a imagem própria, senão a do primeiro vídeo.
 window.projectCover = function (proj) {
   if (!proj) return '';
-  if (proj.cover) return proj.cover;
-  const primeiro = (proj.videos || []).find((v) => window.hasMedia(v));
-  return primeiro ? window.mediaThumb(primeiro) : '';
+  return proj.cover || capaDoPrimeiroVideo(proj);
 };
 
 function ProjectCard({ proj, index, isMobile, lang }) {
   const [hover, setHover] = React.useState(false);
+  // Quando a arte própria falha e entra a capa do vídeo, o tratamento de
+  // logo não vale mais: frame de vídeo pede preencher e escurecer.
+  const [usouReserva, setUsouReserva] = React.useState(false);
   const capa = window.projectCover(proj);
+  // coverFit 'contain' = arte/logo: mostra inteiro em vez de preencher cortando
+  const ehLogo = proj.coverFit === 'contain' && !usouReserva;
+  const fit = ehLogo ? 'contain' : 'cover';
   const qtd = (proj.videos || []).length;
   const T = (window.I18N && window.I18N[lang]) || window.I18N.pt;
   const t = T.projects;
@@ -52,10 +62,24 @@ function ProjectCard({ proj, index, isMobile, lang }) {
         {capa ? (
           <img
             src={capa} alt={proj.title}
+            // Se a arte não existir no caminho indicado, cai na capa do
+            // primeiro vídeo em vez de deixar imagem quebrada.
+            onError={(e) => {
+              const reserva = capaDoPrimeiroVideo(proj);
+              e.currentTarget.onerror = null;
+              if (reserva && e.currentTarget.src !== reserva) {
+                e.currentTarget.src = reserva;
+                setUsouReserva(true);
+              }
+            }}
             style={{
               position: 'absolute', inset: 0, width: '100%', height: '100%',
-              objectFit: 'cover',
-              filter: hover ? 'grayscale(0) brightness(0.75)' : 'grayscale(0.35) brightness(0.5)',
+              objectFit: fit,
+              // Logo precisa ficar legível: não escurece, e respira nas bordas.
+              padding: ehLogo ? (isMobile ? 28 : 40) : 0,
+              filter: ehLogo
+                ? 'none'
+                : (hover ? 'grayscale(0) brightness(0.75)' : 'grayscale(0.35) brightness(0.5)'),
               transform: hover ? 'scale(1.05)' : 'scale(1)',
               transition: 'transform 0.6s cubic-bezier(0.2,0.8,0.2,1), filter 0.4s',
             }}
@@ -67,10 +91,13 @@ function ProjectCard({ proj, index, isMobile, lang }) {
           }} />
         )}
 
-        {/* Vinheta pro nome ficar legível sobre qualquer imagem */}
+        {/* Vinheta pro nome ficar legível sobre qualquer imagem.
+            Sobre um logo, só a faixa de baixo — o resto lavaria a arte. */}
         <div style={{
           position: 'absolute', inset: 0,
-          background: 'linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, transparent 45%, rgba(0,0,0,0.8) 100%)',
+          background: ehLogo
+            ? 'linear-gradient(to bottom, transparent 55%, rgba(0,0,0,0.75) 100%)'
+            : 'linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, transparent 45%, rgba(0,0,0,0.8) 100%)',
         }} />
 
         {/* Nome do projeto sobre a capa */}

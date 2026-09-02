@@ -10,8 +10,12 @@
      title       → nome do evento/projeto (aparece na capa)
      subtitle    → cliente ou contexto, uma linha
      year        → ano
-     cover       → imagem da capa (ex: './projects/cobrac.jpg').
-                   Sem isso, usa a capa do primeiro vídeo da lista.
+     cover       → imagem da capa (ex: './projects/cobrac.png').
+                   Sem isso — ou se o arquivo não existir — usa a capa
+                   do primeiro vídeo da lista.
+     coverFit    → 'cover' (padrão) preenche o card e corta o excesso.
+                   'contain' mostra a arte inteira sem cortar e sem
+                   escurecer: use pra logo, cartaz, arte com texto.
      description → texto da página do projeto
      videos      → lista de vídeos, mesmo formato de videos.js:
                    { title, duration, streamId, youtubeId, description }
@@ -22,7 +26,8 @@ window.PROJECTS = [
     title: 'COBRAC',
     subtitle: 'Frame Company',
     year: '2026',
-    cover: '',
+    cover: './projects/cobrac.png',
+    coverFit: 'contain',
     description: 'Congresso Brasileiro de Cirurgia e Traumatologia Buco-Maxilo-Facial.',
     videos: [
       {
