@@ -26,8 +26,9 @@ window.PROJECTS = [
     title: 'COBRAC',
     subtitle: 'Frame Company',
     year: '2026',
-    cover: './projects/cobrac.png',
-    coverFit: 'contain',
+    // Vazio = usa a capa do primeiro vídeo. O logo segue em
+    // ./projects/cobrac.png se quiser voltar (com coverFit: 'contain').
+    cover: '',
     description: 'Cobertura de edição Real Time e pós-evento no Congresso Brasileiro de Cirurgia e Traumatologia Buco-Maxilo-Facial.',
     videos: [
       {
