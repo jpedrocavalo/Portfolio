@@ -19,6 +19,7 @@
    (na home) e "Ver tudo" (works.html).
 
    featured: false  → tira só dos selecionados; continua no "Ver tudo".
+   vertical: true   → vídeo 9:16 (Short/Reel): o player abre em pé.
 
    ── COLOR (opcional) ──
    Aparece na página do vídeo, abaixo da descrição. Preencha só o que

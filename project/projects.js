@@ -59,6 +59,22 @@ window.PROJECTS = [
         youtubeId: 'QUlrdJqv6qU',
         description: 'Trabalho de edição Real Time para o Congresso Brasileiro de cirurgia e traumatologia buco-maxilo facial.\n\nrepresentando a Frame Company',
       },
+      {
+        title: 'Stand da Altrum',
+        duration: '',
+        streamId: '',
+        youtubeId: 'BVEkWysWKMA',
+        // Short vertical: o player abre em 9:16 em vez de 16:9
+        vertical: true,
+        description: 'Trabalho de edição para o Congresso Brasileiro de cirurgia e traumatologia buco-maxilo facial.\n\nrepresentando a Frame Company',
+      },
+      {
+        title: 'Palestra Dr. Alexandre Jácome',
+        duration: '',
+        streamId: '',
+        youtubeId: 'hEzpZxtrGU8',
+        description: 'Trabalho de edição para o Congresso Brasileiro de cirurgia e traumatologia buco-maxilo facial.\n\nrepresentando a Frame Company',
+      },
     ],
   },
 ];

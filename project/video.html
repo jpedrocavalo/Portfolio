@@ -149,10 +149,14 @@ function App() {
           <span>{[v.year || (PROJETO && PROJETO.year), v.category].filter(Boolean).join(' · ')}</span>
         </div>
 
-        {/* Player do vídeo — 16:9 */}
+        {/* Player: 16:9, ou 9:16 quando o vídeo é vertical (Short/Reel).
+            Vertical num quadro 16:9 abriria com tarjas pretas dos dois
+            lados; limitado pela altura da tela pra não virar uma coluna. */}
         <div style={{
-          width: '100%', maxWidth: 1100,
-          aspectRatio: '16 / 9',
+          width: '100%',
+          maxWidth: v.vertical ? 'min(100%, calc(78vh * 9 / 16))' : 1100,
+          aspectRatio: v.vertical ? '9 / 16' : '16 / 9',
+          margin: '0 auto',
           background: `linear-gradient(135deg, ${PALETTE.accent}22, ${PALETTE.fg}08)`,
           border: `1px solid ${PALETTE.fg}1a`,
           overflow: 'hidden',
