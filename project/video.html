@@ -29,6 +29,7 @@
 <script src="i18n.js"></script>
 <script src="media.js"></script>
 <script src="videos.js"></script>
+<script src="projects.js"></script>
 <script type="text/babel" src="contact-modal.jsx"></script>
 <script type="text/babel" src="color-section.jsx"></script>
 
@@ -40,13 +41,30 @@ const FONTS = {
   mono: '"JetBrains Mono", monospace',
 };
 
-// Qual vídeo mostrar: lê ?v=<índice> da URL (vindo do grid da reel).
-// Sem parâmetro (ou inválido) → mostra o último vídeo (índice 0).
-const VIDEO_INDEX = parseInt(new URLSearchParams(location.search).get('v'), 10);
-const IS_LATEST = !Number.isInteger(VIDEO_INDEX) || VIDEO_INDEX === 0;
-const VIDEO = (window.VIDEOS && window.VIDEOS[VIDEO_INDEX])
-  || (window.VIDEOS && window.VIDEOS[0])
-  || { title: 'Vídeo', duration: '', year: '', category: '', streamId: '', youtubeId: '', description: '' };
+// Qual vídeo mostrar:
+//   ?v=<índice>          → vídeo de videos.js (vindo do grid da home)
+//   ?p=<proj>&v=<índice> → vídeo de dentro de um projeto (projects.js)
+const PARAMS = new URLSearchParams(location.search);
+const VIDEO_INDEX = parseInt(PARAMS.get('v'), 10);
+const PROJ_INDEX = parseInt(PARAMS.get('p'), 10);
+
+const VAZIO = { title: 'Vídeo', duration: '', year: '', category: '', streamId: '', youtubeId: '', description: '' };
+
+const PROJETO = Number.isInteger(PROJ_INDEX)
+  ? (window.PROJECTS && window.PROJECTS[PROJ_INDEX])
+  : null;
+
+const VIDEO = PROJETO
+  ? ((PROJETO.videos && PROJETO.videos[VIDEO_INDEX]) || VAZIO)
+  : ((window.VIDEOS && window.VIDEOS[VIDEO_INDEX])
+      || (window.VIDEOS && window.VIDEOS[0])
+      || VAZIO);
+
+// "Último trabalho" só faz sentido pro índice 0 da lista principal.
+const IS_LATEST = !PROJETO && (!Number.isInteger(VIDEO_INDEX) || VIDEO_INDEX === 0);
+
+// Pra onde o botão voltar aponta: o projeto de origem, ou "Todos os trabalhos".
+const VOLTAR_HREF = PROJETO ? `./project.html?p=${PROJ_INDEX}` : './works.html';
 
 function useIsMobile() {
   const [isMobile, setIsMobile] = React.useState(false);
@@ -123,8 +141,12 @@ function App() {
           fontFamily: FONTS.mono, fontSize: 11, letterSpacing: '0.3em',
           textTransform: 'uppercase', color: PALETTE.muted, marginBottom: 20,
         }}>
-          <span style={{ color: PALETTE.accent }}>{IS_LATEST ? T.video.latestWork : T.video.selectedWork}</span>
-          <span>{v.year} · {v.category}</span>
+          {/* Vindo de um projeto, o rótulo mostra o projeto em vez de
+              "último/selecionado", que ali não faz sentido. */}
+          <span style={{ color: PALETTE.accent }}>
+            {PROJETO ? PROJETO.title : (IS_LATEST ? T.video.latestWork : T.video.selectedWork)}
+          </span>
+          <span>{[v.year || (PROJETO && PROJETO.year), v.category].filter(Boolean).join(' · ')}</span>
         </div>
 
         {/* Player do vídeo — 16:9 */}
@@ -206,14 +228,14 @@ function App() {
         {/* Color — antes, depois, nodes e breakdown */}
         {ColorSection && <ColorSection color={v.color} isMobile={isMobile} lang={lang} />}
 
-        {/* Botão voltar → works.html (mesma página do "Ver tudo") */}
+        {/* Botão voltar → o projeto de origem, ou "Todos os trabalhos" */}
         <div style={{ width: '100%', maxWidth: 1100, marginTop: isMobile ? 40 : 56 }}>
-          <a href="./works.html" style={{
+          <a href={VOLTAR_HREF} style={{
             fontFamily: FONTS.mono, fontSize: 11, letterSpacing: '0.3em',
             textTransform: 'uppercase', color: PALETTE.accent,
             textDecoration: 'none',
           }}>
-            ← {T.works.allWorks}
+            {PROJETO ? T.projects.back : `← ${T.works.allWorks}`}
           </a>
         </div>
       </section>

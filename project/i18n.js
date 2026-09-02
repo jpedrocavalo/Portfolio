@@ -68,6 +68,19 @@ window.I18N = {
       seeAll:          'Ver tudo ↗',
     },
 
+    // ── Projetos (seção na home + project.html) ──
+    projects: {
+      label:         '02, Projetos',
+      heading:       'Projetos.',
+      videoSingular: 'vídeo',
+      videoPlural:   'vídeos',
+      soon:          'Em breve',
+      videosLabel:   'Vídeos do projeto',
+      empty:         'Vídeos sendo adicionados, em breve',
+      back:          '← Voltar para o projeto',
+      backHome:      '← Voltar para os projetos',
+    },
+
     // ── Página de vídeo (video.html) ──
     video: {
       latestWork:   'Último trabalho',
@@ -160,6 +173,18 @@ window.I18N = {
       latestWork:      '↗ Latest work',
       selectedWorks:   '01, Selected works',
       seeAll:          'See all ↗',
+    },
+
+    projects: {
+      label:         '02, Projects',
+      heading:       'Projects.',
+      videoSingular: 'video',
+      videoPlural:   'videos',
+      soon:          'Coming soon',
+      videosLabel:   'Videos in this project',
+      empty:         'Videos being added, coming soon',
+      back:          '← Back to the project',
+      backHome:      '← Back to projects',
     },
 
     video: {

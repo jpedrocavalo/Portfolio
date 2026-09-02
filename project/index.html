@@ -29,11 +29,13 @@
 <script src="media.js"></script>
 <script src="videos.js"></script>
 <script src="shortform.js"></script>
+<script src="projects.js"></script>
 
 <script type="text/babel" src="heroes/color-reveal-bg.jsx"></script>
 <script type="text/babel" src="heroes/v1-showreel.jsx"></script>
 <script type="text/babel" src="contact-modal.jsx"></script>
 <script type="text/babel" src="color-section.jsx"></script>
+<script type="text/babel" src="projects-section.jsx"></script>
 <script type="text/babel" src="shortform-section.jsx"></script>
 
 <script type="text/babel">
@@ -176,6 +178,7 @@ function App() {
   const [contactOpen, setContactOpen] = React.useState(false);
   const ContactModal = window.ContactModal;
   const ShortformSection = window.ShortformSection;
+  const ProjectsSection = window.ProjectsSection;
 
   // Detecta mobile pra ajustar o grid de Selected Works
   const [isMobile, setIsMobile] = React.useState(false);
@@ -313,6 +316,9 @@ function App() {
         </div>
 
       </section>
+
+      {/* Projetos — capas que abrem a lista de vídeos de cada projeto */}
+      {ProjectsSection && <ProjectsSection isMobile={isMobile} lang={lang} />}
 
       {/* Short-form — seção pinada, cards 9:16 deslizam com o scroll */}
       {ShortformSection && <ShortformSection isMobile={isMobile} lang={lang} />}

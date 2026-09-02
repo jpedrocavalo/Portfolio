@@ -264,7 +264,8 @@ function ShortformSection({ isMobile, lang }) {
   const PAD = isMobile ? 20 : 40;
 
   const heading = lang === 'pt' ? 'Short-form.' : 'Short-form.';
-  const label = lang === 'pt' ? '02, Vertical · Reels · Social' : '02, Vertical · Reels · Social';
+  // 01 = Trabalhos selecionados, 02 = Projetos, 03 = aqui
+  const label = '03, Vertical · Reels · Social';
 
   // Mede o quanto a faixa precisa deslizar pra revelar o último card
   useEffect(() => {

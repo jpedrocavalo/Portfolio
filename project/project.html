@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Jotap Films — Project</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; width: 100%; background: #0a0a0a; color: #f5f1e8; font-family: 'Inter', system-ui, sans-serif; }
+  #root { width: 100%; }
+  a { color: inherit; }
+</style>
+
+<!-- React + Babel -->
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+</head>
+<body>
+<div id="root"></div>
+
+<script src="i18n.js"></script>
+<script src="media.js"></script>
+<script src="projects.js"></script>
+<script type="text/babel" src="contact-modal.jsx"></script>
+
+<script type="text/babel">
+const PALETTE = { bg: '#0a0a0a', fg: '#f5f1e8', muted: '#8a8580', accent: '#7a00d8' };
+const FONTS = {
+  display: '"Fraunces", serif',
+  sans: '"Inter", system-ui, sans-serif',
+  mono: '"JetBrains Mono", monospace',
+};
+
+// Qual projeto mostrar: ?p=<índice> de projects.js
+const PROJ_INDEX = parseInt(new URLSearchParams(location.search).get('p'), 10);
+const IDX = Number.isInteger(PROJ_INDEX) ? PROJ_INDEX : 0;
+const PROJ = (window.PROJECTS && window.PROJECTS[IDX])
+  || { title: 'Projeto', subtitle: '', year: '', description: '', videos: [] };
+
+function useIsMobile() {
+  const [isMobile, setIsMobile] = React.useState(false);
+  React.useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
+  return isMobile;
+}
+
+function Header({ fonts, palette, lang, setLang, onContactOpen }) {
+  const isMobile = useIsMobile();
+  const N = window.I18N[lang].nav;
+  return (
+    <div style={{
+      position: 'fixed', top: 0, left: 0, right: 0,
+      padding: isMobile ? '20px 20px' : '28px 40px',
+      display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+      fontFamily: fonts.mono, fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase',
+      color: '#fff', zIndex: 10, mixBlendMode: 'difference',
+    }}>
+      <a href="./index.html" style={{
+        fontFamily: fonts.display, fontSize: 16, letterSpacing: '-0.02em',
+        textTransform: 'none', fontStyle: 'italic', color: '#fff', textDecoration: 'none',
+      }}>Jotap Films</a>
+
+      <div style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)', display: 'flex', alignItems: 'center', gap: 10 }}>
+        <span onClick={() => setLang('en')} style={{ cursor: 'pointer', color: lang === 'en' ? palette.accent : 'inherit', opacity: lang === 'en' ? 1 : 0.55, transition: 'opacity 0.2s, color 0.2s' }}>EN</span>
+        <span style={{ opacity: 0.4 }}>·</span>
+        <span onClick={() => setLang('pt')} style={{ cursor: 'pointer', color: lang === 'pt' ? palette.accent : 'inherit', opacity: lang === 'pt' ? 1 : 0.55, transition: 'opacity 0.2s, color 0.2s' }}>PT</span>
+      </div>
+
+      <div style={{ display: 'flex', gap: isMobile ? 20 : 32 }}>
+        <a href="./index.html" style={{ color: 'inherit', textDecoration: 'none' }}>{N.reel}</a>
+        <a href="./about.html" style={{ color: 'inherit', textDecoration: 'none' }}>{N.about}</a>
+        {!isMobile && (
+          <span onClick={onContactOpen} style={{ cursor: 'pointer' }}>{N.contact}</span>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// Card 16:9 de um vídeo do projeto → video.html?p=<proj>&v=<índice>
+function VideoCard({ video, projIndex, index, isMobile }) {
+  const [hover, setHover] = React.useState(false);
+  return (
+    <a
+      href={`./video.html?p=${projIndex}&v=${index}`}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+      style={{
+        display: 'flex', flexDirection: 'column',
+        textDecoration: 'none', color: 'inherit', cursor: 'pointer',
+      }}
+    >
+      <div style={{
+        position: 'relative',
+        aspectRatio: '16 / 9',
+        background: `linear-gradient(135deg, ${PALETTE.accent}22, ${PALETTE.fg}08)`,
+        border: `1px solid ${hover ? PALETTE.accent : PALETTE.fg + '1a'}`,
+        overflow: 'hidden',
+        transition: 'border-color 0.25s, transform 0.5s cubic-bezier(0.2,0.8,0.2,1)',
+        transform: hover ? 'scale(1.02)' : 'scale(1)',
+      }}>
+        {window.hasMedia(video) ? (
+          <img
+            {...window.mediaThumbProps(video)}
+            alt={video.title}
+            style={{
+              position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover',
+              transform: hover ? 'scale(1.05)' : 'scale(1)',
+              transition: 'transform 0.6s cubic-bezier(0.2,0.8,0.2,1)',
+            }}
+          />
+        ) : (
+          <div style={{
+            position: 'absolute', inset: 0,
+            background: `repeating-linear-gradient(90deg, transparent, transparent 24px, ${PALETTE.fg}08 24px, ${PALETTE.fg}08 26px)`,
+          }} />
+        )}
+
+        <div style={{
+          position: 'absolute', inset: 0,
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          background: hover ? 'rgba(10,10,10,0.3)' : 'rgba(10,10,10,0)',
+          transition: 'background 0.25s',
+        }}>
+          <div style={{
+            width: 0, height: 0,
+            borderLeft: `18px solid ${hover ? PALETTE.accent : 'rgba(255,255,255,0.9)'}`,
+            borderTop: '12px solid transparent',
+            borderBottom: '12px solid transparent',
+            marginLeft: 5,
+            opacity: hover ? 1 : (window.hasMedia(video) ? 0 : 0.5),
+            transform: hover ? 'scale(1)' : 'scale(0.7)',
+            transition: 'opacity 0.25s, transform 0.25s, border-color 0.25s',
+          }} />
+        </div>
+      </div>
+
+      <div style={{
+        marginTop: 12, display: 'flex', justifyContent: 'space-between',
+        alignItems: 'baseline', gap: 12,
+      }}>
+        <span style={{ fontFamily: FONTS.display, fontStyle: 'italic', fontSize: 15 }}>
+          {video.title}
+        </span>
+        <span style={{
+          fontFamily: FONTS.mono, fontSize: 10, letterSpacing: '0.2em',
+          color: PALETTE.muted, flexShrink: 0,
+        }}>
+          {video.duration}
+        </span>
+      </div>
+    </a>
+  );
+}
+
+function App() {
+  const p = PROJ;
+  const isMobile = useIsMobile();
+  const [lang, setLangState] = React.useState(window.getInitialLang());
+  const setLang = (next) => { setLangState(next); window.persistLang(next); };
+  const T = window.I18N[lang];
+  const t = T.projects;
+  const [contactOpen, setContactOpen] = React.useState(false);
+  const ContactModal = window.ContactModal;
+  const videos = p.videos || [];
+
+  return (
+    <div style={{ width: '100%' }}>
+      {ContactModal && <ContactModal open={contactOpen} onClose={() => setContactOpen(false)} lang={lang} />}
+      <Header fonts={FONTS} palette={PALETTE} lang={lang} setLang={setLang} onContactOpen={() => setContactOpen(true)} />
+
+      {/* Cabeçalho do projeto */}
+      <section style={{
+        padding: isMobile ? '100px 20px 40px' : '160px 40px 56px',
+        borderBottom: '1px solid rgba(255,255,255,0.06)',
+      }}>
+        <div style={{
+          display: 'flex', justifyContent: 'space-between', alignItems: 'baseline',
+          flexWrap: 'wrap', gap: 12,
+          fontFamily: FONTS.mono, fontSize: 11, letterSpacing: '0.3em',
+          textTransform: 'uppercase', color: PALETTE.muted, marginBottom: 20,
+        }}>
+          <span style={{ color: PALETTE.accent }}>{[p.year, p.subtitle].filter(Boolean).join(' · ')}</span>
+          <span>
+            {videos.length > 0
+              ? `${videos.length} ${videos.length === 1 ? t.videoSingular : t.videoPlural}`
+              : t.soon}
+          </span>
+        </div>
+
+        <h1 style={{
+          fontFamily: FONTS.display,
+          fontSize: isMobile ? 'clamp(44px, 13vw, 72px)' : 'clamp(56px, 9vw, 160px)',
+          fontWeight: 300, lineHeight: 0.95, letterSpacing: '-0.04em', margin: 0,
+        }}>
+          {p.title}
+        </h1>
+
+        {p.description && (
+          <p style={{
+            marginTop: 28, maxWidth: 640,
+            fontFamily: FONTS.sans, fontSize: isMobile ? 15 : 16, lineHeight: 1.7,
+            color: 'rgba(245,241,232,0.78)', whiteSpace: 'pre-line',
+          }}>
+            {p.description}
+          </p>
+        )}
+      </section>
+
+      {/* Vídeos do projeto */}
+      <section style={{ padding: isMobile ? '40px 20px 60px' : '56px 40px 80px' }}>
+        <div style={{
+          fontFamily: FONTS.mono, fontSize: 11, letterSpacing: '0.3em',
+          textTransform: 'uppercase', color: 'rgba(245,241,232,0.35)', marginBottom: 28,
+        }}>
+          {t.videosLabel}
+        </div>
+
+        {videos.length > 0 ? (
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(auto-fill, minmax(320px, 1fr))',
+            gap: isMobile ? 12 : 28,
+          }}>
+            {videos.map((v, i) => (
+              <VideoCard key={i} video={v} projIndex={IDX} index={i} isMobile={isMobile} />
+            ))}
+          </div>
+        ) : (
+          <div style={{
+            padding: isMobile ? '48px 20px' : '80px 40px',
+            border: `1px dashed ${PALETTE.fg}1a`,
+            textAlign: 'center',
+            fontFamily: FONTS.mono, fontSize: 11, letterSpacing: '0.3em',
+            textTransform: 'uppercase', color: 'rgba(245,241,232,0.35)',
+          }}>
+            {t.empty}
+          </div>
+        )}
+
+        <a href="./index.html#projects" style={{
+          display: 'inline-block', marginTop: isMobile ? 40 : 56,
+          fontFamily: FONTS.mono, fontSize: 11, letterSpacing: '0.3em',
+          textTransform: 'uppercase', color: PALETTE.accent, textDecoration: 'none',
+        }}>
+          {t.backHome}
+        </a>
+      </section>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+
+</body>
+</html>
