@@ -39,4 +39,39 @@ window.SHORTFORM = [
     youtubeId: 'BVEkWysWKMA',
     description: 'Trabalho de edição para o Congresso Brasileiro de cirurgia e traumatologia buco-maxilo facial.\n\nrepresentando a Frame Company',
   },
+  {
+    title: 'Formatura da Gio',
+    subtitle: 'Frame Company',
+    year: '2026',
+    streamId: 'e18e064a56ced6553e0ec220def58618',
+    youtubeId: 'i2zMYQGhsQU',
+    // Mesmo trabalho que aparece em videos.js — mesma color.
+    color: {
+      before: './color/Antes-FormaturaGio.png',
+      after:  './color/Depois-FormaturaGio.png',
+      nodes:  './color/Node-FormaturaGio.png',
+      lut: {
+        name: 'LA CREME',
+        url: 'https://looks.fjr.io/',
+      },
+    },
+    description: 'Trabalho freelancer de edição para Frame Company.\nDireção, direção de fotografia e operação de câmera: Frame Company.',
+  },
+  {
+    title: 'Reels Test',
+    subtitle: 'Material do Lucas haither',
+    year: '2026',
+    streamId: 'd2d30e79ee9d8525478731dafb5c2250',
+    youtubeId: 'OS2igPCMd6Y',
+    color: {
+      before: './color/Antes-ReelsLucas.png',
+      after:  './color/Depois-ReelsLucas.png',
+      nodes:  './color/Node-ReelsLucas.png',
+      lut: {
+        name: 'LA CREME',
+        url: 'https://looks.fjr.io/',
+      },
+    },
+    description: 'Material do Lucas haither.',
+  },
 ];
