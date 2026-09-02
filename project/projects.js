@@ -32,28 +32,28 @@ window.PROJECTS = [
     description: 'Cobertura de edição Real Time e pós-evento no Congresso Brasileiro de Cirurgia e Traumatologia Buco-Maxilo-Facial.',
     videos: [
       {
-        title: 'Abertura - COBRAC',
+        title: 'Abertura',
         duration: '',
         streamId: '',
         youtubeId: 'Lvz-7CaKMTU',
         description: 'Trabalho de edição para o Congresso Brasileiro de cirurgia e traumatologia buco-maxilo facial.\n\nrepresentando a Frame Company',
       },
       {
-        title: 'Dia 1 - COBRAC',
+        title: 'Dia 1',
         duration: '',
         streamId: '',
         youtubeId: 'My95rPharFA',
         description: 'Trabalho de edição Real Time para o Congresso Brasileiro de cirurgia e traumatologia buco-maxilo facial.\n\nrepresentando a Frame Company',
       },
       {
-        title: 'Dia 2 - COBRAC',
+        title: 'Dia 2',
         duration: '',
         streamId: '',
         youtubeId: 'om_1w1xagQU',
         description: 'Trabalho de edição Real Time para o Congresso Brasileiro de cirurgia e traumatologia buco-maxilo facial.\n\nrepresentando a Frame Company',
       },
       {
-        title: 'Dia 3 - COBRAC',
+        title: 'Dia 3',
         duration: '',
         streamId: '',
         youtubeId: 'QUlrdJqv6qU',
