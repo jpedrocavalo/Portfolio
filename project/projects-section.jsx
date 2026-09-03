@@ -17,7 +17,9 @@ const PJ_FONTS = {
 
 // Capa do primeiro vídeo do projeto — a reserva quando não há arte própria.
 function capaDoPrimeiroVideo(proj) {
-  const primeiro = ((proj && proj.videos) || []).find((v) => window.hasMedia(v));
+  const primeiro = ((proj && proj.videos) || [])
+    .filter((v) => !v.hidden)
+    .find((v) => window.hasMedia(v));
   return primeiro ? window.mediaThumb(primeiro) : '';
 }
 
@@ -36,7 +38,8 @@ function ProjectCard({ proj, index, isMobile, lang }) {
   // coverFit 'contain' = arte/logo: mostra inteiro em vez de preencher cortando
   const ehLogo = proj.coverFit === 'contain' && !usouReserva;
   const fit = ehLogo ? 'contain' : 'cover';
-  const qtd = (proj.videos || []).length;
+  // Só os que estão no ar, pra bater com a contagem da página do projeto
+  const qtd = (proj.videos || []).filter((v) => !v.hidden).length;
   const T = (window.I18N && window.I18N[lang]) || window.I18N.pt;
   const t = T.projects;
 

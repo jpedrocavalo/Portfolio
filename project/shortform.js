@@ -33,10 +33,12 @@
 window.SHORTFORM = [
   {
     title: 'Stand da Altrum',
-    subtitle: 'Frame Company',
+    subtitle: 'COBRAC · Frame Company',
     year: '2026',
     streamId: '',
     youtubeId: 'BVEkWysWKMA',
+    // Fora do ar enquanto o vídeo é atualizado. Tire esta linha pra voltar.
+    hidden: true,
     description: 'Trabalho de edição para o Congresso Brasileiro de cirurgia e traumatologia buco-maxilo facial.\n\nrepresentando a Frame Company',
   },
   {

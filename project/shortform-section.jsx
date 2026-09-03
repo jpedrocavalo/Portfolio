@@ -252,7 +252,8 @@ function SfCard({ item, index, onOpen, width }) {
 // ─── Seção com scroll horizontal "pinado" ──────────────────────
 function ShortformSection({ isMobile, lang }) {
   const { useState, useEffect, useRef } = React;
-  const items = window.SHORTFORM || [];
+  // hidden: true tira o vídeo do ar sem apagar os dados dele
+  const items = (window.SHORTFORM || []).filter((v) => !v.hidden);
   const [openIndex, setOpenIndex] = useState(null);
   const [maxShift, setMaxShift] = useState(0);
 

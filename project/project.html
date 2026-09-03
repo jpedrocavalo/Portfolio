@@ -173,7 +173,12 @@ function App() {
   const t = T.projects;
   const [contactOpen, setContactOpen] = React.useState(false);
   const ContactModal = window.ContactModal;
-  const videos = p.videos || [];
+  // hidden: true tira o vídeo do ar sem apagar os dados. O índice real
+  // vem junto porque o link (?v=) aponta pra posição dentro de p.videos —
+  // filtrar antes faria os links caírem no vídeo errado.
+  const videos = (p.videos || [])
+    .map((v, i) => ({ video: v, indice: i }))
+    .filter((x) => !x.video.hidden);
 
   return (
     <div style={{ width: '100%' }}>
@@ -233,8 +238,8 @@ function App() {
             gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(auto-fill, minmax(320px, 1fr))',
             gap: isMobile ? 12 : 28,
           }}>
-            {videos.map((v, i) => (
-              <VideoCard key={i} video={v} projIndex={IDX} index={i} isMobile={isMobile} />
+            {videos.map(({ video, indice }) => (
+              <VideoCard key={indice} video={video} projIndex={IDX} index={indice} isMobile={isMobile} />
             ))}
           </div>
         ) : (

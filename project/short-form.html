@@ -45,7 +45,8 @@ const FONTS = {
 
 // Dados vêm de shortform.js (fonte única, compartilhada com a home).
 // Capa e player vêm de media.js (Cloudflare Stream ou YouTube).
-const SHORTFORM = window.SHORTFORM || [];
+// hidden: true tira o vídeo do ar sem apagar os dados dele
+const SHORTFORM = (window.SHORTFORM || []).filter((v) => !v.hidden);
 
 function Header({ fonts, palette, lang, setLang, onContactOpen }) {
   const N = window.I18N[lang].nav;

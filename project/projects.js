@@ -20,6 +20,9 @@
      videos      → lista de vídeos, mesmo formato de videos.js:
                    { title, duration, streamId, youtubeId, description }
                    e opcionalmente o bloco `color`.
+
+   Em qualquer vídeo, `hidden: true` tira ele do ar sem apagar nada —
+   útil enquanto o vídeo está sendo atualizado.
    ════════════════════════════════════════════════════════════════ */
 window.PROJECTS = [
   {
@@ -66,6 +69,8 @@ window.PROJECTS = [
         youtubeId: 'BVEkWysWKMA',
         // Short vertical: o player abre em 9:16 em vez de 16:9
         vertical: true,
+        // Fora do ar enquanto o vídeo é atualizado. Tire esta linha pra voltar.
+        hidden: true,
         description: 'Trabalho de edição para o Congresso Brasileiro de cirurgia e traumatologia buco-maxilo facial.\n\nrepresentando a Frame Company',
       },
       {
