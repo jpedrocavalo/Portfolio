@@ -33,7 +33,7 @@
 window.SHORTFORM = [
   {
     title: 'Stand da Altrum',
-    subtitle: 'COBRAC · Frame Company',
+    subtitle: 'Frame Company',
     year: '2026',
     streamId: '',
     youtubeId: 'BVEkWysWKMA',
