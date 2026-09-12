@@ -141,7 +141,7 @@ window.PROJECTS = [
         description: 'Trabalho freelancer de edição para Frame Company.\nDireção, direção de fotografia e operação de câmera: Frame Company.',
       },
       {
-        title: 'Henrico Meireles',
+        title: 'henRICO MEIreles',
         duration: '',
         streamId: '',
         youtubeId: 'TZWZGTslZwk',
