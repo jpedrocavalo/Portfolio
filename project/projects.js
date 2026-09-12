@@ -99,6 +99,10 @@ window.PROJECTS = [
       before: '',
       after: '',
       nodes: '',
+      lut: {
+        name: 'LA CREME',
+        url: 'https://looks.fjr.io/',
+      },
     },
     videos: [
       {
