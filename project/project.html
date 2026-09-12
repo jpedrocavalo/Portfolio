@@ -256,8 +256,14 @@ function App() {
           </div>
         )}
 
-        {/* Look do projeto — mesmo bloco de color dos vídeos, abaixo da lista */}
-        {ColorSection && <ColorSection color={p.color} isMobile={isMobile} lang={lang} />}
+        {/* Look do projeto — mesmo bloco de color dos vídeos, abaixo da
+            lista. O bloco tem largura máxima; centralizado, como na
+            página de vídeo. */}
+        {ColorSection && (
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <ColorSection color={p.color} isMobile={isMobile} lang={lang} />
+          </div>
+        )}
 
         <a href="./index.html#projects" style={{
           display: 'inline-block', marginTop: isMobile ? 40 : 56,

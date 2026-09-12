@@ -41,7 +41,12 @@ const FONTS = {
   mono: '"JetBrains Mono", monospace',
 };
 
-const VIDEOS = window.VIDEOS || [];
+// hidden: true tira o vídeo do ar sem apagar os dados. O índice real vem
+// junto porque o link (?v=) aponta pra posição em window.VIDEOS — filtrar
+// antes faria os links abrirem o vídeo errado.
+const VIDEOS = (window.VIDEOS || [])
+  .map((v, i) => ({ video: v, indice: i }))
+  .filter((x) => !x.video.hidden);
 
 // Capa vem de media.js (Cloudflare Stream ou YouTube)
 
@@ -217,8 +222,8 @@ function App() {
           gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
           gap: 28,
         }}>
-          {VIDEOS.map((v, i) => (
-            <VideoCard key={i} video={v} index={i} fonts={FONTS} palette={PALETTE} />
+          {VIDEOS.map(({ video, indice }) => (
+            <VideoCard key={indice} video={video} index={indice} fonts={FONTS} palette={PALETTE} />
           ))}
         </div>
 

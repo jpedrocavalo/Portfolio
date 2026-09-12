@@ -19,6 +19,7 @@
    (na home) e "Ver tudo" (works.html).
 
    featured: false  → tira só dos selecionados; continua no "Ver tudo".
+   hidden: true     → tira do ar de vez (some dos dois), sem apagar nada.
    vertical: true   → vídeo 9:16 (Short/Reel): o player abre em pé.
 
    ── COLOR (opcional) ──
@@ -75,6 +76,15 @@ window.VIDEOS = [
     description: 'Trabalho freelancer de edição para Frame Company.\nDireção, direção de fotografia e operação de câmera: Frame Company.',
   },
   {
+    title: 'Toguro',
+    duration: '',
+    year: '2026',
+    category: 'Click Digital',
+    streamId: '',
+    youtubeId: 'tISm1v0PylA',
+    description: 'Trabalho freelancer de edição para Frame Company.\nDireção, direção de fotografia e operação de câmera: Frame Company.',
+  },
+  {
     title: 'Desfile Riachuelo Contact Center',
     duration: '',
     year: '2026',
@@ -87,6 +97,15 @@ window.VIDEOS = [
       nodes:  './color/Node-DesfileCCR.png',
       breakdown: { streamId: '8f60ffde5c574b441c8f7cfb0fa993ce' },
     },
+    description: 'Trabalho freelancer de edição para Frame Company.\nDireção, direção de fotografia e operação de câmera: Frame Company.',
+  },
+  {
+    title: 'Prof. Gilberto',
+    duration: '',
+    year: '2026',
+    category: 'Click Digital',
+    streamId: '',
+    youtubeId: 'm5ONXDVMCxE',
     description: 'Trabalho freelancer de edição para Frame Company.\nDireção, direção de fotografia e operação de câmera: Frame Company.',
   },
   {
@@ -110,24 +129,6 @@ window.VIDEOS = [
     description: 'Trabalho freelancer de edição para Frame Company.\nDireção, direção de fotografia e operação de câmera: Frame Company.',
   },
   {
-    title: 'Toguro',
-    duration: '',
-    year: '2026',
-    category: 'Click Digital',
-    streamId: '',
-    youtubeId: 'tISm1v0PylA',
-    description: 'Trabalho freelancer de edição para Frame Company.\nDireção, direção de fotografia e operação de câmera: Frame Company.',
-  },
-  {
-    title: 'Prof. Gilberto',
-    duration: '',
-    year: '2026',
-    category: 'Click Digital',
-    streamId: '',
-    youtubeId: 'm5ONXDVMCxE',
-    description: 'Trabalho freelancer de edição para Frame Company.\nDireção, direção de fotografia e operação de câmera: Frame Company.',
-  },
-  {
     title: 'henRICO MEIreles',
     duration: '',
     year: '2026',
@@ -145,8 +146,8 @@ window.VIDEOS = [
     category: 'Aftermovie',
     streamId: 'fd615f2e70246c9f3922cfcf86b58086',
     youtubeId: 'KyalhB1Udh4',
-    // Fora dos selecionados; segue no "Ver tudo".
-    featured: false,
+    // Fora do ar. Tire esta linha pra voltar.
+    hidden: true,
     description: 'Trabalho freelancer de edição para Frame Company.\nDireção, direção de fotografia e operação de câmera: Frame Company.',
   },
   {
