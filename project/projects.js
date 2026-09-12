@@ -17,9 +17,14 @@
                    'contain' mostra a arte inteira sem cortar e sem
                    escurecer: use pra logo, cartaz, arte com texto.
      description → texto da página do projeto
+     color       → look desenvolvido pro projeto inteiro. Aparece na
+                   página do projeto abaixo dos vídeos, com o mesmo
+                   comparador, nodes e créditos do bloco de um vídeo.
+                   Mesmo formato: { before, after, nodes, powergrade,
+                   lut, breakdown }. Some enquanto estiver vazio.
      videos      → lista de vídeos, mesmo formato de videos.js:
                    { title, duration, streamId, youtubeId, description }
-                   e opcionalmente o bloco `color`.
+                   e opcionalmente o bloco `color` próprio do vídeo.
 
    Em qualquer vídeo, `hidden: true` tira ele do ar sem apagar nada —
    útil enquanto o vídeo está sendo atualizado.
@@ -80,6 +85,24 @@ window.PROJECTS = [
         youtubeId: 'hEzpZxtrGU8',
         description: 'Trabalho de edição para o Congresso Brasileiro de cirurgia e traumatologia buco-maxilo facial.\n\nrepresentando a Frame Company',
       },
+    ],
+  },
+  {
+    title: 'Click Digital',
+    subtitle: 'Frame Company',
+    year: '2026',
+    cover: '',
+    description: '',
+    // Look do projeto — aparece abaixo dos vídeos. Preencha quando tiver
+    // os frames (./color/...) e o print de nodes.
+    color: {
+      before: '',
+      after: '',
+      nodes: '',
+    },
+    videos: [
+      // { title, duration: '', streamId: '', youtubeId: '',
+      //   description: 'Trabalho freelancer de edição para Frame Company.\nDireção, direção de fotografia e operação de câmera: Frame Company.' },
     ],
   },
 ];

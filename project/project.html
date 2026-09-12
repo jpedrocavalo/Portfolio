@@ -29,6 +29,7 @@
 <script src="media.js"></script>
 <script src="projects.js"></script>
 <script type="text/babel" src="contact-modal.jsx"></script>
+<script type="text/babel" src="color-section.jsx"></script>
 
 <script type="text/babel">
 const PALETTE = { bg: '#0a0a0a', fg: '#f5f1e8', muted: '#8a8580', accent: '#7a00d8' };
@@ -173,6 +174,7 @@ function App() {
   const t = T.projects;
   const [contactOpen, setContactOpen] = React.useState(false);
   const ContactModal = window.ContactModal;
+  const ColorSection = window.ColorSection;
   // hidden: true tira o vídeo do ar sem apagar os dados. O índice real
   // vem junto porque o link (?v=) aponta pra posição dentro de p.videos —
   // filtrar antes faria os links caírem no vídeo errado.
@@ -253,6 +255,9 @@ function App() {
             {t.empty}
           </div>
         )}
+
+        {/* Look do projeto — mesmo bloco de color dos vídeos, abaixo da lista */}
+        {ColorSection && <ColorSection color={p.color} isMobile={isMobile} lang={lang} />}
 
         <a href="./index.html#projects" style={{
           display: 'inline-block', marginTop: isMobile ? 40 : 56,
