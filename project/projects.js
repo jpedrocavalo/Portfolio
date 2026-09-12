@@ -22,6 +22,13 @@
                    comparador, nodes e créditos do bloco de um vídeo.
                    Mesmo formato: { before, after, nodes, powergrade,
                    lut, breakdown }. Some enquanto estiver vazio.
+
+                   Look aplicado a mais de uma câmera? Troque o par
+                   before/after por uma lista, cada uma com rótulo:
+                     comparisons: [
+                       { label: 'Sony', before: '...', after: '...' },
+                       { label: 'Blackmagic', before: '...', after: '...' },
+                     ],
      videos      → lista de vídeos, mesmo formato de videos.js:
                    { title, duration, streamId, youtubeId, description }
                    e opcionalmente o bloco `color` próprio do vídeo.
@@ -93,12 +100,22 @@ window.PROJECTS = [
     year: '2026',
     cover: '',
     description: '',
-    // Look do projeto — aparece abaixo dos vídeos. Preencha quando tiver
-    // os frames (./color/...) e o print de nodes.
+    // Look do projeto — aparece abaixo dos vídeos. O mesmo look foi
+    // aplicado a duas câmeras, então são duas comparações com rótulo.
     color: {
-      before: '',
-      after: '',
-      nodes: '',
+      comparisons: [
+        {
+          label: 'Blackmagic',
+          before: './color/Click digital/Antes-Blackmagic1.png',
+          after:  './color/Click digital/Depois-Blackmagic1.png',
+        },
+        {
+          label: 'Sony',
+          before: './color/Click digital/Antes-Sony.png',
+          after:  './color/Click digital/Depois-Sony.png',
+        },
+      ],
+      nodes: './color/Click digital/NodeTree.png',
       lut: {
         name: 'LA CREME',
         url: 'https://looks.fjr.io/',

@@ -250,7 +250,16 @@ function ColorSection({ color, isMobile, lang, compact }) {
   if (!color) return null;
 
   const breakdown = color.breakdown;
-  const temAlgo = !!(color.before || color.after || color.nodes || window.hasMedia(breakdown));
+
+  // Comparações. Um look aplicado a várias câmeras vira uma lista em
+  // `comparisons`, cada uma com rótulo; o par solto before/after continua
+  // valendo como o caso de uma só.
+  const comparacoes = (color.comparisons && color.comparisons.length)
+    ? color.comparisons
+    : [{ label: '', before: color.before, after: color.after }];
+  const temComparacao = comparacoes.some((c) => c.before || c.after);
+
+  const temAlgo = !!(temComparacao || color.nodes || window.hasMedia(breakdown));
   if (!temAlgo) return null;
 
   const t = T.colorGrade;
@@ -282,39 +291,55 @@ function ColorSection({ color, isMobile, lang, compact }) {
         {t.heading}
       </h2>
 
-      {/* Antes / depois. Com as duas imagens vira comparador arrastável;
-          faltando alguma, cai nas molduras lado a lado pra mostrar o que
-          ainda não foi preenchido. */}
-      <div style={{ marginTop: compact ? 22 : (isMobile ? 32 : 44) }}>
-        {color.before && color.after ? (
-          <>
-            <div style={{
-              fontFamily: CS_FONTS.mono, fontSize: 10, letterSpacing: '0.25em',
-              textTransform: 'uppercase', color: CS_PALETTE.muted, marginBottom: 10,
-            }}>
-              {t.before} / {t.after} — {t.drag}
-            </div>
-            <BeforeAfterSlider
-              before={color.before}
-              after={color.after}
-              labelBefore={t.before}
-              labelAfter={t.after}
-              isMobile={isMobile}
-            />
-          </>
-        ) : (
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
-            gap: isMobile ? 20 : 24,
-          }}>
-            <ColorSlot label={t.before} src={color.before} alt={t.before}
-              ratio="16 / 9" isMobile={isMobile} soonLabel={t.soon} />
-            <ColorSlot label={t.after} src={color.after} alt={t.after}
-              ratio="16 / 9" isMobile={isMobile} soonLabel={t.soon} />
+      {/* Antes / depois, uma comparação por câmera. Com as duas imagens
+          vira comparador arrastável; faltando alguma, cai nas molduras
+          lado a lado pra mostrar o que ainda não foi preenchido. */}
+      {comparacoes.map((cmp, i) => {
+        return (
+          <div key={i} style={{ marginTop: i === 0 ? (compact ? 22 : (isMobile ? 32 : 44)) : (isMobile ? 24 : 32) }}>
+            {cmp.before && cmp.after ? (
+              <>
+                <div style={{
+                  fontFamily: CS_FONTS.mono, fontSize: 10, letterSpacing: '0.25em',
+                  textTransform: 'uppercase', color: CS_PALETTE.muted, marginBottom: 10,
+                }}>
+                  {cmp.label && <span style={{ color: CS_PALETTE.fg }}>{cmp.label}</span>}
+                  {cmp.label && ' — '}
+                  {t.before} / {t.after} — {t.drag}
+                </div>
+                <BeforeAfterSlider
+                  before={cmp.before}
+                  after={cmp.after}
+                  labelBefore={t.before}
+                  labelAfter={t.after}
+                  isMobile={isMobile}
+                />
+              </>
+            ) : (
+              <>
+                {cmp.label && (
+                  <div style={{
+                    fontFamily: CS_FONTS.mono, fontSize: 10, letterSpacing: '0.25em',
+                    textTransform: 'uppercase', color: CS_PALETTE.fg, marginBottom: 10,
+                  }}>
+                    {cmp.label}
+                  </div>
+                )}
+                <div style={{
+                  display: 'grid',
+                  gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
+                  gap: isMobile ? 20 : 24,
+                }}>
+                  <ColorSlot label={t.before} src={cmp.before} alt={t.before}
+                    ratio="16 / 9" isMobile={isMobile} soonLabel={t.soon} />
+                  <ColorSlot label={t.after} src={cmp.after} alt={t.after}
+                    ratio="16 / 9" isMobile={isMobile} soonLabel={t.soon} />
+                </div>
+              </>
+            )}
           </div>
-        )}
-      </div>
+        );
+      })}
 
       {/* Estrutura de nodes — contain pra não cortar nenhum node */}
       <div style={{ marginTop: isMobile ? 24 : 32 }}>

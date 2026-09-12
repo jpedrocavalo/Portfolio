@@ -37,6 +37,13 @@
        lut:        { name: '', url: '' },
      },
 
+   Look aplicado a mais de uma câmera? No lugar de before/after, use
+   uma lista com rótulo — vira um comparador por câmera:
+     comparisons: [
+       { label: 'Sony',       before: '...', after: '...' },
+       { label: 'Blackmagic', before: '...', after: '...' },
+     ],
+
    ── CAPA (opcional) ──
    Por padrão a capa vem do YouTube (a que você subiu lá), mesmo com o
    vídeo tocando pelo Cloudflare. Pra mudar isso num vídeo só:
@@ -103,12 +110,43 @@ window.VIDEOS = [
     description: 'Trabalho freelancer de edição para Frame Company.\nDireção, direção de fotografia e operação de câmera: Frame Company.',
   },
   {
+    title: 'Toguro',
+    duration: '',
+    year: '2026',
+    category: 'Click Digital',
+    streamId: '',
+    youtubeId: 'tISm1v0PylA',
+    description: 'Trabalho freelancer de edição para Frame Company.\nDireção, direção de fotografia e operação de câmera: Frame Company.',
+  },
+  {
+    title: 'Prof. Gilberto',
+    duration: '',
+    year: '2026',
+    category: 'Click Digital',
+    streamId: '',
+    youtubeId: 'm5ONXDVMCxE',
+    description: 'Trabalho freelancer de edição para Frame Company.\nDireção, direção de fotografia e operação de câmera: Frame Company.',
+  },
+  {
+    title: 'henRICO MEIreles',
+    duration: '',
+    year: '2026',
+    category: 'Click Digital',
+    streamId: '',
+    youtubeId: 'TZWZGTslZwk',
+    // Só no "Ver tudo", fora dos selecionados da home.
+    featured: false,
+    description: 'Trabalho freelancer de edição para Frame Company.\nDireção, direção de fotografia e operação de câmera: Frame Company.',
+  },
+  {
     title: 'São Julhão do Riachuelo Contact Center',
     duration: '',
     year: '2026',
     category: 'Aftermovie',
     streamId: 'fd615f2e70246c9f3922cfcf86b58086',
     youtubeId: 'KyalhB1Udh4',
+    // Fora dos selecionados; segue no "Ver tudo".
+    featured: false,
     description: 'Trabalho freelancer de edição para Frame Company.\nDireção, direção de fotografia e operação de câmera: Frame Company.',
   },
   {
