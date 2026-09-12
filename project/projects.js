@@ -182,6 +182,13 @@ window.PROJECTS = [
         youtubeId: 'tISm1v0PylA',
         description: 'Trabalho freelancer de edição para Frame Company.\nDireção, direção de fotografia e operação de câmera: Frame Company.',
       },
+      {
+        title: 'Wanderley',
+        duration: '',
+        streamId: '',
+        youtubeId: 'QKY_EhwZVz8',
+        description: 'Trabalho freelancer de edição para Frame Company.\nDireção, direção de fotografia e operação de câmera: Frame Company.',
+      },
     ],
   },
 ];
