@@ -225,13 +225,24 @@ window.I18N = {
 };
 
 // ── Helpers compartilhados ──
+
+// O <html lang> segue o idioma escolhido — leitor de tela e buscador
+// leem isso, e o HTML estático só sabe o padrão (pt-BR).
+function aplicaLangNoHtml(lang) {
+  try { document.documentElement.lang = lang === 'en' ? 'en' : 'pt-BR'; } catch (_) {}
+}
+
 window.getInitialLang = function () {
+  let lang = 'pt';
   try {
     const saved = localStorage.getItem('jotap_lang');
-    return (saved === 'en' || saved === 'pt') ? saved : 'pt';
-  } catch (_) { return 'pt'; }
+    if (saved === 'en' || saved === 'pt') lang = saved;
+  } catch (_) {}
+  aplicaLangNoHtml(lang);
+  return lang;
 };
 
 window.persistLang = function (lang) {
   try { localStorage.setItem('jotap_lang', lang); } catch (_) {}
+  aplicaLangNoHtml(lang);
 };
