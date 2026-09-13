@@ -62,7 +62,7 @@ const VIDEOS = (window.VIDEOS || [])
 
 // Capa vem de media.js (Cloudflare Stream ou YouTube)
 
-function VideoCard({ video, index }) {
+function VideoCard({ video, index, lang }) {
   const [hover, setHover] = useState(false);
   const HoverPlay = window.HoverPlay;
   return (
@@ -106,7 +106,7 @@ function VideoCard({ video, index }) {
           {video.title}
         </span>
         <span style={{ ...TH.label, flexShrink: 0 }}>
-          {[video.category, video.year].filter(Boolean).join(', ')}
+          {[window.tCategory(lang, video.category), video.year].filter(Boolean).join(', ')}
         </span>
       </div>
     </a>
@@ -158,7 +158,7 @@ function App() {
           gap: isMobile ? 12 : 24,
         }}>
           {VIDEOS.map(({ video, indice }) => (
-            <VideoCard key={indice} video={video} index={indice} />
+            <VideoCard key={indice} video={video} index={indice} lang={lang} />
           ))}
         </div>
 

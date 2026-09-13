@@ -72,7 +72,7 @@ const ROWS = 2;
 
 // Card — thumbnail estático (mais leve no grid).
 // fill=true → preenche o container; false → usa aspectRatio 16:9.
-function Card({ data, fill }) {
+function Card({ data, fill, lang }) {
   const [hover, setHover] = React.useState(false);
   const media = window.hasMedia(data) || data.videoSrc || data.imageSrc;
   const HoverPlay = window.HoverPlay;
@@ -134,7 +134,7 @@ function Card({ data, fill }) {
           {data.featuredTitle || data.title}
         </span>
         <span style={{ ...TH.label, flexShrink: 0 }}>
-          {[data.category, data.year].filter(Boolean).join(', ')}
+          {[window.tCategory(lang, data.category), data.year].filter(Boolean).join(', ')}
         </span>
       </div>
     </div>
@@ -171,7 +171,7 @@ function App() {
   return (
     <div style={{ width: '100%' }}>
       {ContactModal && <ContactModal open={contactOpen} onClose={() => setContactOpen(false)} lang={lang} />}
-      <window.SiteHeader current="reel" lang={lang} setLang={setLang} onContactOpen={() => setContactOpen(true)} />
+      <window.SiteHeader current="works" lang={lang} setLang={setLang} onContactOpen={() => setContactOpen(true)} />
 
       {/* Abertura: título à esquerda, colunas de info e descrição à direita */}
       <section style={{
@@ -236,7 +236,7 @@ function App() {
               display: 'flex', flexDirection: 'column',
               textDecoration: 'none', color: 'inherit', cursor: 'pointer',
             }}>
-              <Card data={data} fill={!isMobile} />
+              <Card data={data} fill={!isMobile} lang={lang} />
             </a>
           ))}
         </div>

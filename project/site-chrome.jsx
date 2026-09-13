@@ -7,7 +7,7 @@
    Expõe:
      window.useIsMobile()
      window.SiteHeader({ current, lang, setLang, onContactOpen })
-       current: 'reel' | 'works' | 'about' — qual item fica em negrito
+       current: 'works' | 'about' — qual item fica em negrito
      window.ContactCta({ lang, isMobile })   — "Vamos conversar."
      window.SiteFooter({ lang })             — linha final com o ©
      window.HoverPlay({ hover, hasMedia })   — véu escuro + play nos cards
@@ -58,9 +58,10 @@ function NavItem({ href, label, active, last, onClick }) {
 function SiteHeader({ current, lang, setLang, onContactOpen }) {
   const isMobile = useIsMobile();
   const N = window.I18N[lang].nav;
+  // 'works' aponta pra home (os trabalhos estão lá); works.html continua
+  // acessível pelo "Ver tudo" da seção.
   const items = [
-    { key: 'reel',  href: './index.html', label: N.reel },
-    { key: 'works', href: './works.html', label: N.works },
+    { key: 'works', href: './index.html', label: N.works },
     { key: 'about', href: './about.html', label: N.about },
   ];
   // No mobile não cabe tudo: some o item da página atual.

@@ -106,7 +106,7 @@ function App() {
   const etiqueta = PROJETO ? PROJETO.title : (IS_LATEST ? T.video.latestWork : T.video.selectedWork);
   const ano = v.year || (PROJETO && PROJETO.year);
   // Vídeo de projeto sem categoria própria: mostra o cliente do projeto.
-  const categoria = v.category || (PROJETO && PROJETO.subtitle);
+  const categoria = window.tCategory(lang, v.category) || (PROJETO && PROJETO.subtitle);
   const categoriaLabel = v.category ? T.video.categoryLabel : T.projects.clientLabel;
 
   return (

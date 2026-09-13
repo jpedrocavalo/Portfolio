@@ -273,6 +273,20 @@ window.getInitialLang = function () {
   return lang;
 };
 
+// Categoria dos vídeos (videos.js está em inglês). Em PT, traduz o que
+// tiver tradução aqui; o que não tiver, aparece como está.
+const CATEGORIAS_PT = {
+  'Wedding film':        'Filme de casamento',
+  'Graduation film':     'Filme de formatura',
+  'Pre Wedding Session': 'Ensaio pré-wedding',
+  'Aftermovie':          'Aftermovie',
+  'Corte':               'Corte',
+};
+window.tCategory = function (lang, category) {
+  if (!category) return category;
+  return lang === 'pt' ? (CATEGORIAS_PT[category] || category) : category;
+};
+
 window.persistLang = function (lang) {
   try { localStorage.setItem('jotap_lang', lang); } catch (_) {}
   aplicaLangNoHtml(lang);
