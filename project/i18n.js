@@ -13,6 +13,7 @@ window.I18N = {
     nav: {
       color:   'Color',
       reel:    'Reel',
+      works:   'Trabalhos',
       about:   'Sobre',
       contact: 'Contato',
     },
@@ -66,6 +67,14 @@ window.I18N = {
       latestWork:      '↗ Último trabalho',
       selectedWorks:   '01, Trabalhos selecionados',
       seeAll:          'Ver tudo ↗',
+      // Colunas ao lado do título da home
+      roleLabel:       'Função',
+      role:            'Editor & Colorista',
+      locationLabel:   'Base',
+      location:        'Natal, RN, Brasil',
+      servicesLabel:   'Serviços',
+      services:        ['Edição', 'Tratamento de cor', 'Edição real time'],
+      descriptionLabel:'Descrição',
     },
 
     // ── Projetos (seção na home + project.html) ──
@@ -77,6 +86,9 @@ window.I18N = {
       soon:          'Em breve',
       videosLabel:   'Vídeos do projeto',
       empty:         'Vídeos sendo adicionados, em breve',
+      clientLabel:   'Cliente',
+      yearLabel:     'Ano',
+      descriptionLabel: 'Descrição',
       back:          '← Voltar para o projeto',
       backHome:      '← Voltar para os projetos',
     },
@@ -85,6 +97,10 @@ window.I18N = {
     video: {
       latestWork:   'Último trabalho',
       selectedWork: 'Trabalho selecionado',
+      categoryLabel:'Categoria',
+      yearLabel:    'Ano',
+      projectLabel: 'Projeto',
+      descriptionLabel: 'Descrição',
     },
 
     // ── Bloco de color na página de vídeo ──
@@ -126,6 +142,7 @@ window.I18N = {
     nav: {
       color:   'Color',
       reel:    'Reel',
+      works:   'Work',
       about:   'About',
       contact: 'Contact',
     },
@@ -173,6 +190,13 @@ window.I18N = {
       latestWork:      '↗ Latest work',
       selectedWorks:   '01, Selected works',
       seeAll:          'See all ↗',
+      roleLabel:       'Role',
+      role:            'Editor & Colorist',
+      locationLabel:   'Based in',
+      location:        'Natal, RN, Brazil',
+      servicesLabel:   'Services',
+      services:        ['Editing', 'Color grading', 'Real-time editing'],
+      descriptionLabel:'Description',
     },
 
     projects: {
@@ -183,6 +207,9 @@ window.I18N = {
       soon:          'Coming soon',
       videosLabel:   'Videos in this project',
       empty:         'Videos being added, coming soon',
+      clientLabel:   'Client',
+      yearLabel:     'Year',
+      descriptionLabel: 'Description',
       back:          '← Back to the project',
       backHome:      '← Back to projects',
     },
@@ -190,6 +217,10 @@ window.I18N = {
     video: {
       latestWork:   'Latest work',
       selectedWork: 'Selected work',
+      categoryLabel:'Category',
+      yearLabel:    'Year',
+      projectLabel: 'Project',
+      descriptionLabel: 'Description',
     },
 
     colorGrade: {

@@ -11,12 +11,9 @@
    Dados vêm de shortform.js (window.SHORTFORM).
    ════════════════════════════════════════════════════════════════ */
 
-const SF_PALETTE = { bg: '#0a0a0a', fg: '#f5f1e8', muted: '#8a8580', accent: '#7a00d8' };
-const SF_FONTS = {
-  display: '"Fraunces", serif',
-  sans: '"Inter", system-ui, sans-serif',
-  mono: '"JetBrains Mono", monospace',
-};
+const SF_TH = window.THEME;
+const SF_PALETTE = SF_TH.palette;
+const SF_FONTS = SF_TH.fonts;
 
 // Capa e player vêm de media.js — Cloudflare Stream quando o vídeo tem
 // streamId, YouTube caso contrário.
@@ -44,7 +41,7 @@ function ShortformModal({ item, onClose, isMobile, lang }) {
       onClick={onClose}
       style={{
         position: 'fixed', inset: 0, zIndex: 200,
-        background: 'rgba(8,8,8,0.86)',
+        background: 'rgba(245,244,240,0.88)',
         backdropFilter: 'blur(28px)',
         WebkitBackdropFilter: 'blur(28px)',
         // flex-start + margin:auto no filho em vez de align-items:center.
@@ -60,14 +57,14 @@ function ShortformModal({ item, onClose, isMobile, lang }) {
         style={{
           position: 'fixed', top: 20, right: 24, zIndex: 2,
           width: 40, height: 40, borderRadius: 20,
-          border: '1px solid rgba(255,255,255,0.2)',
-          background: 'transparent', color: '#fff',
+          border: `1px solid ${SF_PALETTE.line}`,
+          background: SF_PALETTE.bg, color: SF_PALETTE.fg,
           fontSize: 20, lineHeight: 1, cursor: 'pointer',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           transition: 'background 0.2s',
         }}
-        onMouseEnter={(e) => (e.currentTarget.style.background = 'rgba(255,255,255,0.12)')}
-        onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
+        onMouseEnter={(e) => (e.currentTarget.style.background = SF_PALETTE.surface)}
+        onMouseLeave={(e) => (e.currentTarget.style.background = SF_PALETTE.bg)}
       >×</button>
 
       {/* Quadro: vídeo + texto em cima, color ocupando a largura embaixo */}
@@ -78,13 +75,12 @@ function ShortformModal({ item, onClose, isMobile, lang }) {
           margin: 'auto',
           display: 'flex',
           flexDirection: 'column',
-          background: '#0d0d0d',
-          border: '1px solid rgba(255,255,255,0.1)',
-          borderRadius: 4,
+          background: SF_PALETTE.bg,
+          border: `1px solid ${SF_PALETTE.line}`,
           overflow: 'hidden',
           maxWidth: isMobile ? 480 : 1180,
           width: '100%',
-          boxShadow: '0 30px 90px rgba(0,0,0,0.65)',
+          boxShadow: '0 30px 90px rgba(17,17,17,0.18)',
         }}
       >
         <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row' }}>
@@ -112,32 +108,20 @@ function ShortformModal({ item, onClose, isMobile, lang }) {
           justifyContent: 'flex-start',
           minWidth: 0,
         }}>
-          <h2 style={{
-            fontFamily: SF_FONTS.display,
-            fontStyle: 'italic', fontWeight: 300,
-            fontSize: isMobile ? 'clamp(28px, 8vw, 40px)' : 'clamp(40px, 3.6vw, 68px)',
-            lineHeight: 1.02, letterSpacing: '-0.03em',
-            margin: 0, color: SF_PALETTE.fg,
-          }}>
+          <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: isMobile ? 14 : 20 }}>
+            {[item.year, item.subtitle].filter(Boolean).map((x, i) => (
+              <span key={i} style={SF_TH.pill}>{x}</span>
+            ))}
+          </div>
+
+          <h2 style={SF_TH.heading(isMobile ? 'clamp(28px, 8vw, 40px)' : 'clamp(32px, 3vw, 56px)')}>
             {item.title}
           </h2>
 
-          <div style={{
-            marginTop: isMobile ? 16 : 28,
-            fontFamily: SF_FONTS.mono, fontSize: 11, letterSpacing: '0.3em',
-            textTransform: 'uppercase', color: SF_PALETTE.accent,
-          }}>
-            {[item.year, item.subtitle].filter(Boolean).join(' · ')}
+          <div style={{ ...SF_TH.label, marginTop: isMobile ? 20 : 32, marginBottom: 8 }}>
+            {(window.I18N[lang] || window.I18N.pt).video.descriptionLabel}
           </div>
-
-          <p style={{
-            marginTop: 16, marginBottom: 0,
-            fontFamily: SF_FONTS.sans,
-            fontSize: isMobile ? 14 : 15, lineHeight: 1.75,
-            color: 'rgba(245,241,232,0.72)',
-            whiteSpace: 'pre-line',
-            maxWidth: 460,
-          }}>
+          <p style={{ ...SF_TH.body(isMobile ? 14 : 15), maxWidth: 460 }}>
             {item.description}
           </p>
 
@@ -149,12 +133,11 @@ function ShortformModal({ item, onClose, isMobile, lang }) {
               style={{
                 marginTop: isMobile ? 24 : 36,
                 alignSelf: 'flex-start',
-                fontFamily: SF_FONTS.mono, fontSize: 10, letterSpacing: '0.25em',
-                textTransform: 'uppercase', color: 'rgba(245,241,232,0.45)',
-                textDecoration: 'none', transition: 'color 0.2s',
+                ...SF_TH.link, color: SF_PALETTE.muted,
+                transition: 'color 0.2s',
               }}
               onMouseEnter={(e) => (e.currentTarget.style.color = SF_PALETTE.fg)}
-              onMouseLeave={(e) => (e.currentTarget.style.color = 'rgba(245,241,232,0.45)')}
+              onMouseLeave={(e) => (e.currentTarget.style.color = SF_PALETTE.muted)}
             >
               Ver no YouTube ↗
             </a>
@@ -175,7 +158,8 @@ function ShortformModal({ item, onClose, isMobile, lang }) {
 }
 
 // ─── Card vertical flutuante ───────────────────────────────────
-function SfCard({ item, index, onOpen, width }) {
+// still = sem flutuação (grid da página short-form.html)
+function SfCard({ item, index, onOpen, width, still }) {
   const [hover, setHover] = React.useState(false);
   return (
     <div
@@ -183,15 +167,14 @@ function SfCard({ item, index, onOpen, width }) {
       style={{
         width, flexShrink: 0, cursor: 'pointer',
         // Flutuação: cada card sobe/desce com fase própria
-        animation: `sf-float ${5.5 + (index % 3) * 0.8}s ease-in-out ${index * 0.45}s infinite`,
+        animation: still ? 'none' : `sf-float ${5.5 + (index % 3) * 0.8}s ease-in-out ${index * 0.45}s infinite`,
       }}
     >
       <div style={{
         position: 'relative',
         aspectRatio: '9 / 16',
-        background: `linear-gradient(135deg, ${SF_PALETTE.accent}33, ${SF_PALETTE.fg}11)`,
-        border: `1px solid ${hover ? SF_PALETTE.accent : 'rgba(255,255,255,0.1)'}`,
-        borderRadius: 3,
+        background: SF_PALETTE.surface,
+        border: `1px solid ${hover ? SF_PALETTE.accent : SF_PALETTE.line}`,
         overflow: 'hidden',
         transition: 'border-color 0.25s, transform 0.5s cubic-bezier(0.2,0.8,0.2,1)',
         transform: hover ? 'scale(1.02)' : 'scale(1)',
@@ -209,41 +192,16 @@ function SfCard({ item, index, onOpen, width }) {
             transition: 'transform 0.6s cubic-bezier(0.2,0.8,0.2,1)',
           }}
         />
-        <div style={{
-          position: 'absolute', inset: 0,
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          background: hover ? 'rgba(10,10,10,0.3)' : 'rgba(10,10,10,0)',
-          transition: 'background 0.25s',
-        }}>
-          <div style={{
-            width: 0, height: 0,
-            borderLeft: `18px solid ${hover ? SF_PALETTE.accent : 'rgba(255,255,255,0.9)'}`,
-            borderTop: '12px solid transparent',
-            borderBottom: '12px solid transparent',
-            marginLeft: 5,
-            opacity: hover ? 1 : 0,
-            transform: hover ? 'scale(1)' : 'scale(0.7)',
-            transition: 'opacity 0.25s, transform 0.25s, border-color 0.25s',
-          }} />
-        </div>
+        <window.HoverPlay hover={hover} hasMedia />
       </div>
 
       {/* Legenda: título, subtítulo, ano */}
-      <div style={{ marginTop: 12, display: 'flex', flexDirection: 'column', gap: 4 }}>
-        <div style={{
-          fontFamily: SF_FONTS.display, fontStyle: 'italic',
-          fontSize: 14, lineHeight: 1.2, color: SF_PALETTE.fg,
-        }}>{item.title}</div>
-        <div style={{
-          fontFamily: SF_FONTS.sans, fontSize: 11, lineHeight: 1.4,
-          color: SF_PALETTE.muted,
-        }}>{item.subtitle}</div>
-        <div style={{
-          fontFamily: SF_FONTS.mono, fontSize: 9, letterSpacing: '0.25em',
-          textTransform: 'uppercase',
-          color: hover ? SF_PALETTE.accent : 'rgba(245,241,232,0.4)',
-          transition: 'color 0.25s',
-        }}>{item.year}</div>
+      <div style={{ marginTop: 10, display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'baseline', gap: '4px 12px' }}>
+        <div>
+          <div style={{ fontFamily: SF_FONTS.sans, fontSize: 13, fontWeight: 500, lineHeight: 1.3, color: SF_PALETTE.fg }}>{item.title}</div>
+          {item.subtitle && <div style={{ ...SF_TH.label, marginTop: 2 }}>{item.subtitle}</div>}
+        </div>
+        <div style={{ ...SF_TH.label, flexShrink: 0 }}>{item.year}</div>
       </div>
     </div>
   );
@@ -320,20 +278,13 @@ function ShortformSection({ isMobile, lang }) {
       gap: 16, flexWrap: 'wrap',
     }}>
       <div>
-        <div style={{
-          fontFamily: SF_FONTS.mono, fontSize: 11, letterSpacing: '0.3em',
-          textTransform: 'uppercase', color: 'rgba(245,241,232,0.35)', marginBottom: 14,
-        }}>{label}</div>
-        <h2 style={{
-          fontFamily: SF_FONTS.display,
-          fontSize: isMobile ? 'clamp(36px, 11vw, 56px)' : 'clamp(48px, 5vw, 92px)',
-          fontWeight: 300, lineHeight: 0.95, letterSpacing: '-0.04em', margin: 0,
-        }}>{heading}</h2>
+        <div style={{ ...SF_TH.label, marginBottom: 14 }}>{label}</div>
+        <h2 style={SF_TH.heading(isMobile ? 'clamp(32px, 9vw, 44px)' : 'clamp(32px, 3.2vw, 56px)')}>{heading}</h2>
       </div>
-      <a href="./short-form.html" style={{
-        fontFamily: SF_FONTS.mono, fontSize: 11, letterSpacing: '0.3em',
-        textTransform: 'uppercase', color: SF_PALETTE.accent, textDecoration: 'none',
-      }}>{lang === 'pt' ? 'Ver tudo ↗' : 'See all ↗'}</a>
+      <a href="./short-form.html" style={SF_TH.link}
+        onMouseEnter={(e) => (e.currentTarget.style.color = SF_PALETTE.accent)}
+        onMouseLeave={(e) => (e.currentTarget.style.color = SF_PALETTE.fg)}
+      >{lang === 'pt' ? 'Ver tudo ↗' : 'See all ↗'}</a>
     </div>
   );
 
@@ -345,8 +296,8 @@ function ShortformSection({ isMobile, lang }) {
   if (isMobile) {
     return (
       <section style={{
-        padding: `56px 0 64px`,
-        borderTop: '1px solid rgba(255,255,255,0.06)',
+        padding: `32px 0 48px`,
+        borderTop: SF_TH.sectionRule,
       }}>
         <div style={{ padding: `0 ${PAD}px` }}>{Header}</div>
         <div style={{
@@ -389,7 +340,7 @@ function ShortformSection({ isMobile, lang }) {
       style={{
         position: 'relative',
         height: `calc(100vh + ${maxShift}px)`,
-        borderTop: '1px solid rgba(255,255,255,0.06)',
+        borderTop: SF_TH.sectionRule,
       }}
     >
       <div style={{
@@ -419,8 +370,7 @@ function ShortformSection({ isMobile, lang }) {
         {maxShift > 0 && (
           <div style={{
             position: 'absolute', bottom: 32, left: PAD,
-            fontFamily: SF_FONTS.mono, fontSize: 10, letterSpacing: '0.25em',
-            textTransform: 'uppercase', color: 'rgba(245,241,232,0.3)',
+            ...SF_TH.label,
           }}>
             {lang === 'pt' ? '↓ Role para navegar' : '↓ Scroll to browse'}
           </div>

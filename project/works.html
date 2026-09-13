@@ -21,11 +21,11 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
 <style>
   * { box-sizing: border-box; }
-  html, body { margin: 0; padding: 0; width: 100%; background: #0a0a0a; color: #f5f1e8; font-family: 'Inter', system-ui, sans-serif; }
+  html, body { margin: 0; padding: 0; width: 100%; background: #f5f4f0; color: #111111; -webkit-font-smoothing: antialiased; font-family: 'Inter', system-ui, sans-serif; }
   #root { width: 100%; }
   a { color: inherit; }
 </style>
@@ -41,19 +41,17 @@
 
 <!-- Traduções compartilhadas + lista de vídeos (scripts normais, antes do Babel) -->
 <script src="i18n.js"></script>
+<script src="theme.js"></script>
 <script src="media.js"></script>
 <script src="videos.js"></script>
+<script type="text/babel" src="site-chrome.jsx"></script>
 <script type="text/babel" src="contact-modal.jsx"></script>
 
 <script type="text/babel">
 const { useState } = React;
-
-const PALETTE = { bg: '#0a0a0a', fg: '#f5f1e8', muted: '#8a8580', accent: '#7a00d8' };
-const FONTS = {
-  display: '"Fraunces", serif',
-  sans: '"Inter", system-ui, sans-serif',
-  mono: '"JetBrains Mono", monospace',
-};
+const TH = window.THEME;
+const PALETTE = TH.palette;
+const FONTS = TH.fonts;
 
 // hidden: true tira o vídeo do ar sem apagar os dados. O índice real vem
 // junto porque o link (?v=) aponta pra posição em window.VIDEOS — filtrar
@@ -64,39 +62,9 @@ const VIDEOS = (window.VIDEOS || [])
 
 // Capa vem de media.js (Cloudflare Stream ou YouTube)
 
-function Header({ fonts, palette, lang, setLang, onContactOpen }) {
-  const N = window.I18N[lang].nav;
-  return (
-    <div style={{
-      position: 'fixed', top: 0, left: 0, right: 0,
-      padding: '28px 40px',
-      display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-      fontFamily: fonts.mono, fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase',
-      color: '#fff', zIndex: 10, mixBlendMode: 'difference',
-    }}>
-      <a href="./index.html" style={{
-        fontFamily: fonts.display, fontSize: 16, letterSpacing: '-0.02em',
-        textTransform: 'none', fontStyle: 'italic', color: '#fff', textDecoration: 'none',
-      }}>Jotap Films</a>
-
-      {/* Toggle de idioma — centralizado no viewport */}
-      <div style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)', display: 'flex', alignItems: 'center', gap: 10 }}>
-        <span onClick={() => setLang('en')} style={{ cursor: 'pointer', color: lang === 'en' ? palette.accent : 'inherit', opacity: lang === 'en' ? 1 : 0.55, transition: 'opacity 0.2s, color 0.2s' }}>EN</span>
-        <span style={{ opacity: 0.4 }}>·</span>
-        <span onClick={() => setLang('pt')} style={{ cursor: 'pointer', color: lang === 'pt' ? palette.accent : 'inherit', opacity: lang === 'pt' ? 1 : 0.55, transition: 'opacity 0.2s, color 0.2s' }}>PT</span>
-      </div>
-
-      <div style={{ display: 'flex', gap: 32 }}>
-        <a href="./index.html" style={{ color: 'inherit', textDecoration: 'none' }}>{N.reel}</a>
-        <a href="./about.html" style={{ color: 'inherit', textDecoration: 'none' }}>{N.about}</a>
-        <span onClick={onContactOpen} style={{ cursor: 'pointer' }}>{N.contact}</span>
-      </div>
-    </div>
-  );
-}
-
-function VideoCard({ video, index, fonts, palette }) {
+function VideoCard({ video, index }) {
   const [hover, setHover] = useState(false);
+  const HoverPlay = window.HoverPlay;
   return (
     <a
       href={`./video.html?v=${index}`}
@@ -110,13 +78,13 @@ function VideoCard({ video, index, fonts, palette }) {
       <div style={{
         position: 'relative',
         aspectRatio: '16 / 9',
-        background: `linear-gradient(135deg, ${palette.accent}22, ${palette.fg}08)`,
-        border: `1px solid ${hover ? palette.accent : palette.fg + '1a'}`,
+        background: PALETTE.surface,
+        border: `1px solid ${hover ? PALETTE.accent : PALETTE.line}`,
         overflow: 'hidden',
         transition: 'border-color 0.25s, transform 0.5s cubic-bezier(0.2,0.8,0.2,1)',
         transform: hover ? 'scale(1.02)' : 'scale(1)',
       }}>
-        {window.hasMedia(video) ? (
+        {window.hasMedia(video) && (
           <img
             {...window.mediaThumbProps(video)}
             alt={video.title}
@@ -127,49 +95,20 @@ function VideoCard({ video, index, fonts, palette }) {
               transition: 'transform 0.6s cubic-bezier(0.2,0.8,0.2,1)',
             }}
           />
-        ) : (
-          <div style={{
-            position: 'absolute', inset: 0,
-            background: `repeating-linear-gradient(90deg, transparent, transparent 24px, ${palette.fg}08 24px, ${palette.fg}08 26px)`,
-          }} />
         )}
-
-        {/* Overlay escuro + play, igual aos cards de short-form */}
-        <div style={{
-          position: 'absolute', inset: 0,
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          background: hover ? 'rgba(10,10,10,0.3)' : 'rgba(10,10,10,0)',
-          transition: 'background 0.25s',
-        }}>
-          <div style={{
-            width: 0, height: 0,
-            borderLeft: `18px solid ${hover ? palette.accent : 'rgba(255,255,255,0.9)'}`,
-            borderTop: '12px solid transparent',
-            borderBottom: '12px solid transparent',
-            marginLeft: 5,
-            opacity: hover ? 1 : (window.hasMedia(video) ? 0 : 0.5),
-            transform: hover ? 'scale(1)' : 'scale(0.7)',
-            transition: 'opacity 0.25s, transform 0.25s, border-color 0.25s',
-          }} />
-        </div>
+        <HoverPlay hover={hover} hasMedia={window.hasMedia(video)} />
       </div>
-      <div style={{ marginTop: 12 }}>
-        <span style={{
-          fontFamily: fonts.display, fontStyle: 'italic',
-          fontSize: 15, color: palette.fg,
-        }}>
+      <div style={{
+        marginTop: 10,
+        display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'baseline', gap: '4px 12px',
+      }}>
+        <span style={{ fontFamily: FONTS.sans, fontSize: 13, fontWeight: 500, color: PALETTE.fg }}>
           {video.title}
         </span>
+        <span style={{ ...TH.label, flexShrink: 0 }}>
+          {[video.category, video.year].filter(Boolean).join(', ')}
+        </span>
       </div>
-      {(video.year || video.category) && (
-        <div style={{
-          marginTop: 4,
-          fontFamily: fonts.mono, fontSize: 10, letterSpacing: '0.2em',
-          textTransform: 'uppercase', color: 'rgba(245,241,232,0.4)',
-        }}>
-          {[video.year, video.category].filter(Boolean).join(' · ')}
-        </div>
-      )}
     </a>
   );
 }
@@ -180,119 +119,59 @@ function App() {
   const T = window.I18N[lang];
   const [contactOpen, setContactOpen] = React.useState(false);
   const ContactModal = window.ContactModal;
+  const isMobile = window.useIsMobile();
+  const Seta = window.Seta;
   return (
     <div style={{ width: '100%' }}>
       {ContactModal && <ContactModal open={contactOpen} onClose={() => setContactOpen(false)} lang={lang} />}
-      <Header fonts={FONTS} palette={PALETTE} lang={lang} setLang={setLang} onContactOpen={() => setContactOpen(true)} />
+      <window.SiteHeader current="works" lang={lang} setLang={setLang} onContactOpen={() => setContactOpen(true)} />
 
       {/* Bloco de título */}
       <section style={{
-        padding: '160px 40px 60px',
+        padding: isMobile ? '104px 20px 36px' : '150px 40px 56px',
+        display: 'grid',
+        gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
+        gap: isMobile ? 24 : 40,
+        alignItems: 'end',
       }}>
-        <div style={{
-          display: 'flex', justifyContent: 'space-between', alignItems: 'baseline',
-          flexWrap: 'wrap', gap: 16,
-        }}>
+        <div>
+          <Seta size={isMobile ? 22 : 28} />
+          <h1 style={{ ...TH.heading(isMobile ? 'clamp(44px, 13vw, 72px)' : 'clamp(56px, 6.2vw, 108px)'), marginTop: isMobile ? 20 : 28 }}>
+            {T.works.heading}
+          </h1>
+        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24 }}>
           <div>
-            <div style={{
-              fontFamily: FONTS.mono, fontSize: 11, letterSpacing: '0.3em',
-              textTransform: 'uppercase', color: PALETTE.accent, marginBottom: 24,
-            }}>
-              {T.works.allWorks}
+            <div style={{ ...TH.label, marginBottom: 6 }}>{T.works.allWorks}</div>
+            <div style={{ fontFamily: FONTS.sans, fontSize: 13, color: PALETTE.fg }}>
+              {VIDEOS.length} {VIDEOS.length === 1 ? T.works.projectSingular : T.works.projectPlural}
             </div>
-            <h1 style={{
-              fontFamily: FONTS.display,
-              fontSize: 'clamp(56px, 9vw, 160px)',
-              fontWeight: 300, lineHeight: 0.95, letterSpacing: '-0.04em', margin: 0,
-            }}>
-              {T.works.heading}
-            </h1>
-          </div>
-          <div style={{
-            fontFamily: FONTS.mono, fontSize: 11, letterSpacing: '0.3em',
-            textTransform: 'uppercase', color: PALETTE.muted,
-          }}>
-            {VIDEOS.length} {VIDEOS.length === 1 ? T.works.projectSingular : T.works.projectPlural}
           </div>
         </div>
       </section>
 
       {/* Grid de todos os vídeos */}
-      <section style={{ padding: '20px 40px 80px' }}>
+      <section style={{ padding: isMobile ? '0 20px 64px' : '0 40px 96px' }}>
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
-          gap: 28,
+          gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(auto-fill, minmax(320px, 1fr))',
+          gap: isMobile ? 12 : 24,
         }}>
           {VIDEOS.map(({ video, indice }) => (
-            <VideoCard key={indice} video={video} index={indice} fonts={FONTS} palette={PALETTE} />
+            <VideoCard key={indice} video={video} index={indice} />
           ))}
         </div>
 
-        <a href="./index.html" style={{
-          display: 'inline-block', marginTop: 56,
-          fontFamily: FONTS.mono, fontSize: 11, letterSpacing: '0.3em',
-          textTransform: 'uppercase', color: PALETTE.accent, textDecoration: 'none',
-        }}>
+        <a href="./index.html" style={{ ...TH.link, display: 'inline-block', marginTop: 48 }}
+          onMouseEnter={(e) => (e.currentTarget.style.color = PALETTE.accent)}
+          onMouseLeave={(e) => (e.currentTarget.style.color = PALETTE.fg)}
+        >
           {T.backToReel}
         </a>
       </section>
 
-      {/* Footer CTA */}
-      <section style={{
-        minHeight: '70vh',
-        padding: '120px 40px',
-        display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center',
-        textAlign: 'center',
-        borderTop: '1px solid rgba(255,255,255,0.06)',
-      }}>
-        <div style={{
-          fontFamily: FONTS.mono, fontSize: 11, letterSpacing: '0.3em',
-          textTransform: 'uppercase', color: 'rgba(255,255,255,0.5)', marginBottom: 32,
-        }}>
-          {T.contact.smallLabel}
-        </div>
-        <h2 style={{
-          fontFamily: FONTS.display,
-          fontSize: 'clamp(56px, 9vw, 160px)',
-          fontWeight: 300, lineHeight: 0.95, letterSpacing: '-0.04em', margin: 0,
-          maxWidth: 1200, color: '#fff',
-        }}>
-          {T.contact.headingA} <em style={{ fontStyle: 'italic' }}>{T.contact.headingB}</em>.
-        </h2>
-        <div style={{ marginTop: 40, display: 'flex', gap: 16, alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
-          <a href="https://wa.me/5584988370946"
-            target="_blank" rel="noopener noreferrer"
-            style={{
-              display: 'inline-flex', alignItems: 'center', gap: 12,
-              padding: '18px 28px',
-              border: '1px solid #fff', color: '#fff',
-              fontFamily: FONTS.mono, fontSize: 12, letterSpacing: '0.25em',
-              textTransform: 'uppercase', textDecoration: 'none',
-              transition: 'background 0.3s, color 0.3s',
-            }}
-            onMouseEnter={(e) => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.color = '#0a0a0a'; }}
-            onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = '#fff'; }}
-          >
-            WhatsApp <span>↗</span>
-          </a>
-          <a href="https://mail.google.com/mail/?view=cm&fs=1&to=jotapfilms@gmail.com"
-            target="_blank" rel="noopener noreferrer"
-            style={{
-              display: 'inline-flex', alignItems: 'center', gap: 12,
-              padding: '18px 28px',
-              border: '1px solid rgba(255,255,255,0.35)', color: '#fff',
-              fontFamily: FONTS.mono, fontSize: 12, letterSpacing: '0.25em',
-              textTransform: 'uppercase', textDecoration: 'none',
-              transition: 'background 0.3s, color 0.3s',
-            }}
-            onMouseEnter={(e) => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.color = '#0a0a0a'; }}
-            onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = '#fff'; }}
-          >
-            jotapfilms@gmail.com <span>↗</span>
-          </a>
-        </div>
-      </section>
+      <window.ContactCta lang={lang} isMobile={isMobile} />
+      <window.SiteFooter lang={lang} />
     </div>
   );
 }

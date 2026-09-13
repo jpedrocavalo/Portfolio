@@ -8,12 +8,9 @@
    Expõe window.ProjectsSection({ isMobile, lang }).
    ════════════════════════════════════════════════════════════════ */
 
-const PJ_PALETTE = { bg: '#0a0a0a', fg: '#f5f1e8', muted: '#8a8580', accent: '#7a00d8' };
-const PJ_FONTS = {
-  display: '"Fraunces", serif',
-  sans: '"Inter", system-ui, sans-serif',
-  mono: '"JetBrains Mono", monospace',
-};
+const PJ_TH = window.THEME;
+const PJ_PALETTE = PJ_TH.palette;
+const PJ_FONTS = PJ_TH.fonts;
 
 // Capa do primeiro vídeo do projeto — a reserva quando não há arte própria.
 function capaDoPrimeiroVideo(proj) {
@@ -32,7 +29,7 @@ window.projectCover = function (proj) {
 function ProjectCard({ proj, index, isMobile, lang }) {
   const [hover, setHover] = React.useState(false);
   // Quando a arte própria falha e entra a capa do vídeo, o tratamento de
-  // logo não vale mais: frame de vídeo pede preencher e escurecer.
+  // logo não vale mais: frame de vídeo pede preencher.
   const [usouReserva, setUsouReserva] = React.useState(false);
   const capa = window.projectCover(proj);
   // coverFit 'contain' = arte/logo: mostra inteiro em vez de preencher cortando
@@ -42,6 +39,7 @@ function ProjectCard({ proj, index, isMobile, lang }) {
   const qtd = (proj.videos || []).filter((v) => !v.hidden).length;
   const T = (window.I18N && window.I18N[lang]) || window.I18N.pt;
   const t = T.projects;
+  const contagem = qtd > 0 ? `${qtd} ${qtd === 1 ? t.videoSingular : t.videoPlural}` : t.soon;
 
   return (
     <a
@@ -56,13 +54,13 @@ function ProjectCard({ proj, index, isMobile, lang }) {
       <div style={{
         position: 'relative',
         aspectRatio: '4 / 3',
-        background: `linear-gradient(135deg, ${PJ_PALETTE.accent}22, ${PJ_PALETTE.fg}08)`,
-        border: `1px solid ${hover ? PJ_PALETTE.accent : PJ_PALETTE.fg + '1a'}`,
+        background: PJ_PALETTE.surface,
+        border: `1px solid ${hover ? PJ_PALETTE.accent : PJ_PALETTE.line}`,
         overflow: 'hidden',
         transition: 'border-color 0.25s, transform 0.5s cubic-bezier(0.2,0.8,0.2,1)',
         transform: hover ? 'scale(1.02)' : 'scale(1)',
       }}>
-        {capa ? (
+        {capa && (
           <img
             src={capa} alt={proj.title}
             // Se a arte não existir no caminho indicado, cai na capa do
@@ -78,67 +76,36 @@ function ProjectCard({ proj, index, isMobile, lang }) {
             style={{
               position: 'absolute', inset: 0, width: '100%', height: '100%',
               objectFit: fit,
-              // Logo precisa ficar legível: não escurece, e respira nas bordas.
+              // Logo respira nas bordas
               padding: ehLogo ? (isMobile ? 28 : 40) : 0,
-              filter: ehLogo
-                ? 'none'
-                : (hover ? 'grayscale(0) brightness(0.75)' : 'grayscale(0.35) brightness(0.5)'),
               transform: hover ? 'scale(1.05)' : 'scale(1)',
-              transition: 'transform 0.6s cubic-bezier(0.2,0.8,0.2,1), filter 0.4s',
+              transition: 'transform 0.6s cubic-bezier(0.2,0.8,0.2,1)',
             }}
           />
-        ) : (
-          <div style={{
-            position: 'absolute', inset: 0,
-            background: `repeating-linear-gradient(90deg, transparent, transparent 28px, ${PJ_PALETTE.fg}08 28px, ${PJ_PALETTE.fg}08 30px)`,
-          }} />
         )}
-
-        {/* Vinheta pro nome ficar legível sobre qualquer imagem.
-            Sobre um logo, só a faixa de baixo — o resto lavaria a arte. */}
+        {/* Véu leve no hover, sem play: capa abre uma lista, não um vídeo */}
         <div style={{
           position: 'absolute', inset: 0,
-          background: ehLogo
-            ? 'linear-gradient(to bottom, transparent 55%, rgba(0,0,0,0.75) 100%)'
-            : 'linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, transparent 45%, rgba(0,0,0,0.8) 100%)',
+          background: hover ? 'rgba(17,17,17,0.18)' : 'rgba(17,17,17,0)',
+          transition: 'background 0.25s',
         }} />
+      </div>
 
-        {/* Nome do projeto sobre a capa */}
-        <div style={{
-          position: 'absolute', inset: 0,
-          padding: isMobile ? 18 : 24,
-          display: 'flex', flexDirection: 'column', justifyContent: 'space-between',
-        }}>
-          <div style={{
-            fontFamily: PJ_FONTS.mono, fontSize: 10, letterSpacing: '0.3em',
-            textTransform: 'uppercase', color: 'rgba(245,241,232,0.7)',
-          }}>
-            {proj.year}
+      {/* Nome e ficha abaixo da capa, como nos outros cards */}
+      <div style={{
+        marginTop: 10,
+        display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'baseline', gap: '4px 12px',
+      }}>
+        <div>
+          <div style={{ fontFamily: PJ_FONTS.sans, fontSize: 15, fontWeight: 600, letterSpacing: '-0.01em', color: PJ_PALETTE.fg }}>
+            {proj.title}
           </div>
-          <div>
-            <h3 style={{
-              fontFamily: PJ_FONTS.display, fontStyle: 'italic', fontWeight: 300,
-              fontSize: isMobile ? 'clamp(24px, 7vw, 32px)' : 'clamp(28px, 2.4vw, 44px)',
-              lineHeight: 1, letterSpacing: '-0.02em', margin: 0, color: '#fff',
-              transform: hover ? 'translateX(6px)' : 'translateX(0)',
-              transition: 'transform 0.4s cubic-bezier(0.2,0.8,0.2,1)',
-            }}>
-              {proj.title}
-            </h3>
-            <div style={{
-              marginTop: 8,
-              display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 12,
-              fontFamily: PJ_FONTS.mono, fontSize: 10, letterSpacing: '0.25em',
-              textTransform: 'uppercase',
-              color: hover ? PJ_PALETTE.accent : 'rgba(245,241,232,0.55)',
-              transition: 'color 0.25s',
-            }}>
-              <span>{proj.subtitle || ''}</span>
-              <span style={{ flexShrink: 0 }}>
-                {qtd > 0 ? `${qtd} ${qtd === 1 ? t.videoSingular : t.videoPlural}` : t.soon}
-              </span>
-            </div>
-          </div>
+          {proj.subtitle && (
+            <div style={{ ...PJ_TH.label, marginTop: 2 }}>{proj.subtitle}</div>
+          )}
+        </div>
+        <div style={{ ...PJ_TH.label, flexShrink: 0, textAlign: 'right' }}>
+          {[proj.year, contagem].filter(Boolean).join(', ')}
         </div>
       </div>
     </a>
@@ -154,28 +121,22 @@ function ProjectsSection({ isMobile, lang }) {
 
   return (
     <section id="projects" style={{
+      scrollMarginTop: 56,
       width: '100%',
-      padding: isMobile ? '56px 20px 64px' : '80px 40px 96px',
-      borderTop: '1px solid rgba(255,255,255,0.06)',
+      padding: isMobile ? '32px 20px 48px' : '32px 40px 64px',
+      borderTop: PJ_TH.sectionRule,
     }}>
-      <div style={{
-        fontFamily: PJ_FONTS.mono, fontSize: 11, letterSpacing: '0.3em',
-        textTransform: 'uppercase', color: 'rgba(245,241,232,0.35)', marginBottom: 14,
-      }}>
-        {t.label}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 16 }}>
+        <div style={PJ_TH.label}>{t.label}</div>
       </div>
-      <h2 style={{
-        fontFamily: PJ_FONTS.display,
-        fontSize: isMobile ? 'clamp(36px, 11vw, 56px)' : 'clamp(48px, 5vw, 92px)',
-        fontWeight: 300, lineHeight: 0.95, letterSpacing: '-0.04em', margin: 0,
-      }}>
+      <h2 style={{ ...PJ_TH.heading(isMobile ? 'clamp(32px, 9vw, 44px)' : 'clamp(32px, 3.2vw, 56px)'), marginTop: 14 }}>
         {t.heading}
       </h2>
 
       <div style={{
-        marginTop: isMobile ? 28 : 40,
+        marginTop: isMobile ? 20 : 28,
         display: 'grid',
-        // Capas grandes: no máximo 3 por linha, e uma só ocupa metade
+        // Capas grandes: no máximo 3 por linha
         gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fill, minmax(340px, 1fr))',
         gap: isMobile ? 20 : 24,
       }}>

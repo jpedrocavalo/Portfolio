@@ -18,12 +18,12 @@
    Expõe window.ColorSection({ color, isMobile, lang }).
    ════════════════════════════════════════════════════════════════ */
 
-const CS_PALETTE = { bg: '#0a0a0a', fg: '#f5f1e8', muted: '#8a8580', accent: '#7a00d8' };
-const CS_FONTS = {
-  display: '"Fraunces", serif',
-  sans: '"Inter", system-ui, sans-serif',
-  mono: '"JetBrains Mono", monospace',
-};
+const CS_TH = window.THEME;
+const CS_PALETTE = CS_TH.palette;
+const CS_FONTS = CS_TH.fonts;
+
+// Rótulo pequeno acima de cada moldura
+const CS_LABEL = { ...CS_TH.label, marginBottom: 8 };
 
 // Descobre a proporção real da imagem. Assim a moldura se molda ao
 // arquivo em vez de recortá-lo: frame vertical, print de node largo,
@@ -58,37 +58,25 @@ function ColorSlot({ label, src, alt, ratio, isMobile, soonLabel, fit }) {
   const usada = real || ratio;
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minWidth: 0 }}>
-      <div style={{
-        fontFamily: CS_FONTS.mono, fontSize: 10, letterSpacing: '0.25em',
-        textTransform: 'uppercase', color: CS_PALETTE.muted, marginBottom: 10,
-      }}>
-        {label}
-      </div>
+      <div style={CS_LABEL}>{label}</div>
       <div style={{
         position: 'relative',
         ...(real ? molduraFluida(real) : { aspectRatio: usada }),
-        background: src ? '#000' : `linear-gradient(135deg, ${CS_PALETTE.accent}18, ${CS_PALETTE.fg}06)`,
-        border: `1px solid ${CS_PALETTE.fg}1a`,
+        background: src ? '#000' : CS_PALETTE.surface,
+        border: `1px solid ${CS_PALETTE.line}`,
         overflow: 'hidden',
       }}>
         {src ? (
           <img src={src} alt={alt}
             style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: fit || 'cover' }} />
         ) : (
-          <>
-            <div style={{
-              position: 'absolute', inset: 0,
-              background: `repeating-linear-gradient(90deg, transparent, transparent 26px, ${CS_PALETTE.fg}08 26px, ${CS_PALETTE.fg}08 28px)`,
-            }} />
-            <div style={{
-              position: 'absolute', inset: 0,
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontFamily: CS_FONTS.mono, fontSize: 9, letterSpacing: '0.3em',
-              textTransform: 'uppercase', color: 'rgba(245,241,232,0.3)',
-            }}>
-              {soonLabel}
-            </div>
-          </>
+          <div style={{
+            position: 'absolute', inset: 0,
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            ...CS_TH.label,
+          }}>
+            {soonLabel}
+          </div>
         )}
       </div>
     </div>
@@ -144,12 +132,11 @@ function BeforeAfterSlider({ before, after, labelBefore, labelAfter, isMobile })
   };
 
   const tag = (lado) => ({
+    ...CS_TH.pill,
     position: 'absolute', top: 12, [lado]: 12,
-    padding: '5px 9px',
-    background: 'rgba(10,10,10,0.6)',
+    background: 'rgba(245,244,240,0.9)',
+    borderColor: 'transparent',
     backdropFilter: 'blur(6px)', WebkitBackdropFilter: 'blur(6px)',
-    fontFamily: CS_FONTS.mono, fontSize: 9, letterSpacing: '0.25em',
-    textTransform: 'uppercase', color: 'rgba(245,241,232,0.9)',
     pointerEvents: 'none',
   });
 
@@ -168,7 +155,7 @@ function BeforeAfterSlider({ before, after, labelBefore, labelAfter, isMobile })
         position: 'relative',
         ...molduraFluida(ratio),
         background: '#000',
-        border: `1px solid ${CS_PALETTE.fg}1a`,
+        border: `1px solid ${CS_PALETTE.line}`,
         overflow: 'hidden',
         cursor: dragging ? 'grabbing' : 'ew-resize',
         // pan-y deixa o dedo rolar a página na vertical e só captura o
@@ -193,8 +180,8 @@ function BeforeAfterSlider({ before, after, labelBefore, labelAfter, isMobile })
       <div style={{
         position: 'absolute', top: 0, bottom: 0, left: `${pos}%`,
         width: 2, marginLeft: -1,
-        background: CS_PALETTE.fg,
-        boxShadow: '0 0 12px rgba(0,0,0,0.5)',
+        background: CS_PALETTE.bg,
+        boxShadow: '0 0 12px rgba(0,0,0,0.45)',
         pointerEvents: 'none',
       }} />
 
@@ -204,12 +191,13 @@ function BeforeAfterSlider({ before, after, labelBefore, labelAfter, isMobile })
         transform: 'translate(-50%, -50%)',
         width: isMobile ? 36 : 42, height: isMobile ? 36 : 42,
         borderRadius: '50%',
-        border: `1.5px solid ${CS_PALETTE.fg}`,
-        background: 'rgba(10,10,10,0.55)',
+        border: `1px solid ${CS_PALETTE.line}`,
+        background: 'rgba(245,244,240,0.92)',
         backdropFilter: 'blur(6px)', WebkitBackdropFilter: 'blur(6px)',
+        boxShadow: '0 4px 14px rgba(0,0,0,0.25)',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         gap: 5,
-        color: CS_PALETTE.fg, fontSize: 11, lineHeight: 1,
+        color: CS_PALETTE.fg, fontSize: 12, lineHeight: 1,
         pointerEvents: 'none',
       }}>
         <span>‹</span><span>›</span>
@@ -223,23 +211,19 @@ function BeforeAfterSlider({ before, after, labelBefore, labelAfter, isMobile })
 function CreditoBase({ label, item, primeiro }) {
   if (!item || !item.name) return null;
   return (
-    <div style={{
-      marginTop: primeiro ? 12 : 6,
-      fontFamily: CS_FONTS.mono, fontSize: 10, letterSpacing: '0.2em',
-      textTransform: 'uppercase', color: CS_PALETTE.muted,
-    }}>
+    <div style={{ ...CS_TH.label, fontSize: 12, marginTop: primeiro ? 12 : 6 }}>
       {label}:{' '}
       {item.url ? (
         <a
           href={item.url}
           target="_blank" rel="noopener noreferrer"
-          style={{ color: CS_PALETTE.fg, textDecoration: 'none', borderBottom: `1px solid ${CS_PALETTE.fg}40` }}
+          style={{ color: CS_PALETTE.fg, fontWeight: 500, textDecoration: 'none', borderBottom: `1px solid ${CS_PALETTE.line}` }}
           onMouseEnter={(e) => { e.currentTarget.style.color = CS_PALETTE.accent; e.currentTarget.style.borderBottomColor = CS_PALETTE.accent; }}
-          onMouseLeave={(e) => { e.currentTarget.style.color = CS_PALETTE.fg; e.currentTarget.style.borderBottomColor = CS_PALETTE.fg + '40'; }}
+          onMouseLeave={(e) => { e.currentTarget.style.color = CS_PALETTE.fg; e.currentTarget.style.borderBottomColor = CS_PALETTE.line; }}
         >
           {item.name} ↗
         </a>
-      ) : item.name}
+      ) : <span style={{ color: CS_PALETTE.fg, fontWeight: 500 }}>{item.name}</span>}
     </div>
   );
 }
@@ -267,27 +251,15 @@ function ColorSection({ color, isMobile, lang, compact }) {
   return (
     <div style={{
       width: '100%',
-      maxWidth: compact ? '100%' : 1100,
-      marginTop: compact ? 32 : (isMobile ? 48 : 80),
-      paddingTop: compact ? 26 : (isMobile ? 40 : 56),
-      borderTop: '1px solid rgba(255,255,255,0.08)',
+      maxWidth: compact ? '100%' : 'none',
+      marginTop: compact ? 32 : (isMobile ? 48 : 72),
+      paddingTop: compact ? 26 : (isMobile ? 32 : 40),
+      borderTop: CS_TH.sectionRule,
     }}>
-      <div style={{
-        fontFamily: CS_FONTS.mono, fontSize: 11, letterSpacing: '0.3em',
-        textTransform: 'uppercase', color: CS_PALETTE.accent, marginBottom: 14,
-      }}>
-        {t.label}
-      </div>
-      {/* Inter, não Fraunces: o bloco é técnico e o serifado editorial
-          fica reservado pro título do trabalho. */}
-      <h2 style={{
-        fontFamily: CS_FONTS.sans,
-        fontSize: compact
-          ? (isMobile ? '20px' : '24px')
-          : (isMobile ? 'clamp(24px, 6.5vw, 32px)' : 'clamp(28px, 2.6vw, 44px)'),
-        fontWeight: 500,
-        letterSpacing: '-0.02em', lineHeight: 1.05, margin: 0,
-      }}>
+      <div style={{ ...CS_TH.label, marginBottom: 14 }}>{t.label}</div>
+      <h2 style={CS_TH.heading(compact
+        ? (isMobile ? '22px' : '28px')
+        : (isMobile ? 'clamp(28px, 8vw, 40px)' : 'clamp(32px, 3.2vw, 56px)'))}>
         {t.heading}
       </h2>
 
@@ -299,13 +271,10 @@ function ColorSection({ color, isMobile, lang, compact }) {
           <div key={i} style={{ marginTop: i === 0 ? (compact ? 22 : (isMobile ? 32 : 44)) : (isMobile ? 24 : 32) }}>
             {cmp.before && cmp.after ? (
               <>
-                <div style={{
-                  fontFamily: CS_FONTS.mono, fontSize: 10, letterSpacing: '0.25em',
-                  textTransform: 'uppercase', color: CS_PALETTE.muted, marginBottom: 10,
-                }}>
-                  {cmp.label && <span style={{ color: CS_PALETTE.fg }}>{cmp.label}</span>}
-                  {cmp.label && ' — '}
-                  {t.before} / {t.after} — {t.drag}
+                <div style={CS_LABEL}>
+                  {cmp.label && <span style={{ color: CS_PALETTE.fg, fontWeight: 500 }}>{cmp.label}</span>}
+                  {cmp.label && ', '}
+                  {t.before} / {t.after}, {t.drag}
                 </div>
                 <BeforeAfterSlider
                   before={cmp.before}
@@ -318,10 +287,7 @@ function ColorSection({ color, isMobile, lang, compact }) {
             ) : (
               <>
                 {cmp.label && (
-                  <div style={{
-                    fontFamily: CS_FONTS.mono, fontSize: 10, letterSpacing: '0.25em',
-                    textTransform: 'uppercase', color: CS_PALETTE.fg, marginBottom: 10,
-                  }}>
+                  <div style={{ ...CS_LABEL, color: CS_PALETTE.fg, fontWeight: 500 }}>
                     {cmp.label}
                   </div>
                 )}
@@ -356,16 +322,11 @@ function ColorSection({ color, isMobile, lang, compact }) {
           sem a chave `breakdown`, nem o espaço reservado aparece. */}
       {breakdown && (
       <div style={{ marginTop: isMobile ? 24 : 32 }}>
-        <div style={{
-          fontFamily: CS_FONTS.mono, fontSize: 10, letterSpacing: '0.25em',
-          textTransform: 'uppercase', color: CS_PALETTE.muted, marginBottom: 10,
-        }}>
-          {t.breakdown}
-        </div>
+        <div style={CS_LABEL}>{t.breakdown}</div>
         <div style={{
           position: 'relative', aspectRatio: '16 / 9',
-          background: `linear-gradient(135deg, ${CS_PALETTE.accent}18, ${CS_PALETTE.fg}06)`,
-          border: `1px solid ${CS_PALETTE.fg}1a`,
+          background: CS_PALETTE.surface,
+          border: `1px solid ${CS_PALETTE.line}`,
           overflow: 'hidden',
         }}>
           {window.hasMedia(breakdown) ? (
@@ -376,20 +337,13 @@ function ColorSection({ color, isMobile, lang, compact }) {
               style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', border: 'none' }}
             />
           ) : (
-            <>
-              <div style={{
-                position: 'absolute', inset: 0,
-                background: `repeating-linear-gradient(90deg, transparent, transparent 32px, ${CS_PALETTE.fg}08 32px, ${CS_PALETTE.fg}08 34px)`,
-              }} />
-              <div style={{
-                position: 'absolute', inset: 0,
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontFamily: CS_FONTS.mono, fontSize: 9, letterSpacing: '0.3em',
-                textTransform: 'uppercase', color: 'rgba(245,241,232,0.3)',
-              }}>
-                {t.soon}
-              </div>
-            </>
+            <div style={{
+              position: 'absolute', inset: 0,
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              ...CS_TH.label,
+            }}>
+              {t.soon}
+            </div>
           )}
         </div>
       </div>

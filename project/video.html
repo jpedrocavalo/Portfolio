@@ -21,11 +21,11 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
 <style>
   * { box-sizing: border-box; }
-  html, body { margin: 0; padding: 0; width: 100%; background: #0a0a0a; color: #f5f1e8; font-family: 'Inter', system-ui, sans-serif; }
+  html, body { margin: 0; padding: 0; width: 100%; background: #f5f4f0; color: #111111; -webkit-font-smoothing: antialiased; font-family: 'Inter', system-ui, sans-serif; }
   #root { width: 100%; }
   a { color: inherit; }
 </style>
@@ -41,19 +41,18 @@
 
 <!-- Traduções compartilhadas + lista de vídeos (scripts normais, antes do Babel) -->
 <script src="i18n.js"></script>
+<script src="theme.js"></script>
 <script src="media.js"></script>
 <script src="videos.js"></script>
 <script src="projects.js"></script>
+<script type="text/babel" src="site-chrome.jsx"></script>
 <script type="text/babel" src="contact-modal.jsx"></script>
 <script type="text/babel" src="color-section.jsx"></script>
 
 <script type="text/babel">
-const PALETTE = { bg: '#0a0a0a', fg: '#f5f1e8', muted: '#8a8580', accent: '#7a00d8' };
-const FONTS = {
-  display: '"Fraunces", serif',
-  sans: '"Inter", system-ui, sans-serif',
-  mono: '"JetBrains Mono", monospace',
-};
+const TH = window.THEME;
+const PALETTE = TH.palette;
+const FONTS = TH.fonts;
 
 // Qual vídeo mostrar:
 //   ?v=<índice>          → vídeo de videos.js (vindo do grid da home)
@@ -80,99 +79,90 @@ const IS_LATEST = !PROJETO && (!Number.isInteger(VIDEO_INDEX) || VIDEO_INDEX ===
 // Pra onde o botão voltar aponta: o projeto de origem, ou "Todos os trabalhos".
 const VOLTAR_HREF = PROJETO ? `./project.html?p=${PROJ_INDEX}` : './works.html';
 
-function useIsMobile() {
-  const [isMobile, setIsMobile] = React.useState(false);
-  React.useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 768);
-    check();
-    window.addEventListener('resize', check);
-    return () => window.removeEventListener('resize', check);
-  }, []);
-  return isMobile;
-}
-
-function Header({ fonts, palette, lang, setLang, onContactOpen }) {
-  const isMobile = useIsMobile();
-  const N = window.I18N[lang].nav;
+// Coluna de rótulo + valor, como "Industry / Location" da referência
+function Coluna({ label, value }) {
+  if (!value) return null;
   return (
-    <div style={{
-      position: 'fixed', top: 0, left: 0, right: 0,
-      padding: isMobile ? '20px 20px' : '28px 40px',
-      display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-      fontFamily: fonts.mono, fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase',
-      color: '#fff',
-      zIndex: 10,
-      mixBlendMode: 'difference',
-    }}>
-      <a href="./index.html" style={{
-        fontFamily: fonts.display, fontSize: 16, letterSpacing: '-0.02em',
-        textTransform: 'none', fontStyle: 'italic', color: '#fff', textDecoration: 'none',
-      }}>Jotap Films</a>
-
-      {/* Toggle de idioma — centralizado no viewport */}
-      <div style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)', display: 'flex', alignItems: 'center', gap: 10 }}>
-        <span onClick={() => setLang('en')} style={{ cursor: 'pointer', color: lang === 'en' ? palette.accent : 'inherit', opacity: lang === 'en' ? 1 : 0.55, transition: 'opacity 0.2s, color 0.2s' }}>EN</span>
-        <span style={{ opacity: 0.4 }}>·</span>
-        <span onClick={() => setLang('pt')} style={{ cursor: 'pointer', color: lang === 'pt' ? palette.accent : 'inherit', opacity: lang === 'pt' ? 1 : 0.55, transition: 'opacity 0.2s, color 0.2s' }}>PT</span>
-      </div>
-
-      <div style={{ display: 'flex', gap: isMobile ? 20 : 32 }}>
-        <a href="./index.html" style={{ color: 'inherit', textDecoration: 'none' }}>{N.reel}</a>
-        <a href="./about.html" style={{ color: 'inherit', textDecoration: 'none' }}>{N.about}</a>
-        {!isMobile && (
-          <span onClick={onContactOpen} style={{ cursor: 'pointer' }}>{N.contact}</span>
-        )}
-      </div>
+    <div>
+      <div style={{ ...TH.label, marginBottom: 6 }}>{label}</div>
+      <div style={{ fontFamily: FONTS.sans, fontSize: 13, lineHeight: 1.5, color: PALETTE.fg }}>{value}</div>
     </div>
   );
 }
 
 function App() {
   const v = VIDEO;
-  const isMobile = useIsMobile();
+  const isMobile = window.useIsMobile();
   const [lang, setLangState] = React.useState(window.getInitialLang());
   const setLang = (next) => { setLangState(next); window.persistLang(next); };
   const T = window.I18N[lang];
   const [contactOpen, setContactOpen] = React.useState(false);
   const ContactModal = window.ContactModal;
   const ColorSection = window.ColorSection;
+  const Seta = window.Seta;
+
+  // Vindo de um projeto, a etiqueta mostra o projeto em vez de
+  // "último/selecionado", que ali não faz sentido.
+  const etiqueta = PROJETO ? PROJETO.title : (IS_LATEST ? T.video.latestWork : T.video.selectedWork);
+  const ano = v.year || (PROJETO && PROJETO.year);
+  // Vídeo de projeto sem categoria própria: mostra o cliente do projeto.
+  const categoria = v.category || (PROJETO && PROJETO.subtitle);
+  const categoriaLabel = v.category ? T.video.categoryLabel : T.projects.clientLabel;
+
   return (
     <div style={{ width: '100%' }}>
       {ContactModal && <ContactModal open={contactOpen} onClose={() => setContactOpen(false)} lang={lang} />}
-      <Header fonts={FONTS} palette={PALETTE} lang={lang} setLang={setLang} onContactOpen={() => setContactOpen(true)} />
+      <window.SiteHeader current="works" lang={lang} setLang={setLang} onContactOpen={() => setContactOpen(true)} />
 
+      {/* Cabeçalho: título à esquerda, ficha e descrição à direita */}
       <section style={{
-        minHeight: '100vh',
-        padding: isMobile ? '100px 20px 60px' : '140px 40px 80px',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
+        padding: isMobile ? '104px 20px 36px' : '150px 40px 56px',
+        display: 'grid',
+        gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
+        columnGap: 40, rowGap: isMobile ? 32 : 48,
+        alignItems: 'start',
       }}>
-        {/* Label topo */}
-        <div style={{
-          width: '100%', maxWidth: 1100,
-          display: 'flex', justifyContent: 'space-between',
-          fontFamily: FONTS.mono, fontSize: 11, letterSpacing: '0.3em',
-          textTransform: 'uppercase', color: PALETTE.muted, marginBottom: 20,
-        }}>
-          {/* Vindo de um projeto, o rótulo mostra o projeto em vez de
-              "último/selecionado", que ali não faz sentido. */}
-          <span style={{ color: PALETTE.accent }}>
-            {PROJETO ? PROJETO.title : (IS_LATEST ? T.video.latestWork : T.video.selectedWork)}
-          </span>
-          <span>{[v.year || (PROJETO && PROJETO.year), v.category].filter(Boolean).join(' · ')}</span>
+        <div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+            <Seta size={isMobile ? 22 : 28} />
+            <span style={TH.pill}>{etiqueta}</span>
+          </div>
+          <h1 style={{ ...TH.heading(isMobile ? 'clamp(36px, 10vw, 60px)' : 'clamp(40px, 4.4vw, 76px)'), marginTop: isMobile ? 20 : 28 }}>
+            {v.title}
+          </h1>
         </div>
 
+        <div style={{ display: 'flex', flexDirection: 'column', gap: isMobile ? 28 : 56, paddingTop: isMobile ? 0 : 4 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24 }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
+              <Coluna label={categoriaLabel} value={categoria} />
+              <Coluna label={T.video.yearLabel} value={ano} />
+            </div>
+            {PROJETO && <Coluna label={T.video.projectLabel} value={PROJETO.title} />}
+          </div>
+          {v.description && (
+            <div>
+              <div style={{ ...TH.label, marginBottom: 8 }}>{T.video.descriptionLabel}</div>
+              <p style={{ ...TH.body(isMobile ? 14 : 15), maxWidth: 560 }}>{v.description}</p>
+            </div>
+          )}
+        </div>
+      </section>
+
+      <section style={{
+        padding: isMobile ? '0 20px 64px' : '0 40px 96px',
+        display: 'flex', flexDirection: 'column', alignItems: 'center',
+      }}>
         {/* Player: 16:9, ou 9:16 quando o vídeo é vertical (Short/Reel).
-            Vertical num quadro 16:9 abriria com tarjas pretas dos dois
-            lados; limitado pela altura da tela pra não virar uma coluna. */}
+            Vertical num quadro 16:9 abriria com tarjas dos dois lados;
+            limitado pela altura da tela pra não virar uma coluna. */}
         <div style={{
           width: '100%',
-          maxWidth: v.vertical ? 'min(100%, calc(78vh * 9 / 16))' : 1100,
+          maxWidth: v.vertical ? 'min(100%, calc(78vh * 9 / 16))' : 'none',
           aspectRatio: v.vertical ? '9 / 16' : '16 / 9',
           margin: '0 auto',
-          background: `linear-gradient(135deg, ${PALETTE.accent}22, ${PALETTE.fg}08)`,
-          border: `1px solid ${PALETTE.fg}1a`,
+          background: PALETTE.surface,
+          border: `1px solid ${PALETTE.line}`,
           overflow: 'hidden',
           position: 'relative',
         }}>
@@ -184,71 +174,32 @@ function App() {
               style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', border: 'none' }}
             />
           ) : (
-            <>
-              <div style={{
-                position: 'absolute', inset: 0,
-                background: `repeating-linear-gradient(90deg, transparent, transparent 36px, ${PALETTE.fg}08 36px, ${PALETTE.fg}08 38px)`,
-              }} />
-              <div style={{
-                position: 'absolute', inset: 0,
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                flexDirection: 'column', gap: 16,
-              }}>
-                <div style={{
-                  width: 0, height: 0,
-                  borderLeft: `26px solid ${PALETTE.accent}`,
-                  borderTop: '17px solid transparent',
-                  borderBottom: '17px solid transparent',
-                  marginLeft: 6,
-                }} />
-                <div style={{
-                  fontFamily: FONTS.mono, fontSize: 10, letterSpacing: '0.3em',
-                  textTransform: 'uppercase', color: 'rgba(255,255,255,0.4)',
-                }}>
-                  Adicione o streamId ou youtubeId em videos.js
-                </div>
-              </div>
-            </>
+            <div style={{
+              position: 'absolute', inset: 0,
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              ...TH.label,
+            }}>
+              Adicione o streamId ou youtubeId em videos.js
+            </div>
           )}
-        </div>
-
-        {/* Info do vídeo */}
-        <div style={{
-          width: '100%', maxWidth: 1100, marginTop: isMobile ? 24 : 40,
-          display: 'flex', flexDirection: 'column', gap: 20,
-        }}>
-          <h1 style={{
-            fontFamily: FONTS.display,
-            fontSize: isMobile ? 'clamp(32px, 9vw, 56px)' : 'clamp(40px, 6vw, 88px)',
-            fontWeight: 300, fontStyle: 'italic',
-            letterSpacing: '-0.03em', lineHeight: 1, margin: 0,
-          }}>
-            {v.title}
-          </h1>
-
-          <p style={{
-            fontFamily: FONTS.sans, fontSize: isMobile ? 15 : 16, lineHeight: 1.7,
-            color: 'rgba(245,241,232,0.78)', maxWidth: 640, margin: 0,
-            whiteSpace: 'pre-line',
-          }}>
-            {v.description}
-          </p>
         </div>
 
         {/* Color — antes, depois, nodes e breakdown */}
         {ColorSection && <ColorSection color={v.color} isMobile={isMobile} lang={lang} />}
 
         {/* Botão voltar → o projeto de origem, ou "Todos os trabalhos" */}
-        <div style={{ width: '100%', maxWidth: 1100, marginTop: isMobile ? 40 : 56 }}>
-          <a href={VOLTAR_HREF} style={{
-            fontFamily: FONTS.mono, fontSize: 11, letterSpacing: '0.3em',
-            textTransform: 'uppercase', color: PALETTE.accent,
-            textDecoration: 'none',
-          }}>
+        <div style={{ width: '100%', marginTop: isMobile ? 40 : 56 }}>
+          <a href={VOLTAR_HREF} style={TH.link}
+            onMouseEnter={(e) => (e.currentTarget.style.color = PALETTE.accent)}
+            onMouseLeave={(e) => (e.currentTarget.style.color = PALETTE.fg)}
+          >
             {PROJETO ? T.projects.back : `← ${T.works.allWorks}`}
           </a>
         </div>
       </section>
+
+      <window.ContactCta lang={lang} isMobile={isMobile} />
+      <window.SiteFooter lang={lang} />
     </div>
   );
 }

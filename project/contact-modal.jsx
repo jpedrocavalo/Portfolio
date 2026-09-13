@@ -2,7 +2,8 @@
 
 function ContactModal({ open, onClose, lang }) {
   const { useEffect, useState } = React;
-  const T = (window.I18N && window.I18N[lang]) || {};
+  const TH = window.THEME;
+  const P = TH.palette;
   const backLabel = lang === 'pt' ? 'Voltar' : 'Back';
 
   useEffect(() => {
@@ -15,13 +16,8 @@ function ContactModal({ open, onClose, lang }) {
   if (!open) return null;
 
   const optionStyle = (hover) => ({
-    fontFamily: '"Fraunces", serif',
-    fontStyle: 'italic',
-    fontWeight: 300,
-    fontSize: 'clamp(48px, 8vw, 120px)',
-    letterSpacing: '-0.03em',
-    lineHeight: 1,
-    color: hover ? '#7a00d8' : '#f5f1e8',
+    ...TH.heading('clamp(40px, 8vw, 112px)'),
+    color: hover ? P.accent : P.fg,
     textDecoration: 'none',
     display: 'flex',
     alignItems: 'baseline',
@@ -31,14 +27,7 @@ function ContactModal({ open, onClose, lang }) {
   });
 
   const ArrowSpan = () => (
-    <span style={{
-      fontFamily: '"JetBrains Mono", monospace',
-      fontStyle: 'normal',
-      fontSize: '0.3em',
-      letterSpacing: '0.1em',
-      verticalAlign: 'middle',
-      opacity: 0.6,
-    }}>↗</span>
+    <span style={{ fontSize: '0.3em', fontWeight: 400, opacity: 0.6 }}>↗</span>
   );
 
   function HoverLink({ href, children }) {
@@ -63,7 +52,7 @@ function ContactModal({ open, onClose, lang }) {
       onClick={onClose}
       style={{
         position: 'fixed', inset: 0, zIndex: 300,
-        background: 'rgba(10,10,10,0.92)',
+        background: 'rgba(245,244,240,0.9)',
         backdropFilter: 'blur(28px)',
         WebkitBackdropFilter: 'blur(28px)',
         display: 'flex', flexDirection: 'column',
@@ -74,17 +63,14 @@ function ContactModal({ open, onClose, lang }) {
       <button
         onClick={onClose}
         style={{
-          position: 'absolute', top: 28, left: 40,
-          background: 'none', border: 'none',
-          color: 'rgba(245,241,232,0.55)',
-          fontFamily: '"JetBrains Mono", monospace',
-          fontSize: 11, letterSpacing: '0.2em',
-          textTransform: 'uppercase', cursor: 'pointer',
-          padding: 0,
+          position: 'absolute', top: 20, left: 40,
+          background: 'none', border: 'none', padding: 0,
+          ...TH.link,
+          color: P.muted,
           transition: 'color 0.2s',
         }}
-        onMouseEnter={(e) => (e.currentTarget.style.color = '#f5f1e8')}
-        onMouseLeave={(e) => (e.currentTarget.style.color = 'rgba(245,241,232,0.55)')}
+        onMouseEnter={(e) => (e.currentTarget.style.color = P.fg)}
+        onMouseLeave={(e) => (e.currentTarget.style.color = P.muted)}
       >
         ← {backLabel}
       </button>
