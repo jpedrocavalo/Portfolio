@@ -62,7 +62,7 @@ window.I18N = {
     // ── Reel (index.html, a home / v1-showreel) ──
     reel: {
       heroLabel:       '[001], Editor / Reel',
-      heroDescription: 'Construindo histórias cinematográficas para marcas, artistas e o que está entre eles. Disponível para novos projetos.',
+      heroDescription: 'O olhar de montagem que transforma o seu material em lembranças vivas para os seus clientes. Parceria em pós-produção para produtoras de casamentos e eventos que valorizam histórias atemporais e prazos alinhados.',
       scroll:          'Rolar',
       latestWork:      '↗ Último trabalho',
       selectedWorks:   '01, Trabalhos selecionados',
@@ -72,6 +72,8 @@ window.I18N = {
       role:            'Editor & Colorista',
       locationLabel:   'Base',
       location:        'Natal, RN, Brasil',
+      serveLabel:      'Atendimento',
+      serve:           'Worldwide',
       servicesLabel:   'Serviços',
       services:        ['Edição', 'Tratamento de cor', 'Edição real time'],
       descriptionLabel:'Descrição',
@@ -185,7 +187,7 @@ window.I18N = {
 
     reel: {
       heroLabel:       '[001], Filmmaker & Editor / Reel',
-      heroDescription: 'Crafting cinematic stories for brands, artists, and the in-between. Available for new projects.',
+      heroDescription: 'The editing eye that turns your footage into living memories for your clients. Post-production partnership for wedding and event production companies that value timeless stories and deadlines that hold.',
       scroll:          'Scroll',
       latestWork:      '↗ Latest work',
       selectedWorks:   '01, Selected works',
@@ -194,6 +196,8 @@ window.I18N = {
       role:            'Editor & Colorist',
       locationLabel:   'Based in',
       location:        'Natal, RN, Brazil',
+      serveLabel:      'Working',
+      serve:           'Worldwide',
       servicesLabel:   'Services',
       services:        ['Editing', 'Color grading', 'Real-time editing'],
       descriptionLabel:'Description',
