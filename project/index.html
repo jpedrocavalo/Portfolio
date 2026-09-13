@@ -185,15 +185,15 @@ function App() {
         <div style={{ display: 'flex', flexDirection: 'column', gap: isMobile ? 28 : 56, paddingTop: isMobile ? 0 : 4 }}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24 }}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
-              <Coluna label={T.reel.roleLabel} items={T.reel.role} />
-              <Coluna label={T.reel.locationLabel} items={T.reel.location} />
-              <Coluna label={T.reel.serveLabel} items={T.reel.serve} />
+              <Coluna label={T.home.roleLabel} items={T.home.role} />
+              <Coluna label={T.home.locationLabel} items={T.home.location} />
+              <Coluna label={T.home.serveLabel} items={T.home.serve} />
             </div>
-            <Coluna label={T.reel.servicesLabel} items={T.reel.services} />
+            <Coluna label={T.home.servicesLabel} items={T.home.services} />
           </div>
           <div>
-            <div style={{ ...TH.label, marginBottom: 8 }}>{T.reel.descriptionLabel}</div>
-            <p style={{ ...TH.body(isMobile ? 14 : 15), maxWidth: 560 }}>{T.reel.heroDescription}</p>
+            <div style={{ ...TH.label, marginBottom: 8 }}>{T.home.descriptionLabel}</div>
+            <p style={{ ...TH.body(isMobile ? 14 : 15), maxWidth: 560 }}>{T.home.heroDescription}</p>
           </div>
         </div>
       </section>
@@ -208,12 +208,12 @@ function App() {
         flexDirection: 'column',
       }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', paddingBottom: 20 }}>
-          <div style={TH.label}>{T.reel.selectedWorks}</div>
+          <div style={TH.label}>{T.home.selectedWorks}</div>
           <a href="./works.html" style={TH.link}
             onMouseEnter={(e) => (e.currentTarget.style.color = PALETTE.accent)}
             onMouseLeave={(e) => (e.currentTarget.style.color = PALETTE.fg)}
           >
-            {T.reel.seeAll}
+            {T.home.seeAll}
           </a>
         </div>
         {/* Capas coladas, sangrando até a borda da tela: a margem

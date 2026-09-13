@@ -12,7 +12,7 @@ window.I18N = {
     // ── Navegação (header de todas as páginas) ──
     nav: {
       color:   'Color',
-      reel:    'Reel',
+
       works:   'Trabalhos',
       about:   'Sobre',
       contact: 'Contato',
@@ -32,7 +32,7 @@ window.I18N = {
     },
 
     // ── Links de voltar ──
-    backToReel:  '← Voltar para reel',
+    backToWorks: '← Voltar para trabalhos',
     backToColor: '← Voltar para color',
 
     // ── About (index.html) ──
@@ -59,9 +59,8 @@ window.I18N = {
       nowShowing: 'Em cena agora',
     },
 
-    // ── Reel (index.html, a home / v1-showreel) ──
-    reel: {
-      heroLabel:       '[001], Editor / Reel',
+    // ── Home (index.html) ──
+    home: {
       heroDescription: 'O olhar de montagem que transforma o seu material em lembranças vivas para os seus clientes. Parceria em pós-produção para produtoras de casamentos e eventos que valorizam histórias atemporais e prazos alinhados.',
       scroll:          'Rolar',
       latestWork:      '↗ Último trabalho',
@@ -73,7 +72,7 @@ window.I18N = {
       locationLabel:   'Base',
       location:        'Natal, RN, Brasil',
       serveLabel:      'Atendimento',
-      serve:           'Worldwide',
+      serve:           'Mundo inteiro',
       servicesLabel:   'Serviços',
       services:        ['Edição', 'Tratamento de cor', 'Edição real time'],
       descriptionLabel:'Descrição',
@@ -143,7 +142,7 @@ window.I18N = {
   en: {
     nav: {
       color:   'Color',
-      reel:    'Reel',
+
       works:   'Work',
       about:   'About',
       contact: 'Contact',
@@ -160,7 +159,7 @@ window.I18N = {
       openFor:    'Available for new projects',
     },
 
-    backToReel:  '← Back to reel',
+    backToWorks: '← Back to work',
     backToColor: '← Back to color',
 
     about: {
@@ -185,8 +184,7 @@ window.I18N = {
       nowShowing: 'Now showing',
     },
 
-    reel: {
-      heroLabel:       '[001], Filmmaker & Editor / Reel',
+    home: {
       heroDescription: 'The editing eye that turns your footage into living memories for your clients. Post-production partnership for wedding and event production companies that value timeless stories and deadlines that hold.',
       scroll:          'Scroll',
       latestWork:      '↗ Latest work',
