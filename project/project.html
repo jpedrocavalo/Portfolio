@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Jotap Films — Project</title>
 <meta name="description" content="Eventos e projetos com vários vídeos, e o look de cor desenvolvido pra cada um." />
-<link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+<link rel="icon" type="image/svg+xml" href="./favicon.svg?v=2" />
 
 <!-- Preview ao compartilhar o link (WhatsApp, Instagram, LinkedIn...) -->
 <meta property="og:type" content="website" />
@@ -61,7 +61,6 @@ const PROJ = (window.PROJECTS && window.PROJECTS[IDX])
 // Card 16:9 de um vídeo do projeto → video.html?p=<proj>&v=<índice>
 function VideoCard({ video, projIndex, index }) {
   const [hover, setHover] = React.useState(false);
-  const HoverPlay = window.HoverPlay;
   return (
     <a
       href={`./video.html?p=${projIndex}&v=${index}`}
@@ -76,10 +75,7 @@ function VideoCard({ video, projIndex, index }) {
         position: 'relative',
         aspectRatio: '16 / 9',
         background: PALETTE.surface,
-        border: `1px solid ${hover ? PALETTE.accent : PALETTE.line}`,
         overflow: 'hidden',
-        transition: 'border-color 0.25s, transform 0.5s cubic-bezier(0.2,0.8,0.2,1)',
-        transform: hover ? 'scale(1.02)' : 'scale(1)',
       }}>
         {window.hasMedia(video) && (
           <img
@@ -92,10 +88,9 @@ function VideoCard({ video, projIndex, index }) {
             }}
           />
         )}
-        <HoverPlay hover={hover} hasMedia={window.hasMedia(video)} />
       </div>
 
-      <div style={{ marginTop: 10, fontFamily: FONTS.sans, fontSize: 13, fontWeight: 500, color: PALETTE.fg }}>
+      <div style={{ padding: '10px 16px 22px', fontFamily: FONTS.sans, fontSize: 13, fontWeight: 500, color: PALETTE.fg }}>
         {video.title}
       </div>
     </a>
@@ -146,7 +141,6 @@ function App() {
         gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
         columnGap: 40, rowGap: isMobile ? 32 : 48,
         alignItems: 'start',
-        borderBottom: TH.sectionRule,
       }}>
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
@@ -181,9 +175,10 @@ function App() {
 
         {videos.length > 0 ? (
           <div style={{
+            margin: `0 -${TH.pad(isMobile)}px`,
             display: 'grid',
             gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(auto-fill, minmax(320px, 1fr))',
-            gap: isMobile ? 12 : 24,
+            gap: 0,
           }}>
             {videos.map(({ video, indice }) => (
               <VideoCard key={indice} video={video} projIndex={IDX} index={indice} />

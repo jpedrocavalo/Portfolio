@@ -174,10 +174,7 @@ function SfCard({ item, index, onOpen, width, still }) {
         position: 'relative',
         aspectRatio: '9 / 16',
         background: SF_PALETTE.surface,
-        border: `1px solid ${hover ? SF_PALETTE.accent : SF_PALETTE.line}`,
         overflow: 'hidden',
-        transition: 'border-color 0.25s, transform 0.5s cubic-bezier(0.2,0.8,0.2,1)',
-        transform: hover ? 'scale(1.02)' : 'scale(1)',
       }}
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
@@ -192,7 +189,6 @@ function SfCard({ item, index, onOpen, width, still }) {
             transition: 'transform 0.6s cubic-bezier(0.2,0.8,0.2,1)',
           }}
         />
-        <window.HoverPlay hover={hover} hasMedia />
       </div>
 
       {/* Legenda: título, subtítulo, ano */}
@@ -223,8 +219,7 @@ function ShortformSection({ isMobile, lang }) {
   const PAD = isMobile ? 20 : 40;
 
   const heading = lang === 'pt' ? 'Short-form.' : 'Short-form.';
-  // 01 = Trabalhos selecionados, 02 = Projetos, 03 = aqui
-  const label = '03, Vertical · Reels · Social';
+  const label = 'Vertical · Reels · Social';
 
   // Mede o quanto a faixa precisa deslizar pra revelar o último card
   useEffect(() => {

@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Jotap Films — About</title>
 <meta name="description" content="Editor freelancer, obcecado com cor, ritmo e o momento exato em que o corte respira certo." />
-<link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+<link rel="icon" type="image/svg+xml" href="./favicon.svg?v=2" />
 
 <!-- Preview ao compartilhar o link (WhatsApp, Instagram, LinkedIn...) -->
 <meta property="og:type" content="website" />
@@ -50,17 +50,11 @@ const TH = window.THEME;
 const PALETTE = TH.palette;
 const FONTS = TH.fonts;
 
-// ── BIO — campos sem tradução (nome/role/localização). ──
-// Os textos traduzíveis vêm de window.I18N (arquivo i18n.js).
-const BIO = {
-  name: 'Jotap',
-  role: 'Editor & Colorist',
-  location: 'Natal, RN, Brasil',
-};
-
 // ─── Bio + Foto ───────────────────────────────────────────────
 function BioSection({ lang, isMobile }) {
   const t = window.I18N[lang].about;
+  // Função e base vêm do mesmo lugar da home, já traduzidas
+  const r = window.I18N[lang].reel;
   const [hover, setHover] = React.useState(false);
 
   return (
@@ -81,12 +75,12 @@ function BioSection({ lang, isMobile }) {
 
         <div style={{ marginTop: 28, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24 }}>
           <div>
-            <div style={{ ...TH.label, marginBottom: 6 }}>{window.I18N[lang].reel.roleLabel}</div>
-            <div style={{ fontFamily: FONTS.sans, fontSize: 13, color: PALETTE.fg }}>{BIO.role}</div>
+            <div style={{ ...TH.label, marginBottom: 6 }}>{r.roleLabel}</div>
+            <div style={{ fontFamily: FONTS.sans, fontSize: 13, color: PALETTE.fg }}>{r.role}</div>
           </div>
           <div>
-            <div style={{ ...TH.label, marginBottom: 6 }}>{window.I18N[lang].reel.locationLabel}</div>
-            <div style={{ fontFamily: FONTS.sans, fontSize: 13, color: PALETTE.fg }}>{BIO.location}</div>
+            <div style={{ ...TH.label, marginBottom: 6 }}>{r.locationLabel}</div>
+            <div style={{ fontFamily: FONTS.sans, fontSize: 13, color: PALETTE.fg }}>{r.location}</div>
           </div>
         </div>
 

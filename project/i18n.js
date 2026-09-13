@@ -37,7 +37,7 @@ window.I18N = {
 
     // ── About (index.html) ──
     about: {
-      bioLabel: '01, Bio',
+      bioLabel: 'Bio',
       bioHeadingA: 'Finding',
       bioHeadingB: 'the cut',
       paragraphs: [
@@ -65,7 +65,7 @@ window.I18N = {
       heroDescription: 'O olhar de montagem que transforma o seu material em lembranças vivas para os seus clientes. Parceria em pós-produção para produtoras de casamentos e eventos que valorizam histórias atemporais e prazos alinhados.',
       scroll:          'Rolar',
       latestWork:      '↗ Último trabalho',
-      selectedWorks:   '01, Trabalhos selecionados',
+      selectedWorks:   'Trabalhos selecionados',
       seeAll:          'Ver tudo ↗',
       // Colunas ao lado do título da home
       roleLabel:       'Função',
@@ -81,7 +81,7 @@ window.I18N = {
 
     // ── Projetos (seção na home + project.html) ──
     projects: {
-      label:         '02, Projetos',
+      label:         'Projetos',
       heading:       'Projetos.',
       videoSingular: 'vídeo',
       videoPlural:   'vídeos',
@@ -164,7 +164,7 @@ window.I18N = {
     backToColor: '← Back to color',
 
     about: {
-      bioLabel: '01, Bio',
+      bioLabel: 'Bio',
       bioHeadingA: 'Finding',
       bioHeadingB: 'the cut',
       paragraphs: [
@@ -190,7 +190,7 @@ window.I18N = {
       heroDescription: 'The editing eye that turns your footage into living memories for your clients. Post-production partnership for wedding and event production companies that value timeless stories and deadlines that hold.',
       scroll:          'Scroll',
       latestWork:      '↗ Latest work',
-      selectedWorks:   '01, Selected works',
+      selectedWorks:   'Selected works',
       seeAll:          'See all ↗',
       roleLabel:       'Role',
       role:            'Editor & Colorist',
@@ -204,7 +204,7 @@ window.I18N = {
     },
 
     projects: {
-      label:         '02, Projects',
+      label:         'Projects',
       heading:       'Projects.',
       videoSingular: 'video',
       videoPlural:   'videos',

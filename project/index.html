@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Jotap Films</title>
 <meta name="description" content="O olhar de montagem que transforma o seu material em lembranças vivas para os seus clientes. Parceria em pós-produção para produtoras de casamentos e eventos que valorizam histórias atemporais e prazos alinhados." />
-<link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+<link rel="icon" type="image/svg+xml" href="./favicon.svg?v=2" />
 
 <!-- Preview ao compartilhar o link (WhatsApp, Instagram, LinkedIn...) -->
 <meta property="og:type" content="website" />
@@ -74,8 +74,6 @@ const ROWS = 2;
 // fill=true → preenche o container; false → usa aspectRatio 16:9.
 function Card({ data, fill, lang }) {
   const [hover, setHover] = React.useState(false);
-  const media = window.hasMedia(data) || data.videoSrc || data.imageSrc;
-  const HoverPlay = window.HoverPlay;
   return (
     <div
       onMouseEnter={() => setHover(true)}
@@ -93,9 +91,6 @@ function Card({ data, fill, lang }) {
         aspectRatio: fill ? 'auto' : '16 / 9',
         background: PALETTE.surface,
         overflow: 'hidden',
-        border: `1px solid ${hover ? PALETTE.accent : PALETTE.line}`,
-        transition: 'border-color 0.25s, transform 0.5s cubic-bezier(0.2,0.8,0.2,1)',
-        transform: hover ? 'scale(1.02)' : 'scale(1)',
       }}>
         {window.hasMedia(data) ? (
           <img
@@ -123,10 +118,9 @@ function Card({ data, fill, lang }) {
             }} />
         ) : null}
 
-        <HoverPlay hover={hover} hasMedia={!!media} />
       </div>
       <div style={{
-        marginTop: 10, flexShrink: 0,
+        padding: '10px 16px 22px', flexShrink: 0,
         display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'baseline', gap: '4px 12px',
       }}>
         {/* featuredTitle = título só aqui na home; o resto do site usa title */}
@@ -209,12 +203,11 @@ function App() {
         scrollMarginTop: 56,
         height: isMobile ? 'auto' : '100vh',
         width: '100%',
-        padding: isMobile ? '32px 20px 48px' : '32px 40px 40px',
+        padding: isMobile ? '32px 20px 24px' : '32px 40px 0',
         display: 'flex',
         flexDirection: 'column',
-        borderTop: TH.sectionRule,
       }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', paddingBottom: 20 }}>
           <div style={TH.label}>{T.reel.selectedWorks}</div>
           <a href="./works.html" style={TH.link}
             onMouseEnter={(e) => (e.currentTarget.style.color = PALETTE.accent)}
@@ -223,14 +216,16 @@ function App() {
             {T.reel.seeAll}
           </a>
         </div>
+        {/* Capas coladas, sangrando até a borda da tela: a margem
+            negativa anula o padding da seção. */}
         <div style={{
           flex: isMobile ? 'none' : 1,
-          marginTop: 20,
+          margin: `0 -${TH.pad(isMobile)}px`,
           display: 'grid',
           // Mobile: 2 colunas, cards 16:9 naturais. Desktop: 3×2 preenchendo a altura.
           gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : `repeat(${COLS}, 1fr)`,
           gridTemplateRows:    isMobile ? 'auto' : `repeat(${ROWS}, 1fr)`,
-          gap: isMobile ? 12 : 24,
+          gap: 0,
         }}>
           {featuredItems.map((data, i) => (
             <a key={i} href={data.href} style={{

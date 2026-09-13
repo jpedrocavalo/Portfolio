@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Jotap Films — All works</title>
 <meta name="description" content="Casamentos, aftermovies, formaturas e filmes de marca editados e tratados por Jotap." />
-<link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+<link rel="icon" type="image/svg+xml" href="./favicon.svg?v=2" />
 
 <!-- Preview ao compartilhar o link (WhatsApp, Instagram, LinkedIn...) -->
 <meta property="og:type" content="website" />
@@ -64,7 +64,6 @@ const VIDEOS = (window.VIDEOS || [])
 
 function VideoCard({ video, index, lang }) {
   const [hover, setHover] = useState(false);
-  const HoverPlay = window.HoverPlay;
   return (
     <a
       href={`./video.html?v=${index}`}
@@ -79,10 +78,7 @@ function VideoCard({ video, index, lang }) {
         position: 'relative',
         aspectRatio: '16 / 9',
         background: PALETTE.surface,
-        border: `1px solid ${hover ? PALETTE.accent : PALETTE.line}`,
         overflow: 'hidden',
-        transition: 'border-color 0.25s, transform 0.5s cubic-bezier(0.2,0.8,0.2,1)',
-        transform: hover ? 'scale(1.02)' : 'scale(1)',
       }}>
         {window.hasMedia(video) && (
           <img
@@ -96,10 +92,9 @@ function VideoCard({ video, index, lang }) {
             }}
           />
         )}
-        <HoverPlay hover={hover} hasMedia={window.hasMedia(video)} />
       </div>
       <div style={{
-        marginTop: 10,
+        padding: '10px 16px 22px',
         display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'baseline', gap: '4px 12px',
       }}>
         <span style={{ fontFamily: FONTS.sans, fontSize: 13, fontWeight: 500, color: PALETTE.fg }}>
@@ -152,10 +147,12 @@ function App() {
 
       {/* Grid de todos os vídeos */}
       <section style={{ padding: isMobile ? '0 20px 64px' : '0 40px 96px' }}>
+        {/* Capas coladas, sangrando até a borda da tela */}
         <div style={{
+          margin: `0 -${TH.pad(isMobile)}px`,
           display: 'grid',
           gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(auto-fill, minmax(320px, 1fr))',
-          gap: isMobile ? 12 : 24,
+          gap: 0,
         }}>
           {VIDEOS.map(({ video, indice }) => (
             <VideoCard key={indice} video={video} index={indice} lang={lang} />

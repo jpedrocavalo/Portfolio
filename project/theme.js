@@ -95,7 +95,8 @@
     textDecoration: 'none',
   };
 
-  const sectionRule = `1px solid ${palette.lineSoft}`;
+  // Sem linha entre as seções; o espaço em branco separa.
+  const sectionRule = 'none';
   const pad = (isMobile) => (isMobile ? 20 : 40);
 
   window.THEME = { palette, fonts, label, heading, body, pill, button, link, sectionRule, pad };

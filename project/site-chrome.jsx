@@ -10,7 +10,6 @@
        current: 'works' | 'about' — qual item fica em negrito
      window.ContactCta({ lang, isMobile })   — "Vamos conversar."
      window.SiteFooter({ lang })             — linha final com o ©
-     window.HoverPlay({ hover, hasMedia })   — véu escuro + play nos cards
      window.Seta()                           — a seta ↘ que abre os títulos
    ════════════════════════════════════════════════════════════════ */
 
@@ -121,29 +120,6 @@ function SiteHeader({ current, lang, setLang, onContactOpen }) {
   );
 }
 
-// Véu escuro + triângulo de play que aparecem no hover dos cards.
-function HoverPlay({ hover, hasMedia }) {
-  return (
-    <div style={{
-      position: 'absolute', inset: 0,
-      display: 'flex', alignItems: 'center', justifyContent: 'center',
-      background: hover ? 'rgba(17,17,17,0.28)' : 'rgba(17,17,17,0)',
-      transition: 'background 0.25s',
-    }}>
-      <div style={{
-        width: 0, height: 0,
-        borderLeft: `18px solid ${hover ? CH_P.accent : 'rgba(255,255,255,0.92)'}`,
-        borderTop: '12px solid transparent',
-        borderBottom: '12px solid transparent',
-        marginLeft: 5,
-        opacity: hover ? 1 : (hasMedia ? 0 : 0.5),
-        transform: hover ? 'scale(1)' : 'scale(0.7)',
-        transition: 'opacity 0.25s, transform 0.25s, border-color 0.25s',
-      }} />
-    </div>
-  );
-}
-
 function PillButton({ href, filled, children }) {
   const [hover, setHover] = React.useState(false);
   const base = TH.button(filled);
@@ -205,7 +181,6 @@ function SiteFooter({ lang }) {
 window.useIsMobile = useIsMobile;
 window.Seta = Seta;
 window.SiteHeader = SiteHeader;
-window.HoverPlay = HoverPlay;
 window.PillButton = PillButton;
 window.ContactCta = ContactCta;
 window.SiteFooter = SiteFooter;

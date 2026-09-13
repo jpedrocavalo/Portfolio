@@ -55,10 +55,7 @@ function ProjectCard({ proj, index, isMobile, lang }) {
         position: 'relative',
         aspectRatio: '4 / 3',
         background: PJ_PALETTE.surface,
-        border: `1px solid ${hover ? PJ_PALETTE.accent : PJ_PALETTE.line}`,
         overflow: 'hidden',
-        transition: 'border-color 0.25s, transform 0.5s cubic-bezier(0.2,0.8,0.2,1)',
-        transform: hover ? 'scale(1.02)' : 'scale(1)',
       }}>
         {capa && (
           <img
@@ -83,17 +80,11 @@ function ProjectCard({ proj, index, isMobile, lang }) {
             }}
           />
         )}
-        {/* Véu leve no hover, sem play: capa abre uma lista, não um vídeo */}
-        <div style={{
-          position: 'absolute', inset: 0,
-          background: hover ? 'rgba(17,17,17,0.18)' : 'rgba(17,17,17,0)',
-          transition: 'background 0.25s',
-        }} />
       </div>
 
       {/* Nome e ficha abaixo da capa, como nos outros cards */}
       <div style={{
-        marginTop: 10,
+        padding: '10px 16px 22px',
         display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'baseline', gap: '4px 12px',
       }}>
         <div>
@@ -123,8 +114,7 @@ function ProjectsSection({ isMobile, lang }) {
     <section id="projects" style={{
       scrollMarginTop: 56,
       width: '100%',
-      padding: isMobile ? '32px 20px 48px' : '32px 40px 64px',
-      borderTop: PJ_TH.sectionRule,
+      padding: isMobile ? '32px 20px 24px' : '32px 40px 24px',
     }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 16 }}>
         <div style={PJ_TH.label}>{t.label}</div>
@@ -133,12 +123,13 @@ function ProjectsSection({ isMobile, lang }) {
         {t.heading}
       </h2>
 
+      {/* Capas coladas, sangrando até a borda da tela */}
       <div style={{
         marginTop: isMobile ? 20 : 28,
+        margin: `${isMobile ? 20 : 28}px -${PJ_TH.pad(isMobile)}px 0`,
         display: 'grid',
-        // Capas grandes: no máximo 3 por linha
         gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fill, minmax(340px, 1fr))',
-        gap: isMobile ? 20 : 24,
+        gap: 0,
       }}>
         {projetos.map((p, i) => (
           <ProjectCard key={i} proj={p} index={i} isMobile={isMobile} lang={lang} />
