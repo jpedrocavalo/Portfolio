@@ -62,7 +62,7 @@ const PARAMS = new URLSearchParams(location.search);
 const VIDEO_INDEX = parseInt(PARAMS.get('v'), 10);
 const PROJ_INDEX = parseInt(PARAMS.get('p'), 10);
 
-const VAZIO = { title: 'Vídeo', duration: '', year: '', category: '', streamId: '', youtubeId: '', description: '' };
+const VAZIO = { title: 'Vídeo', year: '', category: '', streamId: '', youtubeId: '', description: '' };
 
 const PROJETO = Number.isInteger(PROJ_INDEX)
   ? (window.PROJECTS && window.PROJECTS[PROJ_INDEX])
@@ -217,22 +217,14 @@ function App() {
           width: '100%', maxWidth: 1100, marginTop: isMobile ? 24 : 40,
           display: 'flex', flexDirection: 'column', gap: 20,
         }}>
-          <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12 }}>
-            <h1 style={{
-              fontFamily: FONTS.display,
-              fontSize: isMobile ? 'clamp(32px, 9vw, 56px)' : 'clamp(40px, 6vw, 88px)',
-              fontWeight: 300, fontStyle: 'italic',
-              letterSpacing: '-0.03em', lineHeight: 1, margin: 0,
-            }}>
-              {v.title}
-            </h1>
-            <span style={{
-              fontFamily: FONTS.mono, fontSize: 13, letterSpacing: '0.2em',
-              color: PALETTE.muted,
-            }}>
-              {v.duration}
-            </span>
-          </div>
+          <h1 style={{
+            fontFamily: FONTS.display,
+            fontSize: isMobile ? 'clamp(32px, 9vw, 56px)' : 'clamp(40px, 6vw, 88px)',
+            fontWeight: 300, fontStyle: 'italic',
+            letterSpacing: '-0.03em', lineHeight: 1, margin: 0,
+          }}>
+            {v.title}
+          </h1>
 
           <p style={{
             fontFamily: FONTS.sans, fontSize: isMobile ? 15 : 16, lineHeight: 1.7,

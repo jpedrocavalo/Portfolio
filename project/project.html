@@ -161,18 +161,9 @@ function VideoCard({ video, projIndex, index, isMobile }) {
         </div>
       </div>
 
-      <div style={{
-        marginTop: 12, display: 'flex', justifyContent: 'space-between',
-        alignItems: 'baseline', gap: 12,
-      }}>
+      <div style={{ marginTop: 12 }}>
         <span style={{ fontFamily: FONTS.display, fontStyle: 'italic', fontSize: 15 }}>
           {video.title}
-        </span>
-        <span style={{
-          fontFamily: FONTS.mono, fontSize: 10, letterSpacing: '0.2em',
-          color: PALETTE.muted, flexShrink: 0,
-        }}>
-          {video.duration}
         </span>
       </div>
     </a>

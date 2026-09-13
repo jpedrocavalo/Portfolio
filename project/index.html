@@ -175,10 +175,9 @@ function Card({ data, fonts, palette, fill }) {
           }} />
         </div>
       </div>
-      <div style={{ marginTop: 10, display: 'flex', justifyContent: 'space-between', fontSize: 13, flexShrink: 0 }}>
+      <div style={{ marginTop: 10, fontSize: 13, flexShrink: 0 }}>
         {/* featuredTitle = título só aqui na home; o resto do site usa title */}
         <span style={{ fontFamily: fonts.display, fontStyle: 'italic' }}>{data.featuredTitle || data.title}</span>
-        <span style={{ fontFamily: fonts.mono, color: palette.muted, fontSize: 10 }}>{data.duration}</span>
       </div>
     </div>
   );

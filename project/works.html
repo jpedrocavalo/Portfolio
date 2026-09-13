@@ -153,24 +153,12 @@ function VideoCard({ video, index, fonts, palette }) {
           }} />
         </div>
       </div>
-      <div style={{
-        marginTop: 12,
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'baseline',
-        gap: 12,
-      }}>
+      <div style={{ marginTop: 12 }}>
         <span style={{
           fontFamily: fonts.display, fontStyle: 'italic',
           fontSize: 15, color: palette.fg,
         }}>
           {video.title}
-        </span>
-        <span style={{
-          fontFamily: fonts.mono, fontSize: 10, letterSpacing: '0.2em',
-          color: palette.muted, flexShrink: 0,
-        }}>
-          {video.duration}
         </span>
       </div>
       {(video.year || video.category) && (

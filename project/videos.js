@@ -60,7 +60,6 @@
 window.VIDEOS = [
   {
     title: 'Casamento Guará & Graziele',
-    duration: '',
     year: '2026',
     category: 'Wedding film',
     streamId: '9e9771ce9e088a4aa0f8ae636945b9eb',
@@ -81,7 +80,6 @@ window.VIDEOS = [
     title: 'Toguro',
     // Só no grid da home; no resto o título fica sem o sufixo.
     featuredTitle: 'Toguro - Click Digital',
-    duration: '',
     year: '2026',
     category: 'Click Digital',
     streamId: '',
@@ -90,7 +88,6 @@ window.VIDEOS = [
   },
   {
     title: 'Desfile Riachuelo Contact Center',
-    duration: '',
     year: '2026',
     category: 'Desfile',
     streamId: '2f0edcdeec3d19dfdc37d62c0458d121',
@@ -107,7 +104,6 @@ window.VIDEOS = [
     title: 'Prof. Gilberto',
     // Só no grid da home; no resto o título fica sem o sufixo.
     featuredTitle: 'Prof. Gilberto - Click Digital',
-    duration: '',
     year: '2026',
     category: 'Click Digital',
     streamId: '',
@@ -116,7 +112,6 @@ window.VIDEOS = [
   },
   {
     title: 'Formatura da Gio',
-    duration: '',
     year: '2026',
     category: 'Graduation film',
     streamId: 'e18e064a56ced6553e0ec220def58618',
@@ -136,7 +131,6 @@ window.VIDEOS = [
   },
   {
     title: 'henRICO MEIreles',
-    duration: '',
     year: '2026',
     category: 'Click Digital',
     streamId: '',
@@ -147,7 +141,6 @@ window.VIDEOS = [
   },
   {
     title: 'São Julhão do Riachuelo Contact Center',
-    duration: '',
     year: '2026',
     category: 'Aftermovie',
     streamId: 'fd615f2e70246c9f3922cfcf86b58086',
@@ -158,7 +151,6 @@ window.VIDEOS = [
   },
   {
     title: 'Pre Wedding Thaynara e Ruan',
-    duration: '',
     year: '2026',
     category: 'Pre Wedding Session',
     streamId: '44d487d915c51a3b1dd41d3d9ee425cc',
@@ -167,7 +159,6 @@ window.VIDEOS = [
   },
   {
     title: 'Corte Pastor Edson - Igreja ADPAZ',
-    duration: '',
     year: '2026',
     category: 'Corte',
     streamId: '91bd705f3afb67bbe3940b1c89725477',
