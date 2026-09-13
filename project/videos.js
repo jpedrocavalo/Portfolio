@@ -19,6 +19,8 @@
    (na home) e "Ver tudo" (works.html).
 
    featured: false  → tira só dos selecionados; continua no "Ver tudo".
+   featuredTitle    → título só no grid da home (ex: 'Toguro - Click
+                      Digital'); Ver tudo e página do vídeo usam title.
    hidden: true     → tira do ar de vez (some dos dois), sem apagar nada.
    vertical: true   → vídeo 9:16 (Short/Reel): o player abre em pé.
 
@@ -77,6 +79,8 @@ window.VIDEOS = [
   },
   {
     title: 'Toguro',
+    // Só no grid da home; no resto o título fica sem o sufixo.
+    featuredTitle: 'Toguro - Click Digital',
     duration: '',
     year: '2026',
     category: 'Click Digital',
@@ -101,6 +105,8 @@ window.VIDEOS = [
   },
   {
     title: 'Prof. Gilberto',
+    // Só no grid da home; no resto o título fica sem o sufixo.
+    featuredTitle: 'Prof. Gilberto - Click Digital',
     duration: '',
     year: '2026',
     category: 'Click Digital',
