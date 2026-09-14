@@ -98,12 +98,9 @@
   // Sem linha entre as seções; o espaço em branco separa.
   const sectionRule = 'none';
 
-  // Capas em preto e branco; a cor entra no hover. Em tela de toque não
-  // existe hover, então ali a capa já vem colorida.
-  const podeHover = (() => {
-    try { return window.matchMedia('(hover: hover)').matches; } catch (_) { return true; }
-  })();
-  const coverFilter = (hover) => (podeHover && !hover ? 'grayscale(1)' : 'none');
+  // Capas em preto e branco; a cor entra no hover. No celular também
+  // fica P&B (a cor aparece ao abrir o vídeo).
+  const coverFilter = (hover) => (hover ? 'none' : 'grayscale(1)');
   const pad = (isMobile) => (isMobile ? 20 : 40);
 
   window.THEME = { palette, fonts, label, heading, body, pill, button, link, sectionRule, pad, coverFilter };
