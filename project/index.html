@@ -67,6 +67,9 @@ const FEATURED = window.VIDEOS
   .map((v, i) => ({ ...v, href: './video.html?v=' + i }))
   .filter((v) => v.featured !== false && !v.hidden);
 
+// Seção de short-form na home. false = fora do ar, sem apagar nada.
+const SHORTFORM_ATIVO = false;
+
 const COLS = 3;
 const ROWS = 2;
 
@@ -343,8 +346,9 @@ function App() {
       {/* Projetos — capas que abrem a lista de vídeos de cada projeto */}
       {ProjectsSection && <ProjectsSection isMobile={isMobile} lang={lang} />}
 
-      {/* Short-form — seção pinada, cards 9:16 deslizam com o scroll */}
-      {ShortformSection && <ShortformSection isMobile={isMobile} lang={lang} />}
+      {/* Short-form — seção pinada, cards 9:16 deslizam com o scroll.
+          Desativada por enquanto: mude SHORTFORM_ATIVO pra true pra voltar. */}
+      {SHORTFORM_ATIVO && ShortformSection && <ShortformSection isMobile={isMobile} lang={lang} />}
 
       <window.ContactCta lang={lang} isMobile={isMobile} />
       <window.SiteFooter lang={lang} />
