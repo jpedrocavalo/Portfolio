@@ -186,7 +186,8 @@ function SfCard({ item, index, onOpen, width, still }) {
             position: 'absolute', inset: 0, width: '100%', height: '100%',
             objectFit: 'cover',
             transform: hover ? 'scale(1.05)' : 'scale(1)',
-            transition: 'transform 0.6s cubic-bezier(0.2,0.8,0.2,1)',
+            filter: window.THEME.coverFilter(hover),
+            transition: 'transform 0.6s cubic-bezier(0.2,0.8,0.2,1), filter 0.45s ease',
           }}
         />
       </div>

@@ -76,7 +76,8 @@ function ProjectCard({ proj, index, isMobile, lang }) {
               // Logo respira nas bordas
               padding: ehLogo ? (isMobile ? 28 : 40) : 0,
               transform: hover ? 'scale(1.05)' : 'scale(1)',
-              transition: 'transform 0.6s cubic-bezier(0.2,0.8,0.2,1)',
+              filter: window.THEME.coverFilter(hover),
+              transition: 'transform 0.6s cubic-bezier(0.2,0.8,0.2,1), filter 0.45s ease',
             }}
           />
         )}
