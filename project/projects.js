@@ -92,6 +92,12 @@ window.PROJECTS = [
         youtubeId: '5HcYlKl8qNA',
         description: 'Trabalho de edição para o Congresso Brasileiro de cirurgia e traumatologia buco-maxilo facial.\n\nrepresentando a Frame Company',
       },
+      {
+        title: 'Osteomed Stands',
+        streamId: '',
+        youtubeId: 'CP-8HF5MyPw',
+        description: 'Trabalho de edição para o Congresso Brasileiro de cirurgia e traumatologia buco-maxilo facial.\n\nrepresentando a Frame Company',
+      },
     ],
   },
   {
