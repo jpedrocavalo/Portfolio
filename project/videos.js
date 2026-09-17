@@ -64,8 +64,9 @@ window.VIDEOS = [
     category: 'COBRAC',
     streamId: '',
     youtubeId: '5APIH15Dqzs',
-    // Só no "Ver tudo", fora dos selecionados da home.
-    featured: false,
+    // Fora da lista principal (segue no projeto COBRAC). Tire esta
+    // linha pra voltar ao "Ver tudo".
+    hidden: true,
     // Color: preencha os caminhos quando as imagens estiverem na pasta color/
     // color: {
     //   before: './color/Antes-OsteomedHandsOn.png',
