@@ -90,6 +90,8 @@ window.PROJECTS = [
         title: 'Materialise dia 1',
         streamId: '',
         youtubeId: '5HcYlKl8qNA',
+        // Fora do ar. Tire esta linha pra voltar.
+        hidden: true,
         description: 'Trabalho de edição para o Congresso Brasileiro de cirurgia e traumatologia buco-maxilo facial.\n\nrepresentando a Frame Company',
       },
       {
