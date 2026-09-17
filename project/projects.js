@@ -100,6 +100,13 @@ window.PROJECTS = [
         youtubeId: 'CP-8HF5MyPw',
         description: 'Trabalho de edição para o Congresso Brasileiro de cirurgia e traumatologia buco-maxilo facial.\n\nrepresentando a Frame Company',
       },
+      {
+        // Também está nos Trabalhos selecionados da home (videos.js)
+        title: 'Osteomed Hands-On',
+        streamId: '',
+        youtubeId: '5APIH15Dqzs',
+        description: 'Trabalho de edição para o Congresso Brasileiro de cirurgia e traumatologia buco-maxilo facial.\n\nrepresentando a Frame Company',
+      },
     ],
   },
   {

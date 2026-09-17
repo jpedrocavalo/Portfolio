@@ -70,8 +70,12 @@ const FEATURED = window.VIDEOS
 // Seção de short-form na home. false = fora do ar, sem apagar nada.
 const SHORTFORM_ATIVO = false;
 
+// Desktop: 3 por linha. Até 2 linhas, a seção ocupa a tela inteira e as
+// capas esticam pra preencher; com mais vídeos, as capas ficam 16:9 e a
+// seção cresce.
 const COLS = 3;
-const ROWS = 2;
+const ROWS = Math.max(1, Math.ceil(FEATURED.length / COLS));
+const CABE_NA_TELA = ROWS <= 2;
 
 // Card — thumbnail estático (mais leve no grid).
 // fill=true → preenche o container; false → usa aspectRatio 16:9.
@@ -317,7 +321,7 @@ function App() {
       ) : (
       <section id="selected" style={{
         scrollMarginTop: 56,
-        height: '100vh',
+        height: CABE_NA_TELA ? '100vh' : 'auto',
         width: '100%',
         padding: '32px 40px 0',
         display: 'flex',
@@ -327,11 +331,11 @@ function App() {
         {/* Capas coladas, sangrando até a borda da tela: a margem
             negativa anula o padding da seção. */}
         <div style={{
-          flex: 1,
+          flex: CABE_NA_TELA ? 1 : 'none',
           margin: '0 -40px',
           display: 'grid',
           gridTemplateColumns: `repeat(${COLS}, 1fr)`,
-          gridTemplateRows: `repeat(${ROWS}, 1fr)`,
+          gridTemplateRows: CABE_NA_TELA ? `repeat(${ROWS}, 1fr)` : 'auto',
           gap: 0,
         }}>
           {FEATURED.map((data, i) => (
@@ -339,7 +343,7 @@ function App() {
               display: 'flex', flexDirection: 'column',
               textDecoration: 'none', color: 'inherit', cursor: 'pointer',
             }}>
-              <Card data={data} fill lang={lang} />
+              <Card data={data} fill={CABE_NA_TELA} lang={lang} />
             </a>
           ))}
         </div>

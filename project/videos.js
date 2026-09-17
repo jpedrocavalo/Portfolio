@@ -59,6 +59,22 @@
    ════════════════════════════════════════════════════════════════ */
 window.VIDEOS = [
   {
+    title: 'Osteomed Hands-On',
+    // Só no grid da home; no resto o título fica sem o sufixo.
+    featuredTitle: 'Osteomed Hands-On - COBRAC',
+    year: '2026',
+    category: 'COBRAC',
+    streamId: '',
+    youtubeId: '5APIH15Dqzs',
+    // Color: preencha os caminhos quando as imagens estiverem na pasta color/
+    // color: {
+    //   before: './color/Antes-OsteomedHandsOn.png',
+    //   after:  './color/Depois-OsteomedHandsOn.png',
+    //   nodes:  './color/Node-OsteomedHandsOn.png',
+    // },
+    description: 'Trabalho de edição para o Congresso Brasileiro de cirurgia e traumatologia buco-maxilo facial.\n\nrepresentando a Frame Company',
+  },
+  {
     title: 'Casamento Guará & Graziele',
     year: '2026',
     category: 'Wedding film',
