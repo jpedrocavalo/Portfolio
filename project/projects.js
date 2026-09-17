@@ -86,6 +86,12 @@ window.PROJECTS = [
         youtubeId: 'hEzpZxtrGU8',
         description: 'Trabalho de edição para o Congresso Brasileiro de cirurgia e traumatologia buco-maxilo facial.\n\nrepresentando a Frame Company',
       },
+      {
+        title: 'Materialise dia 1',
+        streamId: '',
+        youtubeId: '5HcYlKl8qNA',
+        description: 'Trabalho de edição para o Congresso Brasileiro de cirurgia e traumatologia buco-maxilo facial.\n\nrepresentando a Frame Company',
+      },
     ],
   },
   {
