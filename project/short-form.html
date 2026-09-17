@@ -86,6 +86,10 @@ function App() {
         alignItems: 'end',
       }}>
         <div>
+          <a href="./index.html" style={{ ...TH.link, display: 'inline-block', marginBottom: isMobile ? 20 : 28, color: PALETTE.muted }}
+            onMouseEnter={(e) => (e.currentTarget.style.color = PALETTE.fg)}
+            onMouseLeave={(e) => (e.currentTarget.style.color = PALETTE.muted)}
+          >{T.backToWorks}</a>
           <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
             <Seta size={isMobile ? 22 : 28} />
             <span style={TH.pill}>{T.shortform.smallLabel}</span>
@@ -111,13 +115,6 @@ function App() {
             <SfCard key={i} item={item} index={i} onOpen={setOpenIndex} width="100%" still />
           ))}
         </div>
-
-        <a href="./index.html" style={{ ...TH.link, display: 'inline-block', marginTop: 48 }}
-          onMouseEnter={(e) => (e.currentTarget.style.color = PALETTE.accent)}
-          onMouseLeave={(e) => (e.currentTarget.style.color = PALETTE.fg)}
-        >
-          {T.backToWorks}
-        </a>
       </section>
 
       {/* Modal estilo Instagram — vídeo 9:16 à esquerda, texto à direita */}

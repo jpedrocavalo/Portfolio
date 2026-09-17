@@ -144,6 +144,10 @@ function App() {
         alignItems: 'start',
       }}>
         <div>
+          <a href="./index.html#projects" style={{ ...TH.link, display: 'inline-block', marginBottom: isMobile ? 20 : 28, color: PALETTE.muted }}
+            onMouseEnter={(e) => (e.currentTarget.style.color = PALETTE.fg)}
+            onMouseLeave={(e) => (e.currentTarget.style.color = PALETTE.muted)}
+          >{t.backHome}</a>
           <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
             <Seta size={isMobile ? 22 : 28} />
             <span style={TH.pill}>{T.video.projectLabel}</span>
@@ -202,13 +206,6 @@ function App() {
             <ColorSection color={p.color} isMobile={isMobile} lang={lang} />
           </div>
         )}
-
-        <a href="./index.html#projects" style={{ ...TH.link, display: 'inline-block', marginTop: isMobile ? 40 : 56 }}
-          onMouseEnter={(e) => (e.currentTarget.style.color = PALETTE.accent)}
-          onMouseLeave={(e) => (e.currentTarget.style.color = PALETTE.fg)}
-        >
-          {t.backHome}
-        </a>
       </section>
 
       <window.ContactCta lang={lang} isMobile={isMobile} />

@@ -124,7 +124,7 @@ function PillButton({ href, filled, children }) {
   const [hover, setHover] = React.useState(false);
   const base = TH.button(filled);
   const style = hover
-    ? { ...base, background: filled ? CH_P.accent : CH_P.fg, borderColor: filled ? CH_P.accent : CH_P.fg, color: CH_P.bg }
+    ? { ...base, background: filled ? '#333' : CH_P.fg, borderColor: filled ? '#333' : CH_P.fg, color: CH_P.bg }
     : base;
   return (
     <a href={href} target="_blank" rel="noopener noreferrer" style={style}

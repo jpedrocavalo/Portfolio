@@ -6,8 +6,7 @@
    inteiro, mexa aqui.
 
    Estilo: fundo claro, tipografia sem serifa, rótulos pequenos em
-   cinza, linhas finas separando as seções. O roxo fica só pra
-   estados de hover.
+   cinza. Sem cor de destaque: hover é cinza.
    ════════════════════════════════════════════════════════════════ */
 (function () {
   const palette = {
@@ -17,7 +16,7 @@
     muted:    '#7c7c77',
     line:     'rgba(17,17,17,0.14)', // hairline padrão
     lineSoft: 'rgba(17,17,17,0.08)', // hairline entre seções
-    accent:   '#7a00d8',            // só em hover
+    accent:   '#7c7c77',            // hover de links: o mesmo cinza dos rótulos
   };
 
   const sans = '"Inter", "Helvetica Neue", Helvetica, Arial, sans-serif';

@@ -131,6 +131,10 @@ function App() {
         alignItems: 'end',
       }}>
         <div>
+          <a href="./index.html" style={{ ...TH.link, display: 'inline-block', marginBottom: isMobile ? 20 : 28, color: PALETTE.muted }}
+            onMouseEnter={(e) => (e.currentTarget.style.color = PALETTE.fg)}
+            onMouseLeave={(e) => (e.currentTarget.style.color = PALETTE.muted)}
+          >{T.backToWorks}</a>
           <Seta size={isMobile ? 22 : 28} />
           <h1 style={{ ...TH.heading(isMobile ? 'clamp(44px, 13vw, 72px)' : 'clamp(56px, 6.2vw, 108px)'), marginTop: isMobile ? 20 : 28 }}>
             {T.works.heading}
@@ -159,13 +163,6 @@ function App() {
             <VideoCard key={indice} video={video} index={indice} lang={lang} />
           ))}
         </div>
-
-        <a href="./index.html" style={{ ...TH.link, display: 'inline-block', marginTop: 48 }}
-          onMouseEnter={(e) => (e.currentTarget.style.color = PALETTE.accent)}
-          onMouseLeave={(e) => (e.currentTarget.style.color = PALETTE.fg)}
-        >
-          {T.backToWorks}
-        </a>
       </section>
 
       <window.ContactCta lang={lang} isMobile={isMobile} />
