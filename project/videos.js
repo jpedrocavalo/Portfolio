@@ -59,6 +59,14 @@
    ════════════════════════════════════════════════════════════════ */
 window.VIDEOS = [
   {
+    title: 'Making Of da Noiva - Júlia e Ícaro',
+    year: '2026',
+    category: 'Making of',
+    streamId: '',
+    youtubeId: '9MD8pAtQXoU',
+    description: 'Trabalho freelancer de edição para Frame Company.\nDireção, direção de fotografia e operação de câmera: Frame Company.',
+  },
+  {
     title: 'Osteomed Hands-On',
     year: '2026',
     category: 'COBRAC',
@@ -86,7 +94,7 @@ window.VIDEOS = [
     description: 'Trabalho de edição para o Congresso Brasileiro de cirurgia e traumatologia buco-maxilo facial.\n\nrepresentando a Frame Company',
   },
   {
-    title: 'Casamento Guará & Graziele',
+    title: 'Aftermovie - Guará e Graziele',
     year: '2026',
     category: 'Wedding film',
     streamId: '9e9771ce9e088a4aa0f8ae636945b9eb',
@@ -182,6 +190,8 @@ window.VIDEOS = [
     category: 'Pre Wedding Session',
     streamId: '44d487d915c51a3b1dd41d3d9ee425cc',
     youtubeId: 'IzkRaAMCK7E',
+    // Só no "Ver tudo": a home fica com 6.
+    featured: false,
     description: 'Trabalho freelancer de edição para Frame Company.\nDireção, direção de fotografia e operação de câmera: Frame Company.',
   },
   {
@@ -190,7 +200,8 @@ window.VIDEOS = [
     category: 'Corte',
     streamId: '91bd705f3afb67bbe3940b1c89725477',
     youtubeId: 'tXvVcFDQ8v0',
-    // Fica fora do "Trabalhos selecionados" do reel, mas aparece no "Ver tudo".
+    // Fora do ar. Tire esta linha pra voltar (ao "Ver tudo").
+    hidden: true,
     featured: false,
     description: 'Trabalho voluntário de edição para a igreja ADPaz - Campus Zona Sul',
   }
