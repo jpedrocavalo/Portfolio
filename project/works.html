@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Jotap Films — Trabalhos</title>
+<title>Jotap Films — Trabalhos selecionados</title>
 <meta name="description" content="Casamentos, aftermovies, formaturas e filmes de marca editados e tratados por Jotap." />
 <link rel="icon" type="image/svg+xml" href="./favicon.svg?v=2" />
 
 <!-- Preview ao compartilhar o link (WhatsApp, Instagram, LinkedIn...) -->
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="Jotap Films" />
-<meta property="og:title" content="Todos os trabalhos — Jotap Films" />
+<meta property="og:title" content="Trabalhos selecionados — Jotap Films" />
 <meta property="og:description" content="Casamentos, aftermovies, formaturas e filmes de marca editados e tratados por Jotap." />
 <meta property="og:url" content="https://jotapfilms.com/works" />
 <meta property="og:image" content="https://jotapfilms.com/og.jpg" />
@@ -139,14 +139,6 @@ function App() {
           <h1 style={{ ...TH.heading(isMobile ? 'clamp(44px, 13vw, 72px)' : 'clamp(56px, 6.2vw, 108px)'), marginTop: isMobile ? 20 : 28 }}>
             {T.works.heading}
           </h1>
-        </div>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24 }}>
-          <div>
-            <div style={{ ...TH.label, marginBottom: 6 }}>{T.works.allWorks}</div>
-            <div style={{ fontFamily: FONTS.sans, fontSize: 13, color: PALETTE.fg }}>
-              {VIDEOS.length} {VIDEOS.length === 1 ? T.works.projectSingular : T.works.projectPlural}
-            </div>
-          </div>
         </div>
       </section>
 

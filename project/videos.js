@@ -64,6 +64,14 @@ window.VIDEOS = [
     category: 'Making of',
     streamId: '',
     youtubeId: '9MD8pAtQXoU',
+    // Capa própria (original em heroes/Thumb Making of.png, 3,5 MB;
+    // esta é a versão leve pra web)
+    poster: './capas/makingof-julia.jpg',
+    color: {
+      before: './color/Antes-Makingofjulia.png',
+      after:  './color/Depois-Makingofjulia.png',
+      nodes:  './color/Node-Makingofjulia.png',
+    },
     description: 'Trabalho freelancer de edição para Frame Company.\nDireção, direção de fotografia e operação de câmera: Frame Company.',
   },
   {

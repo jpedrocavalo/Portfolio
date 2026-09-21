@@ -120,8 +120,8 @@ window.I18N = {
 
     // ── Página de todos os trabalhos (works.html) ──
     works: {
-      allWorks:        'Todos os trabalhos',
-      heading:         'Trabalhos.',
+      allWorks:        'Trabalhos selecionados',
+      heading:         'Trabalhos selecionados.',
       projectSingular: 'projeto',
       projectPlural:   'projetos',
     },
@@ -239,8 +239,8 @@ window.I18N = {
     },
 
     works: {
-      allWorks:        'All works',
-      heading:         'Works.',
+      allWorks:        'Selected works',
+      heading:         'Selected works.',
       projectSingular: 'project',
       projectPlural:   'projects',
     },
