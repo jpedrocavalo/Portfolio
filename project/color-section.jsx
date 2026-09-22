@@ -324,7 +324,8 @@ function ColorSection({ color, isMobile, lang, compact }) {
       <div style={{ marginTop: isMobile ? 24 : 32 }}>
         <div style={CS_LABEL}>{t.breakdown}</div>
         <div style={{
-          position: 'relative', aspectRatio: '16 / 9',
+          // Mesma moldura do print de nodes: limitada pela altura da tela
+          position: 'relative', ...molduraFluida(16 / 9),
           background: CS_PALETTE.surface,
           border: `1px solid ${CS_PALETTE.line}`,
           overflow: 'hidden',
