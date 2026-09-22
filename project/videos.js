@@ -71,6 +71,7 @@ window.VIDEOS = [
       before: './color/Antes-Makingofjulia.png',
       after:  './color/Depois-Makingofjulia.png',
       nodes:  './color/Node-Makingofjulia.png',
+      breakdown: { streamId: '2df617c38b8b272b27ad0b565ef72e7a' },
     },
     description: 'Trabalho freelancer de edição para Frame Company.\nDireção, direção de fotografia e operação de câmera: Frame Company.',
   },
