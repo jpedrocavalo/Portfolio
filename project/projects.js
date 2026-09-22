@@ -98,6 +98,8 @@ window.PROJECTS = [
         title: 'Osteomed Stands',
         streamId: '',
         youtubeId: 'CP-8HF5MyPw',
+        // Capa própria (original em heroes/Thumb osteomed stands.png)
+        poster: './capas/osteomed-stands.jpg',
         description: 'Trabalho de edição para o Congresso Brasileiro de cirurgia e traumatologia buco-maxilo facial.\n\nrepresentando a Frame Company',
       },
       {
