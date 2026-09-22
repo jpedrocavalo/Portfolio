@@ -62,7 +62,7 @@ window.VIDEOS = [
     title: 'Making Of da Noiva - Júlia e Ícaro',
     year: '2026',
     category: 'Making of',
-    streamId: '',
+    streamId: 'a73d0f00fad3bf5f9a6d5b28fb522b00',
     youtubeId: '9MD8pAtQXoU',
     // Capa própria (original em heroes/Thumb Making of.png, 3,5 MB;
     // esta é a versão leve pra web)
