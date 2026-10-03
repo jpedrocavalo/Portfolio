@@ -133,18 +133,12 @@ window.VIDEOS = [
     description: 'Trabalho freelancer de edição para Frame Company.\nDireção, direção de fotografia e operação de câmera: Frame Company.',
   },
   {
-    title: 'Desfile Riachuelo Contact Center',
+    title: 'Vender é minha arte',
     year: '2026',
-    category: 'Desfile',
-    streamId: '2f0edcdeec3d19dfdc37d62c0458d121',
-    youtubeId: '4FjEpWqRnqs',
-    color: {
-      before: './color/Antes-DesfileCCR.png',
-      after:  './color/Depois-DesfileCCR.png',
-      nodes:  './color/Node-DesfileCCR.png',
-      breakdown: { streamId: '8f60ffde5c574b441c8f7cfb0fa993ce' },
-    },
-    description: 'Trabalho freelancer de edição para Frame Company.\nDireção, direção de fotografia e operação de câmera: Frame Company.',
+    category: 'Frame Company',
+    streamId: '814ed84eea8f5df5116be4b4d104cf05',
+    youtubeId: '',
+    description: 'Trabalho de edição Real Time para o evento Vender é minha arte.\n\nrepresentando a Frame Company',
   },
   {
     title: 'Prof. Gilberto',
