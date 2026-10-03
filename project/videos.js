@@ -138,6 +138,9 @@ window.VIDEOS = [
     category: 'Frame Company',
     streamId: '814ed84eea8f5df5116be4b4d104cf05',
     youtubeId: '',
+    // Sem YouTube, a capa vem de um frame do Cloudflare. O primeiro
+    // quadro é preto (fade in), então escolhemos um mais à frente.
+    thumbTime: '15s',
     description: 'Trabalho de edição Real Time para o evento Vender é minha arte.\n\nrepresentando a Frame Company',
   },
   {
