@@ -128,16 +128,8 @@ window.I18N = {
 
     // ── Página de colorista (colorist.html) ──
     colorist: {
-      label:       'Colorista',
-      heading:     'Colorista.',
-      roleLabel:   'Função',
-      role:        'Colorista',
-      toolsLabel:  'Ferramenta',
-      tools:       'DaVinci Resolve',
-      description: 'Tratamento de cor para filmes de casamento, eventos e conteúdo de marca. Cada trabalho abaixo mostra o antes e o depois, a árvore de nodes e, quando existe, o vídeo do processo.',
-      worksLabel:  'Trabalhos tratados',
-      seeWork:     'Ver o trabalho ↗',
-      empty:       'Trabalhos sendo adicionados, em breve',
+      label:   'Colorista',
+      heading: 'Colorista.',
     },
 
     // ── Página de short-form ──
@@ -260,16 +252,8 @@ window.I18N = {
     },
 
     colorist: {
-      label:       'Colorist',
-      heading:     'Colorist.',
-      roleLabel:   'Role',
-      role:        'Colorist',
-      toolsLabel:  'Tool',
-      tools:       'DaVinci Resolve',
-      description: 'Colour grading for wedding films, events and brand content. Every work below shows the before and after, the node tree and, where there is one, the process video.',
-      worksLabel:  'Graded work',
-      seeWork:     'See the work ↗',
-      empty:       'Work being added, coming soon',
+      label:   'Colorist',
+      heading: 'Colorist.',
     },
 
     shortform: {

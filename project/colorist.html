@@ -4,14 +4,14 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Jotap Films — Colorista</title>
-<meta name="description" content="Portfólio de color grading: antes e depois, árvore de nodes e o processo de cada tratamento." />
+<meta name="description" content="Portfólio de color grading." />
 <link rel="icon" type="image/svg+xml" href="./favicon.svg?v=2" />
 
 <!-- Preview ao compartilhar o link (WhatsApp, Instagram, LinkedIn...) -->
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="Jotap Films" />
 <meta property="og:title" content="Colorista — Jotap Films" />
-<meta property="og:description" content="Portfólio de color grading: antes e depois, árvore de nodes e o processo de cada tratamento." />
+<meta property="og:description" content="Portfólio de color grading." />
 <meta property="og:url" content="https://jotapfilms.com/colorist" />
 <meta property="og:image" content="https://jotapfilms.com/og.jpg" />
 <meta property="og:image:width" content="1200" />
@@ -39,16 +39,13 @@
 <body>
 <div id="root"></div>
 
-<!-- Traduções, tema e as três listas: o portfólio de cor sai delas -->
+<!-- Traduções, tema e a moldura do site (cabeçalho, contato, rodapé).
+     As listas de vídeos ainda não entram: a página está vazia. -->
 <script src="i18n.js"></script>
 <script src="theme.js"></script>
 <script src="media.js"></script>
-<script src="videos.js"></script>
-<script src="projects.js"></script>
-<script src="shortform.js"></script>
 <script type="text/babel" src="site-chrome.jsx"></script>
 <script type="text/babel" src="contact-modal.jsx"></script>
-<script type="text/babel" src="color-section.jsx"></script>
 
 <script type="text/babel">
 const TH = window.THEME;
@@ -56,106 +53,27 @@ const PALETTE = TH.palette;
 const FONTS = TH.fonts;
 
 /* ════════════════════════════════════════════════════════════════
-   O portfólio de cor não tem lista própria: ele varre videos.js,
-   projects.js e shortform.js e recolhe tudo que tem bloco `color`
-   preenchido. Preencher o color de um trabalho novo já o coloca
-   aqui, sem mexer nesta página.
+   PÁGINA DO COLORISTA — jotapfilms.com/colorist
+   --------------------------------------------------------------
+   Por enquanto só a casca: cabeçalho, título, a chamada de contato
+   e o rodapé, no estilo do resto do site. O conteúdo entra abaixo,
+   onde está marcado.
+
+   O que já existe pronto pra usar aqui quando for a hora:
+     window.ColorSection  — antes/depois arrastável, árvore de nodes,
+                            créditos de LUT/PowerGrade e breakdown.
+                            Aceita `noHeading` pra repetir sem repetir
+                            o título. Carregue color-section.jsx.
+     window.VIDEOS / PROJECTS / SHORTFORM — as listas do site, com os
+                            blocos `color` já preenchidos.
+     TH.heading / TH.label / TH.body / TH.pill / TH.link — tipografia.
    ════════════════════════════════════════════════════════════════ */
-
-const temCor = (c) => !!(c && (
-  (c.comparisons && c.comparisons.some((x) => x.before || x.after)) ||
-  c.before || c.after || c.nodes || window.hasMedia(c.breakdown)
-));
-
-// Assinatura pra não mostrar o mesmo tratamento duas vezes: a Formatura
-// da Gio, por exemplo, está na lista principal e no short-form com as
-// mesmas imagens.
-const assinatura = (c) => {
-  const primeira = (c.comparisons && c.comparisons[0]) || c;
-  return (primeira.after || primeira.before || c.nodes || '').toLowerCase();
-};
-
-const TRABALHOS = [];
-const vistos = new Set();
-
-function recolhe(item) {
-  if (!item || !temCor(item.color)) return;
-  const chave = assinatura(item.color);
-  if (chave && vistos.has(chave)) return;
-  if (chave) vistos.add(chave);
-  TRABALHOS.push(item);
-}
-
-// Lista principal — o índice real vira o link, por isso o map vem antes
-// do filtro de ocultos.
-(window.VIDEOS || []).forEach((v, i) => {
-  if (v.hidden) return;
-  recolhe({ titulo: v.title, categoria: v.category, ano: v.year, href: `./video.html?v=${i}`, color: v.color });
-});
-
-// Projetos: o look do projeto inteiro e, depois, o de cada vídeo que
-// tenha tratamento próprio.
-(window.PROJECTS || []).forEach((p, i) => {
-  recolhe({ titulo: p.title, categoria: p.subtitle, ano: p.year, href: `./project.html?p=${i}`, color: p.color });
-  (p.videos || []).forEach((v, j) => {
-    if (v.hidden) return;
-    recolhe({ titulo: v.title, categoria: p.title, ano: p.year, href: `./video.html?p=${i}&v=${j}`, color: v.color });
-  });
-});
-
-// Short-form: o que não entrou pela lista principal
-(window.SHORTFORM || []).forEach((v) => {
-  if (v.hidden) return;
-  recolhe({ titulo: v.title, categoria: v.subtitle, ano: v.year, href: './short-form.html', color: v.color });
-});
-
-// Coluna de rótulo + valor, como na home
-function Coluna({ label, value }) {
-  if (!value) return null;
-  return (
-    <div>
-      <div style={{ ...TH.label, marginBottom: 6 }}>{label}</div>
-      <div style={{ fontFamily: FONTS.sans, fontSize: 13, lineHeight: 1.5, color: PALETTE.fg }}>{value}</div>
-    </div>
-  );
-}
-
-// Um trabalho: nome e ficha em cima, o bloco de color inteiro embaixo.
-function Trabalho({ item, isMobile, lang }) {
-  const t = window.I18N[lang].colorist;
-  const ColorSection = window.ColorSection;
-  const meta = [window.tCategory(lang, item.categoria), item.ano].filter(Boolean).join(', ');
-
-  return (
-    <article style={{ marginTop: isMobile ? 56 : 96 }}>
-      <div style={{
-        display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between',
-        alignItems: 'baseline', gap: '6px 20px',
-        marginBottom: isMobile ? 20 : 28,
-      }}>
-        <h2 style={TH.heading(isMobile ? 'clamp(24px, 7vw, 32px)' : 'clamp(26px, 2.4vw, 40px)')}>
-          {item.titulo}
-        </h2>
-        <div style={{ display: 'flex', alignItems: 'baseline', gap: 16, flexShrink: 0 }}>
-          {meta && <span style={TH.label}>{meta}</span>}
-          <a href={item.href} style={TH.link}
-            onMouseEnter={(e) => (e.currentTarget.style.color = PALETTE.muted)}
-            onMouseLeave={(e) => (e.currentTarget.style.color = PALETTE.fg)}
-          >{t.seeWork}</a>
-        </div>
-      </div>
-
-      {ColorSection && <ColorSection color={item.color} isMobile={isMobile} lang={lang} noHeading />}
-    </article>
-  );
-}
 
 function App() {
   const isMobile = window.useIsMobile();
   const [lang, setLangState] = React.useState(window.getInitialLang());
   const setLang = (next) => { setLangState(next); window.persistLang(next); };
   const T = window.I18N[lang];
-  const t = T.colorist;
   const [contactOpen, setContactOpen] = React.useState(false);
   const ContactModal = window.ContactModal;
   const Seta = window.Seta;
@@ -165,7 +83,7 @@ function App() {
       {ContactModal && <ContactModal open={contactOpen} onClose={() => setContactOpen(false)} lang={lang} />}
       <window.SiteHeader current="colorist" lang={lang} setLang={setLang} onContactOpen={() => setContactOpen(true)} />
 
-      {/* Abertura: título à esquerda, ficha e descrição à direita */}
+      {/* Abertura */}
       <section style={{
         padding: isMobile ? '104px 20px 36px' : '150px 40px 56px',
         display: 'grid',
@@ -180,48 +98,16 @@ function App() {
           >{T.backToWorks}</a>
           <Seta size={isMobile ? 22 : 28} />
           <h1 style={{ ...TH.heading(isMobile ? 'clamp(44px, 13vw, 72px)' : 'clamp(56px, 6.2vw, 108px)'), marginTop: isMobile ? 20 : 28 }}>
-            {t.heading}
+            {T.colorist.heading}
           </h1>
         </div>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: isMobile ? 28 : 56, paddingTop: isMobile ? 0 : 4 }}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24 }}>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
-              <Coluna label={t.roleLabel} value={t.role} />
-              <Coluna label={T.home.locationLabel} value={T.home.location} />
-            </div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
-              <Coluna label={t.toolsLabel} value={t.tools} />
-              <Coluna label={T.home.serveLabel} value={T.home.serve} />
-            </div>
-          </div>
-          <div>
-            <div style={{ ...TH.label, marginBottom: 8 }}>{T.home.descriptionLabel}</div>
-            <p style={{ ...TH.body(isMobile ? 14 : 15), maxWidth: 560 }}>{t.description}</p>
-          </div>
-        </div>
+        {/* Coluna da direita: ficha e descrição entram aqui */}
+        <div />
       </section>
 
-      {/* Os tratamentos, um abaixo do outro */}
-      <section style={{ padding: isMobile ? '0 20px 64px' : '0 40px 96px' }}>
-        <div style={TH.label}>{t.worksLabel}</div>
-
-        {TRABALHOS.length > 0 ? (
-          TRABALHOS.map((item, i) => (
-            <Trabalho key={i} item={item} isMobile={isMobile} lang={lang} />
-          ))
-        ) : (
-          <div style={{
-            marginTop: 28,
-            padding: isMobile ? '48px 20px' : '80px 40px',
-            border: `1px dashed ${PALETTE.line}`,
-            textAlign: 'center',
-            ...TH.label,
-          }}>
-            {t.empty}
-          </div>
-        )}
-      </section>
+      {/* ── CONTEÚDO ── */}
+      <section style={{ padding: isMobile ? '0 20px 64px' : '0 40px 96px' }} />
 
       <window.ContactCta lang={lang} isMobile={isMobile} />
       <window.SiteFooter lang={lang} />
