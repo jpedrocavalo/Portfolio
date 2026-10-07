@@ -368,7 +368,7 @@ function App() {
   return (
     <div style={{ width: '100%' }}>
       {ContactModal && <ContactModal open={contactOpen} onClose={() => setContactOpen(false)} lang={lang} />}
-      <window.SiteHeader current="colorist" lang={lang} setLang={setLang} onContactOpen={() => setContactOpen(true)} />
+      <window.SiteHeader current="works" colorist lang={lang} setLang={setLang} onContactOpen={() => setContactOpen(true)} />
 
       {/* Abertura: título à esquerda, ficha e descrição à direita */}
       <section style={{
@@ -379,10 +379,7 @@ function App() {
         alignItems: 'start',
       }}>
         <div>
-          <a href="./index.html" style={{ ...TH.link, display: 'inline-block', marginBottom: isMobile ? 20 : 28, color: PALETTE.muted }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = PALETTE.fg)}
-            onMouseLeave={(e) => (e.currentTarget.style.color = PALETTE.muted)}
-          >{T.backToWorks}</a>
+          {/* Sem link de voltar: esta é a primeira página do ramo de color */}
           <Seta size={isMobile ? 22 : 28} />
           <h1 style={{ ...TH.heading(isMobile ? 'clamp(44px, 13vw, 72px)' : 'clamp(56px, 6.2vw, 108px)'), marginTop: isMobile ? 20 : 28 }}>
             {T.colorist.heading}

@@ -134,7 +134,7 @@ function App() {
   return (
     <div style={{ width: '100%' }}>
       {ContactModal && <ContactModal open={contactOpen} onClose={() => setContactOpen(false)} lang={lang} />}
-      <window.SiteHeader current="about" lang={lang} setLang={setLang} onContactOpen={() => setContactOpen(true)} />
+      <window.SiteHeader current="about" colorist lang={lang} setLang={setLang} onContactOpen={() => setContactOpen(true)} />
       <BioSection lang={lang} isMobile={isMobile} />
       <window.ContactCta lang={lang} isMobile={isMobile} />
       <window.SiteFooter lang={lang} />

@@ -6,8 +6,11 @@
 
    Expõe:
      window.useIsMobile()
-     window.SiteHeader({ current, lang, setLang, onContactOpen })
-       current: 'works' | 'about' — qual item fica em negrito
+     window.SiteHeader({ current, lang, setLang, onContactOpen, colorist })
+       current:  'works' | 'about' — qual item fica em negrito
+       colorist: true nas páginas do ramo de color (colorist.html e
+                 sobree.html). Troca o destino do logo e do menu pra
+                 dentro desse ramo, sem saída pro site de editor.
      window.ContactCta({ lang, isMobile })   — "Vamos conversar."
      window.SiteFooter({ lang })             — linha final com o ©
      window.Seta()                           — a seta ↘ que abre os títulos
@@ -54,15 +57,22 @@ function NavItem({ href, label, active, last, onClick }) {
     : <span onClick={onClick} style={style} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>{inner}</span>;
 }
 
-function SiteHeader({ current, lang, setLang, onContactOpen }) {
+function SiteHeader({ current, lang, setLang, onContactOpen, colorist }) {
   const isMobile = useIsMobile();
   const N = window.I18N[lang].nav;
-  // 'works' aponta pra home (os trabalhos estão lá); works.html continua
-  // acessível pelo "Ver tudo" da seção.
-  const items = [
-    { key: 'works', href: './index.html', label: N.works },
-    { key: 'about', href: './about.html', label: N.about },
-  ];
+  // O site tem dois ramos que não se cruzam. No de editor, 'Trabalhos' é
+  // a home; no de colorista (colorist=true), é o feed de color, e 'Sobre'
+  // é a bio de colorista. Quem entra por /colorist fica lá dentro.
+  const inicio = colorist ? './colorist.html' : './index.html';
+  const items = colorist
+    ? [
+        { key: 'works', href: './colorist.html', label: N.works },
+        { key: 'about', href: './sobree.html', label: N.about },
+      ]
+    : [
+        { key: 'works', href: './index.html', label: N.works },
+        { key: 'about', href: './about.html', label: N.about },
+      ];
   // No mobile não cabe tudo: some o item da página atual.
   const shown = isMobile ? items.filter((it) => it.key !== current) : items;
 
@@ -97,7 +107,7 @@ function SiteHeader({ current, lang, setLang, onContactOpen }) {
       background: 'rgba(245,244,240,0.86)',
       backdropFilter: 'blur(14px)', WebkitBackdropFilter: 'blur(14px)',
     }}>
-      <a href="./index.html" style={{
+      <a href={inicio} style={{
         fontWeight: 600, color: CH_P.fg, textDecoration: 'none', letterSpacing: '-0.01em',
       }}>Jotap Films<sup style={{ fontSize: 8, marginLeft: 1, fontWeight: 500 }}>®</sup></a>
 
