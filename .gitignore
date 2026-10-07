@@ -18,3 +18,7 @@ node_modules/
 
 # Logs
 *.log
+
+# Fotos do portfólio de color: o PNG do export fica no seu disco, o site
+# serve o JPG leve do lado. Mandar os dois pro ar seria dezenas de MB.
+project/colorist/**/*.png
