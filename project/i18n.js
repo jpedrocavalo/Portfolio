@@ -144,8 +144,13 @@ window.I18N = {
 
     // ── Página de colorista (colorist.html) ──
     colorist: {
-      label:   'Colorista',
-      heading: 'Colorista.',
+      label:        'Colorista',
+      heading:      'Colorista.',
+      roleLabel:    'Função',
+      role:         'Colorista',
+      servicesLabel:'Serviços',
+      services:     ['Tratamento de cor', 'Criação de look', 'Equalização de câmeras'],
+      description:  'O tratamento de cor que dá unidade e caráter ao seu material. Parceria de color para produtoras de casamentos e eventos que querem a mesma imagem do primeiro ao último take.',
     },
 
     // ── Página de short-form ──
@@ -282,8 +287,13 @@ window.I18N = {
     },
 
     colorist: {
-      label:   'Colorist',
-      heading: 'Colorist.',
+      label:        'Colorist',
+      heading:      'Colorist.',
+      roleLabel:    'Role',
+      role:         'Colorist',
+      servicesLabel:'Services',
+      services:     ['Colour grading', 'Look development', 'Camera matching'],
+      description:  'The grade that gives your footage one voice and a character of its own. Colour partnership for wedding and event production companies that want the same image from the first shot to the last.',
     },
 
     shortform: {
