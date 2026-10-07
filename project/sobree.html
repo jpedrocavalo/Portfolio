@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Jotap Films — Sobre</title>
+<meta name="description" content="Editor freelancer, obcecado com cor, ritmo e o momento exato em que o corte respira certo." />
+<link rel="icon" type="image/svg+xml" href="./favicon.svg?v=2" />
+
+<!-- Preview ao compartilhar o link (WhatsApp, Instagram, LinkedIn...) -->
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Jotap Films" />
+<meta property="og:title" content="Sobre — Jotap Films" />
+<meta property="og:description" content="Editor freelancer, obcecado com cor, ritmo e o momento exato em que o corte respira certo." />
+<meta property="og:url" content="https://jotapfilms.com/sobree" />
+<meta property="og:image" content="https://jotapfilms.com/og.jpg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="pt_BR" />
+<meta name="twitter:card" content="summary_large_image" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; width: 100%; background: #f5f4f0; color: #111111; -webkit-font-smoothing: antialiased; font-family: 'Inter', system-ui, sans-serif; }
+  #root { width: 100%; }
+  a { color: inherit; }
+</style>
+
+<!-- React + Babel -->
+<script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js" integrity="sha384-DGyLxAyjq0f9SPpVevD6IgztCFlnMF6oW/XQGmfe+IsZ8TqEiDrcHkMLKI6fiB/Z" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js" integrity="sha384-gTGxhz21lVGYNMcdJOyq01Edg0jhn/c22nsx0kyqP0TxaV5WVdsSH1fSDUf5YJj1" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+</head>
+<body>
+<div id="root"></div>
+
+<!-- Traduções compartilhadas (script normal, roda antes do Babel) -->
+<script src="i18n.js"></script>
+<script src="theme.js"></script>
+<script type="text/babel" src="site-chrome.jsx"></script>
+<script type="text/babel" src="contact-modal.jsx"></script>
+
+<script type="text/babel">
+const TH = window.THEME;
+const PALETTE = TH.palette;
+const FONTS = TH.fonts;
+
+// ─── Bio + Foto ───────────────────────────────────────────────
+function BioSection({ lang, isMobile }) {
+  const t = window.I18N[lang].about;
+  // Função e base vêm do mesmo lugar da home, já traduzidas
+  const r = window.I18N[lang].home;
+  const [hover, setHover] = React.useState(false);
+
+  return (
+    <section style={{
+      padding: isMobile ? '104px 20px 64px' : '150px 40px 120px',
+      display: 'grid',
+      gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
+      gap: isMobile ? 32 : 40,
+      alignItems: 'start',
+    }}>
+      {/* Texto */}
+      <div style={{ maxWidth: isMobile ? '100%' : 560, order: isMobile ? 2 : 1 }}>
+        <window.Seta size={isMobile ? 22 : 28} />
+        <div style={{ ...TH.label, marginTop: isMobile ? 20 : 28, marginBottom: 12 }}>{t.bioLabel}</div>
+        <h1 style={TH.heading(isMobile ? 'clamp(36px, 10vw, 60px)' : 'clamp(40px, 4.4vw, 76px)')}>
+          {t.bioHeadingA} {t.bioHeadingB}.
+        </h1>
+
+        <div style={{ marginTop: 28, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24 }}>
+          <div>
+            <div style={{ ...TH.label, marginBottom: 6 }}>{r.roleLabel}</div>
+            <div style={{ fontFamily: FONTS.sans, fontSize: 13, color: PALETTE.fg }}>{r.role}</div>
+          </div>
+          <div>
+            <div style={{ ...TH.label, marginBottom: 6 }}>{r.locationLabel}</div>
+            <div style={{ fontFamily: FONTS.sans, fontSize: 13, color: PALETTE.fg }}>{r.location}</div>
+          </div>
+        </div>
+
+        <div style={{ marginTop: 32, display: 'flex', flexDirection: 'column', gap: 14 }}>
+          {t.paragraphs.map((p, i) => <p key={i} style={TH.body(isMobile ? 14 : 15)}>{p}</p>)}
+        </div>
+
+        {/* Botão "Ver trabalho" */}
+        <a
+          href="./colorist.html"
+          style={{ ...TH.button(true), marginTop: 32, ...(hover ? { background: '#333', borderColor: '#333' } : {}) }}
+          onMouseEnter={() => setHover(true)}
+          onMouseLeave={() => setHover(false)}
+        >
+          {t.viewWork} <span>↗</span>
+        </a>
+      </div>
+
+      {/* Foto */}
+      <div style={{
+        position: 'relative',
+        aspectRatio: isMobile ? '3 / 2' : '4 / 5',
+        background: PALETTE.surface,
+        border: `1px solid ${PALETTE.line}`,
+        overflow: 'hidden',
+        order: isMobile ? 1 : 2,
+      }}>
+        <img
+          src="./jotap.jpg"
+          alt="Jotap"
+          style={{
+            position: 'absolute', inset: 0,
+            width: '100%', height: '100%',
+            objectFit: 'cover',
+            objectPosition: 'center top',
+          }}
+          onError={(e) => { e.currentTarget.style.display = 'none'; }}
+        />
+      </div>
+    </section>
+  );
+}
+
+function App() {
+  const [lang, setLangState] = React.useState(window.getInitialLang());
+  const setLang = (next) => { setLangState(next); window.persistLang(next); };
+  const [contactOpen, setContactOpen] = React.useState(false);
+  const ContactModal = window.ContactModal;
+  const isMobile = window.useIsMobile();
+
+  return (
+    <div style={{ width: '100%' }}>
+      {ContactModal && <ContactModal open={contactOpen} onClose={() => setContactOpen(false)} lang={lang} />}
+      <window.SiteHeader current="about" lang={lang} setLang={setLang} onContactOpen={() => setContactOpen(true)} />
+      <BioSection lang={lang} isMobile={isMobile} />
+      <window.ContactCta lang={lang} isMobile={isMobile} />
+      <window.SiteFooter lang={lang} />
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+
+</body>
+</html>
