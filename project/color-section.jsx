@@ -229,7 +229,9 @@ function CreditoBase({ label, item, primeiro }) {
 }
 
 // compact = dentro do modal do short-form, onde o espaço é menor.
-function ColorSection({ color, isMobile, lang, compact }) {
+// noHeading = a página já diz do que o bloco trata (colorist.html, onde
+// ele se repete trabalho a trabalho).
+function ColorSection({ color, isMobile, lang, compact, noHeading }) {
   const T = (window.I18N && window.I18N[lang]) || window.I18N.pt;
   if (!color) return null;
 
@@ -252,23 +254,27 @@ function ColorSection({ color, isMobile, lang, compact }) {
     <div style={{
       width: '100%',
       maxWidth: compact ? '100%' : 'none',
-      marginTop: compact ? 32 : (isMobile ? 48 : 72),
-      paddingTop: compact ? 26 : (isMobile ? 32 : 40),
+      marginTop: noHeading ? 0 : (compact ? 32 : (isMobile ? 48 : 72)),
+      paddingTop: noHeading ? 0 : (compact ? 26 : (isMobile ? 32 : 40)),
       borderTop: CS_TH.sectionRule,
     }}>
-      <div style={{ ...CS_TH.label, marginBottom: 14 }}>{t.label}</div>
-      <h2 style={CS_TH.heading(compact
-        ? (isMobile ? '22px' : '28px')
-        : (isMobile ? 'clamp(28px, 8vw, 40px)' : 'clamp(32px, 3.2vw, 56px)'))}>
-        {t.heading}
-      </h2>
+      {!noHeading && (
+        <>
+          <div style={{ ...CS_TH.label, marginBottom: 14 }}>{t.label}</div>
+          <h2 style={CS_TH.heading(compact
+            ? (isMobile ? '22px' : '28px')
+            : (isMobile ? 'clamp(28px, 8vw, 40px)' : 'clamp(32px, 3.2vw, 56px)'))}>
+            {t.heading}
+          </h2>
+        </>
+      )}
 
       {/* Antes / depois, uma comparação por câmera. Com as duas imagens
           vira comparador arrastável; faltando alguma, cai nas molduras
           lado a lado pra mostrar o que ainda não foi preenchido. */}
       {comparacoes.map((cmp, i) => {
         return (
-          <div key={i} style={{ marginTop: i === 0 ? (compact ? 22 : (isMobile ? 32 : 44)) : (isMobile ? 24 : 32) }}>
+          <div key={i} style={{ marginTop: i === 0 ? (noHeading ? 0 : (compact ? 22 : (isMobile ? 32 : 44))) : (isMobile ? 24 : 32) }}>
             {cmp.before && cmp.after ? (
               <>
                 <div style={CS_LABEL}>
