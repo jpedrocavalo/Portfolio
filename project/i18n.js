@@ -49,6 +49,22 @@ window.I18N = {
       viewWork: 'Ver trabalho',
     },
 
+    // ── Bio da página de colorista (sobree.html) ──
+    // Mesma história da Sobre, contada pelo lado da cor.
+    aboutColorist: {
+      bioLabel: 'Bio',
+      bioHeadingA: 'Finding',
+      bioHeadingB: 'the look',
+      role: 'Colorista',
+      paragraphs: [
+        'Comecei querendo um canal no YouTube, tinha menos de dez anos e já montava vídeos no celular sem saber o nome do que fazia. Mexer na imagem veio junto, puxar o contraste, forçar o azul, tentar chegar no que eu via no cinema. Não sabia que aquilo tinha nome.',
+        'Por muito tempo deixei o audiovisual de lado. Outras prioridades, outros caminhos. Mas ele nunca foi embora de verdade, ficou em segundo plano, esperando.',
+        'Hoje trato cor como freelancer. A escala mudou, a obsessão não, pele que continua pele, a luz caindo onde tem que cair, o take que não conversa com o anterior e precisa conversar.',
+        'Mais do que técnica, é leitura. A pergunta que guia cada projeto não é "como fica bonito?", é "o que essa cor faz quem assiste sentir?"',
+      ],
+      viewWork: 'Ver o color',
+    },
+
     // ── Color (color.html / v4-projector) ──
     color: {
       heroHeading1: 'Frames',
@@ -179,6 +195,20 @@ window.I18N = {
         'More than technique, it\'s creation. The question driving each project isn\'t "how does it look?", it\'s "what stays when the image fades?"',
       ],
       viewWork: 'View work',
+    },
+
+    aboutColorist: {
+      bioLabel: 'Bio',
+      bioHeadingA: 'Finding',
+      bioHeadingB: 'the look',
+      role: 'Colorist',
+      paragraphs: [
+        "It started with a dream of a YouTube channel, I was under ten, already cutting videos on my phone without knowing what it was called. Pushing the image came with it, crushing the contrast, forcing the blue, trying to land on what I saw in films. I had no idea that had a name.",
+        "For a long time I set it aside. Other priorities, other paths. But it never really left, it stayed in the background, waiting.",
+        "Today I grade as a freelancer. The scale changed, the obsession didn't, skin that still reads as skin, light falling where it should, the shot that doesn't talk to the one before it and has to.",
+        'More than technique, it\'s reading. The question driving each project isn\'t "how does it look?", it\'s "what does this colour make the viewer feel?"',
+      ],
+      viewWork: 'See the grades',
     },
 
     color: {

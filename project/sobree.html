@@ -3,15 +3,15 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Jotap Films — Sobre</title>
-<meta name="description" content="Editor freelancer, obcecado com cor, ritmo e o momento exato em que o corte respira certo." />
+<title>Jotap Films — Sobre o colorista</title>
+<meta name="description" content="Colorista freelancer, obcecado com pele que continua pele e luz caindo onde tem que cair." />
 <link rel="icon" type="image/svg+xml" href="./favicon.svg?v=2" />
 
 <!-- Preview ao compartilhar o link (WhatsApp, Instagram, LinkedIn...) -->
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="Jotap Films" />
-<meta property="og:title" content="Sobre — Jotap Films" />
-<meta property="og:description" content="Editor freelancer, obcecado com cor, ritmo e o momento exato em que o corte respira certo." />
+<meta property="og:title" content="Sobre o colorista — Jotap Films" />
+<meta property="og:description" content="Colorista freelancer, obcecado com pele que continua pele e luz caindo onde tem que cair." />
 <meta property="og:url" content="https://jotapfilms.com/sobree" />
 <meta property="og:image" content="https://jotapfilms.com/og.jpg" />
 <meta property="og:image:width" content="1200" />
@@ -52,8 +52,8 @@ const FONTS = TH.fonts;
 
 // ─── Bio + Foto ───────────────────────────────────────────────
 function BioSection({ lang, isMobile }) {
-  const t = window.I18N[lang].about;
-  // Função e base vêm do mesmo lugar da home, já traduzidas
+  const t = window.I18N[lang].aboutColorist;
+  // Base vem do mesmo lugar da home; a função é a desta página
   const r = window.I18N[lang].home;
   const [hover, setHover] = React.useState(false);
 
@@ -76,7 +76,7 @@ function BioSection({ lang, isMobile }) {
         <div style={{ marginTop: 28, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24 }}>
           <div>
             <div style={{ ...TH.label, marginBottom: 6 }}>{r.roleLabel}</div>
-            <div style={{ fontFamily: FONTS.sans, fontSize: 13, color: PALETTE.fg }}>{r.role}</div>
+            <div style={{ fontFamily: FONTS.sans, fontSize: 13, color: PALETTE.fg }}>{t.role}</div>
           </div>
           <div>
             <div style={{ ...TH.label, marginBottom: 6 }}>{r.locationLabel}</div>
