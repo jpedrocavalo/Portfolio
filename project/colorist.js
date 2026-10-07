@@ -30,11 +30,6 @@
      },
 
    hidden: true tira o trabalho do feed sem apagar nada.
-
-   ── POR ENQUANTO ──
-   Está semeado com os frames tratados que já existiam na pasta
-   `color/`, só pra página não nascer vazia. Troque por suas fotos
-   de color quando tiver.
    ════════════════════════════════════════════════════════════════ */
 window.COLORIST = [
   {
@@ -57,31 +52,6 @@ window.COLORIST = [
       './colorist/makingof-julia/13.jpg',
       './colorist/makingof-julia/14.jpg',
       './colorist/makingof-julia/15.jpg',
-    ],
-  },
-  {
-    title: 'Aftermovie - Guará e Graziele',
-    year: '2026',
-    cover: './color/Depois-CasamentoGrazi.png',
-    photos: [
-      './color/Depois-CasamentoGrazi.png',
-    ],
-  },
-  {
-    title: 'Click Digital',
-    year: '2026',
-    cover: './color/Click digital/Depois-Blackmagic1.png',
-    photos: [
-      './color/Click digital/Depois-Blackmagic1.png',
-      './color/Click digital/Depois-Sony.png',
-    ],
-  },
-  {
-    title: 'Formatura da Gio',
-    year: '2026',
-    cover: './color/Depois-FormaturaGio.png',
-    photos: [
-      './color/Depois-FormaturaGio.png',
     ],
   },
 ];
