@@ -90,7 +90,8 @@ window.I18N = {
       serveLabel:      'Atendimento',
       serve:           'Mundo inteiro',
       servicesLabel:   'Serviços',
-      services:        ['Edição', 'Tratamento de cor', 'Edição real time'],
+      // Cor saiu daqui: o color tem portfólio próprio em /colorist
+      services:        ['Edição', 'Edição real time'],
       descriptionLabel:'Descrição',
     },
 
@@ -238,7 +239,7 @@ window.I18N = {
       serveLabel:      'Working',
       serve:           'Worldwide',
       servicesLabel:   'Services',
-      services:        ['Editing', 'Color grading', 'Real-time editing'],
+      services:        ['Editing', 'Real-time editing'],
       descriptionLabel:'Description',
     },
 
