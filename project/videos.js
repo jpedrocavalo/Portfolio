@@ -64,9 +64,9 @@ window.VIDEOS = [
     category: 'Frame Company',
     streamId: 'c82d9404bda12fe0d3041c1686eab8a3',
     youtubeId: '',
-    // Sem YouTube, a capa vem de um frame do Cloudflare. O primeiro
-    // quadro é preto (fade in); aos 20s aparece a fachada do posto.
-    thumbTime: '20s',
+    // Capa própria (original em capas/Postocobe.png, 1,2 MB; esta é a
+    // versão leve pra web). Ganha do frame do Cloudflare.
+    poster: './capas/posto-cobe.jpg',
     description: 'Trabalho freelancer de edição para Frame Company.\nDireção, direção de fotografia e operação de câmera: Frame Company.',
   },
   {
