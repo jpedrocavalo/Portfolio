@@ -59,6 +59,17 @@
    ════════════════════════════════════════════════════════════════ */
 window.VIDEOS = [
   {
+    title: '1 ano do Posto cobé',
+    year: '2026',
+    category: 'Frame Company',
+    streamId: 'c82d9404bda12fe0d3041c1686eab8a3',
+    youtubeId: '',
+    // Sem YouTube, a capa vem de um frame do Cloudflare. O primeiro
+    // quadro é preto (fade in); aos 20s aparece a fachada do posto.
+    thumbTime: '20s',
+    description: 'Trabalho freelancer de edição para Frame Company.\nDireção, direção de fotografia e operação de câmera: Frame Company.',
+  },
+  {
     title: 'Making Of da Noiva - Júlia e Ícaro',
     year: '2026',
     category: 'Making of',
@@ -159,6 +170,8 @@ window.VIDEOS = [
     category: 'Graduation film',
     streamId: 'e18e064a56ced6553e0ec220def58618',
     youtubeId: 'i2zMYQGhsQU',
+    // Só no "Ver tudo": a home fica com 6.
+    featured: false,
     // Frames verticais (9:16) — a moldura se adapta sozinha.
     color: {
       before: './color/Antes-FormaturaGio.png',
