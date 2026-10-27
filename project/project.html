@@ -59,7 +59,7 @@ const PROJ = (window.PROJECTS && window.PROJECTS[IDX])
   || { title: 'Projeto', subtitle: '', year: '', description: '', videos: [] };
 
 // Card 16:9 de um vídeo do projeto → video.html?p=<proj>&v=<índice>
-function VideoCard({ video, projIndex, index }) {
+function VideoCard({ video, projIndex, index, lang }) {
   const [hover, setHover] = React.useState(false);
   return (
     <a
@@ -80,7 +80,7 @@ function VideoCard({ video, projIndex, index }) {
         {window.hasMedia(video) && (
           <img
             {...window.mediaThumbProps(video)}
-            alt={video.title}
+            alt={window.tText(lang, video.title)}
             style={{
               position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover',
               transform: hover ? 'scale(1.05)' : 'scale(1)',
@@ -92,7 +92,7 @@ function VideoCard({ video, projIndex, index }) {
       </div>
 
       <div style={{ padding: '10px 16px 22px', fontFamily: FONTS.sans, fontSize: 13, fontWeight: 500, color: PALETTE.fg }}>
-        {video.title}
+        {window.tText(lang, video.title)}
       </div>
     </a>
   );
@@ -153,14 +153,14 @@ function App() {
             <span style={TH.pill}>{T.video.projectLabel}</span>
           </div>
           <h1 style={{ ...TH.heading(isMobile ? 'clamp(44px, 13vw, 72px)' : 'clamp(56px, 6.2vw, 108px)'), marginTop: isMobile ? 20 : 28 }}>
-            {p.title}
+            {window.tText(lang, p.title)}
           </h1>
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: isMobile ? 28 : 56, paddingTop: isMobile ? 0 : 4 }}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24 }}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
-              <Coluna label={t.clientLabel} value={p.subtitle} />
+              <Coluna label={t.clientLabel} value={window.tText(lang, p.subtitle)} />
               <Coluna label={t.yearLabel} value={p.year} />
             </div>
             <Coluna label={t.videosLabel} value={contagem} />
@@ -168,7 +168,7 @@ function App() {
           {p.description && (
             <div>
               <div style={{ ...TH.label, marginBottom: 8 }}>{t.descriptionLabel}</div>
-              <p style={{ ...TH.body(isMobile ? 14 : 15), maxWidth: 560 }}>{p.description}</p>
+              <p style={{ ...TH.body(isMobile ? 14 : 15), maxWidth: 560 }}>{window.tText(lang, p.description)}</p>
             </div>
           )}
         </div>
@@ -186,7 +186,7 @@ function App() {
             gap: 0,
           }}>
             {videos.map(({ video, indice }) => (
-              <VideoCard key={indice} video={video} projIndex={IDX} index={indice} />
+              <VideoCard key={indice} video={video} projIndex={IDX} index={indice} lang={lang} />
             ))}
           </div>
         ) : (

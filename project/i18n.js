@@ -84,7 +84,7 @@ window.I18N = {
       seeAll:          'Ver tudo ↗',
       // Colunas ao lado do título da home
       roleLabel:       'Função',
-      role:            'Editor & Colorista',
+      role:            'Editor',
       locationLabel:   'Base',
       location:        'Natal, RN, Brasil',
       serveLabel:      'Atendimento',
@@ -233,7 +233,7 @@ window.I18N = {
       selectedWorks:   'Selected works',
       seeAll:          'See all ↗',
       roleLabel:       'Role',
-      role:            'Editor & Colorist',
+      role:            'Editor',
       locationLabel:   'Based in',
       location:        'Natal, RN, Brazil',
       serveLabel:      'Working',
@@ -339,6 +339,66 @@ const CATEGORIAS_PT = {
 window.tCategory = function (lang, category) {
   if (!category) return category;
   return lang === 'pt' ? (CATEGORIAS_PT[category] || category) : category;
+};
+
+/* ════════════════════════════════════════════════════════════════
+   TÍTULOS E DESCRIÇÕES EM INGLÊS
+   --------------------------------------------------------------
+   Os dados (videos.js, projects.js, shortform.js, colorist.js) ficam
+   só em português. Quando o idioma é EN, cada texto é procurado aqui,
+   pelo texto exato em PT, e trocado pelo inglês. É o mesmo dicionário
+   pro ramo de editor e pro de colorista.
+
+   • Nome próprio (Toguro, Cadu Neiva, COBRAC...) não precisa entrar:
+     o que não está aqui aparece como está.
+   • Trabalho novo? Acrescente o título e a descrição dele aqui.
+   • Mudou um texto no videos.js? Mude a chave daqui igual, senão ele
+     volta a aparecer em português no EN.
+   • "\n" é a quebra de linha da descrição, igual nos dados.
+   ════════════════════════════════════════════════════════════════ */
+const TEXTOS_EN = {
+  // ── Títulos ──
+  '1 ano do Posto cobé':                  '1 year of Posto cobé',
+  'Making Of da Noiva - Júlia e Ícaro':   "Bride's Making Of - Júlia and Ícaro",
+  'Aftermovie - Guará e Graziele':        'Aftermovie - Guará and Graziele',
+  'Vender é minha arte':                  'Selling Is My Art',
+  'Formatura da Gio':                     "Gio's Graduation",
+  'Pre Wedding Thaynara e Ruan':          'Pre Wedding Thaynara and Ruan',
+  'São Julhão do Riachuelo Contact Center': 'São Julhão at Riachuelo Contact Center',
+  'Corte Pastor Edson - Igreja ADPAZ':    'Pastor Edson Cut - ADPAZ Church',
+  'Abertura':                             'Opening',
+  'Dia 1':                                'Day 1',
+  'Dia 2':                                'Day 2',
+  'Dia 3':                                'Day 3',
+  'Stand da Altrum':                      'Altrum Stand',
+  'Palestra Dr. Alexandre Jácome':        'Talk by Dr. Alexandre Jácome',
+  'Materialise dia 1':                    'Materialise Day 1',
+  'André e Wanderley':                    'André and Wanderley',
+
+  // ── Descrições ──
+  'Trabalho freelancer de edição para Frame Company.\nDireção, direção de fotografia e operação de câmera: Frame Company.':
+    'Freelance editing work for Frame Company.\nDirection, cinematography and camera operation: Frame Company.',
+  'Trabalho freelancer de edição para Vic Filmes.\nDireção, direção de fotografia e operação de câmera: Vic Filmes.':
+    'Freelance editing work for Vic Filmes.\nDirection, cinematography and camera operation: Vic Filmes.',
+  'Trabalho de edição para o Congresso Brasileiro de cirurgia e traumatologia buco-maxilo facial.\n\nrepresentando a Frame Company':
+    'Editing work for the Brazilian Congress of Oral and Maxillofacial Surgery and Traumatology.\n\nrepresenting Frame Company',
+  'Trabalho de edição Real Time para o Congresso Brasileiro de cirurgia e traumatologia buco-maxilo facial.\n\nrepresentando a Frame Company':
+    'Real Time editing work for the Brazilian Congress of Oral and Maxillofacial Surgery and Traumatology.\n\nrepresenting Frame Company',
+  'Trabalho de edição Real Time para o evento Vender é minha arte.\n\nrepresentando a Frame Company':
+    'Real Time editing work for the Selling Is My Art event.\n\nrepresenting Frame Company',
+  'Trabalho voluntário de edição para a igreja ADPaz - Campus Zona Sul':
+    'Volunteer editing work for the ADPaz church - South Zone Campus',
+  'Cobertura de edição Real Time e pós-evento no Congresso Brasileiro de Cirurgia e Traumatologia Buco-Maxilo-Facial.':
+    'Real Time and post-event editing coverage at the Brazilian Congress of Oral and Maxillofacial Surgery and Traumatology.',
+  'Material do Lucas haither':            "Lucas haither's footage",
+  'Material do Lucas haither.':           "Lucas haither's footage.",
+};
+
+// Devolve o texto no idioma pedido. PT passa direto; EN procura no
+// dicionário e, se não achar, devolve o original (nunca fica em branco).
+window.tText = function (lang, texto) {
+  if (lang !== 'en' || !texto) return texto;
+  return TEXTOS_EN[texto] || texto;
 };
 
 window.persistLang = function (lang) {

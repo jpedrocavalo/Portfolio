@@ -59,7 +59,7 @@ function ProjectCard({ proj, index, isMobile, lang }) {
       }}>
         {capa && (
           <img
-            src={capa} alt={proj.title}
+            src={capa} alt={window.tText(lang, proj.title)}
             // Se a arte não existir no caminho indicado, cai na capa do
             // primeiro vídeo em vez de deixar imagem quebrada.
             onError={(e) => {
@@ -90,10 +90,10 @@ function ProjectCard({ proj, index, isMobile, lang }) {
       }}>
         <div>
           <div style={{ fontFamily: PJ_FONTS.sans, fontSize: 15, fontWeight: 600, letterSpacing: '-0.01em', color: PJ_PALETTE.fg }}>
-            {proj.title}
+            {window.tText(lang, proj.title)}
           </div>
           {proj.subtitle && (
-            <div style={{ ...PJ_TH.label, marginTop: 2 }}>{proj.subtitle}</div>
+            <div style={{ ...PJ_TH.label, marginTop: 2 }}>{window.tText(lang, proj.subtitle)}</div>
           )}
         </div>
         <div style={{ ...PJ_TH.label, flexShrink: 0, textAlign: 'right' }}>

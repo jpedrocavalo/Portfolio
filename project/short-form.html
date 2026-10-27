@@ -112,7 +112,7 @@ function App() {
           gap: isMobile ? 12 : 24,
         }}>
           {SHORTFORM.map((item, i) => (
-            <SfCard key={i} item={item} index={i} onOpen={setOpenIndex} width="100%" still />
+            <SfCard key={i} item={item} index={i} onOpen={setOpenIndex} width="100%" still lang={lang} />
           ))}
         </div>
       </section>

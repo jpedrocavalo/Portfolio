@@ -102,7 +102,7 @@ function Card({ data, fill, lang }) {
         {window.hasMedia(data) ? (
           <img
             {...window.mediaThumbProps(data)}
-            alt={data.title}
+            alt={window.tText(lang, data.title)}
             style={{
               position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover',
               transform: hover ? 'scale(1.05)' : 'scale(1)',
@@ -119,7 +119,7 @@ function Card({ data, fill, lang }) {
               transition: 'transform 0.6s cubic-bezier(0.2,0.8,0.2,1), filter 0.45s ease',
             }} />
         ) : data.imageSrc ? (
-          <img src={data.imageSrc} alt={data.title}
+          <img src={data.imageSrc} alt={window.tText(lang, data.title)}
             style={{
               position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover',
               transform: hover ? 'scale(1.05)' : 'scale(1)',
@@ -135,7 +135,7 @@ function Card({ data, fill, lang }) {
       }}>
         {/* featuredTitle = título só aqui na home; o resto do site usa title */}
         <span style={{ fontFamily: FONTS.sans, fontSize: 13, fontWeight: 500, color: PALETTE.fg }}>
-          {data.featuredTitle || data.title}
+          {window.tText(lang, data.featuredTitle || data.title)}
         </span>
         <span style={{ ...TH.label, flexShrink: 0 }}>
           {[window.tCategory(lang, data.category), data.year].filter(Boolean).join(', ')}

@@ -83,7 +83,7 @@ function VideoCard({ video, index, lang }) {
         {window.hasMedia(video) && (
           <img
             {...window.mediaThumbProps(video)}
-            alt={video.title}
+            alt={window.tText(lang, video.title)}
             style={{
               position: 'absolute', inset: 0, width: '100%', height: '100%',
               objectFit: 'cover',
@@ -99,7 +99,7 @@ function VideoCard({ video, index, lang }) {
         display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'baseline', gap: '4px 12px',
       }}>
         <span style={{ fontFamily: FONTS.sans, fontSize: 13, fontWeight: 500, color: PALETTE.fg }}>
-          {video.title}
+          {window.tText(lang, video.title)}
         </span>
         <span style={{ ...TH.label, flexShrink: 0 }}>
           {[window.tCategory(lang, video.category), video.year].filter(Boolean).join(', ')}

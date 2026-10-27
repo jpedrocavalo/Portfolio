@@ -103,10 +103,10 @@ function App() {
 
   // Vindo de um projeto, a etiqueta mostra o projeto em vez de
   // "último/selecionado", que ali não faz sentido.
-  const etiqueta = PROJETO ? PROJETO.title : (IS_LATEST ? T.video.latestWork : T.video.selectedWork);
+  const etiqueta = PROJETO ? window.tText(lang, PROJETO.title) : (IS_LATEST ? T.video.latestWork : T.video.selectedWork);
   const ano = v.year || (PROJETO && PROJETO.year);
   // Vídeo de projeto sem categoria própria: mostra o cliente do projeto.
-  const categoria = window.tCategory(lang, v.category) || (PROJETO && PROJETO.subtitle);
+  const categoria = window.tCategory(lang, v.category) || (PROJETO && window.tText(lang, PROJETO.subtitle));
   const categoriaLabel = v.category ? T.video.categoryLabel : T.projects.clientLabel;
 
   return (
@@ -132,7 +132,7 @@ function App() {
             <span style={TH.pill}>{etiqueta}</span>
           </div>
           <h1 style={{ ...TH.heading(isMobile ? 'clamp(36px, 10vw, 60px)' : 'clamp(40px, 4.4vw, 76px)'), marginTop: isMobile ? 20 : 28 }}>
-            {v.title}
+            {window.tText(lang, v.title)}
           </h1>
         </div>
 
@@ -142,12 +142,12 @@ function App() {
               <Coluna label={categoriaLabel} value={categoria} />
               <Coluna label={T.video.yearLabel} value={ano} />
             </div>
-            {PROJETO && <Coluna label={T.video.projectLabel} value={PROJETO.title} />}
+            {PROJETO && <Coluna label={T.video.projectLabel} value={window.tText(lang, PROJETO.title)} />}
           </div>
           {v.description && (
             <div>
               <div style={{ ...TH.label, marginBottom: 8 }}>{T.video.descriptionLabel}</div>
-              <p style={{ ...TH.body(isMobile ? 14 : 15), maxWidth: 560 }}>{v.description}</p>
+              <p style={{ ...TH.body(isMobile ? 14 : 15), maxWidth: 560 }}>{window.tText(lang, v.description)}</p>
             </div>
           )}
         </div>

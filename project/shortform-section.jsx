@@ -109,20 +109,20 @@ function ShortformModal({ item, onClose, isMobile, lang }) {
           minWidth: 0,
         }}>
           <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: isMobile ? 14 : 20 }}>
-            {[item.year, item.subtitle].filter(Boolean).map((x, i) => (
+            {[item.year, window.tText(lang, item.subtitle)].filter(Boolean).map((x, i) => (
               <span key={i} style={SF_TH.pill}>{x}</span>
             ))}
           </div>
 
           <h2 style={SF_TH.heading(isMobile ? 'clamp(28px, 8vw, 40px)' : 'clamp(32px, 3vw, 56px)')}>
-            {item.title}
+            {window.tText(lang, item.title)}
           </h2>
 
           <div style={{ ...SF_TH.label, marginTop: isMobile ? 20 : 32, marginBottom: 8 }}>
             {(window.I18N[lang] || window.I18N.pt).video.descriptionLabel}
           </div>
           <p style={{ ...SF_TH.body(isMobile ? 14 : 15), maxWidth: 460 }}>
-            {item.description}
+            {window.tText(lang, item.description)}
           </p>
 
           {/* Só faz sentido pra vídeo hospedado no YouTube */}
@@ -159,7 +159,7 @@ function ShortformModal({ item, onClose, isMobile, lang }) {
 
 // ─── Card vertical flutuante ───────────────────────────────────
 // still = sem flutuação (grid da página short-form.html)
-function SfCard({ item, index, onOpen, width, still }) {
+function SfCard({ item, index, onOpen, width, still, lang }) {
   const [hover, setHover] = React.useState(false);
   return (
     <div
@@ -181,7 +181,7 @@ function SfCard({ item, index, onOpen, width, still }) {
       >
         <img
           {...window.mediaThumbProps(item)}
-          alt={item.title}
+          alt={window.tText(lang, item.title)}
           style={{
             position: 'absolute', inset: 0, width: '100%', height: '100%',
             objectFit: 'cover',
@@ -195,8 +195,8 @@ function SfCard({ item, index, onOpen, width, still }) {
       {/* Legenda: título, subtítulo, ano */}
       <div style={{ marginTop: 10, display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'baseline', gap: '4px 12px' }}>
         <div>
-          <div style={{ fontFamily: SF_FONTS.sans, fontSize: 13, fontWeight: 500, lineHeight: 1.3, color: SF_PALETTE.fg }}>{item.title}</div>
-          {item.subtitle && <div style={{ ...SF_TH.label, marginTop: 2 }}>{item.subtitle}</div>}
+          <div style={{ fontFamily: SF_FONTS.sans, fontSize: 13, fontWeight: 500, lineHeight: 1.3, color: SF_PALETTE.fg }}>{window.tText(lang, item.title)}</div>
+          {item.subtitle && <div style={{ ...SF_TH.label, marginTop: 2 }}>{window.tText(lang, item.subtitle)}</div>}
         </div>
         <div style={{ ...SF_TH.label, flexShrink: 0 }}>{item.year}</div>
       </div>
@@ -285,7 +285,7 @@ function ShortformSection({ isMobile, lang }) {
   );
 
   const cards = items.map((item, i) => (
-    <SfCard key={i} item={item} index={i} onOpen={setOpenIndex} width={CARD_W} />
+    <SfCard key={i} item={item} index={i} onOpen={setOpenIndex} width={CARD_W} lang={lang} />
   ));
 
   // ── Mobile: rolagem horizontal nativa com snap ──
@@ -311,7 +311,7 @@ function ShortformSection({ isMobile, lang }) {
         >
           {items.map((item, i) => (
             <div key={i} style={{ scrollSnapAlign: 'start' }}>
-              <SfCard item={item} index={i} onOpen={setOpenIndex} width={CARD_W} />
+              <SfCard item={item} index={i} onOpen={setOpenIndex} width={CARD_W} lang={lang} />
             </div>
           ))}
         </div>
