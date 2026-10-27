@@ -61,13 +61,13 @@ window.VIDEOS = [
   {
     title: '1 ano do Posto cobé',
     year: '2026',
-    category: 'Frame Company',
+    // Sem categoria: no card aparece só o ano
     streamId: 'c82d9404bda12fe0d3041c1686eab8a3',
     youtubeId: '',
     // Capa própria (original em 4K em capas/Postocobe.jpg, 2 MB; esta é
     // a versão leve pra web). Ganha do frame do Cloudflare.
     poster: './capas/posto-cobe.jpg',
-    description: 'Trabalho freelancer de edição para Frame Company.\nDireção, direção de fotografia e operação de câmera: Frame Company.',
+    description: 'Trabalho freelancer de edição para Vic Filmes.\nDireção, direção de fotografia e operação de câmera: Vic Filmes.',
   },
   {
     title: 'Making Of da Noiva - Júlia e Ícaro',
