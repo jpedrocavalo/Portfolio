@@ -398,17 +398,19 @@
         // Um lote é um projeto com N vídeos; o pagamento é do projeto
         const nome = (l.descricao ? l.descricao + ' · ' : '') + 'lote de ' + l.lote + ' vídeos (' + D.fmtData(l.data) + ')';
         const pid = garantirProjeto(clienteId, nome);
-        for (let i = 1; i <= l.lote; i++) novoTrabalho(clienteId, pid, 'Vídeo ' + i, l);
+        // O valor de cada vídeo é a parte dele no lote (divisão igual, em centavos)
+        const partes = D.dividirIgual(l.valor, l.lote);
+        for (let i = 1; i <= l.lote; i++) novoTrabalho(clienteId, pid, 'Vídeo ' + i, l, { valor: partes[i - 1] });
         recibo.projeto_id = pid;
       } else if (l.padrao === 'dia' || (l.padrao === 'real_time' && l.projetoNome && !l.videoTitulo)) {
         const pid = l.projetoNome ? garantirProjeto(clienteId, l.projetoNome) : null;
-        if (l.padrao === 'dia') recibo.trabalho_id = novoTrabalho(clienteId, pid, l.videoTitulo || l.descricao, l);
+        if (l.padrao === 'dia') recibo.trabalho_id = novoTrabalho(clienteId, pid, l.videoTitulo || l.descricao, l, { valor: l.valor });
         else recibo.projeto_id = pid;
       } else if (l.projetoNome) {
         // Texto que é o nome de um projeto: pagamento do projeto inteiro
         recibo.projeto_id = garantirProjeto(clienteId, l.projetoNome);
       } else {
-        recibo.trabalho_id = novoTrabalho(clienteId, null, l.videoTitulo || l.descricao, l);
+        recibo.trabalho_id = novoTrabalho(clienteId, null, l.videoTitulo || l.descricao, l, { valor: l.valor });
       }
 
       ops.push({ tabela: 'recebiveis', dados: recibo });

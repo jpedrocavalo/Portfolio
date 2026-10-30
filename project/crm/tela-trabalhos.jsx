@@ -173,7 +173,7 @@
                 { id: 'projeto', titulo: 'Projeto', valor: (x) => (ix.projeto.get(x.projeto_id) || {}).nome || '', render: (x) => (ix.projeto.get(x.projeto_id) || {}).nome || <span className="crm-mudo">—</span> },
                 { id: 'categoria', titulo: 'Categoria', valor: cat, render: cat },
                 { id: 'etapa', titulo: 'Etapa', valor: (x) => D.ETAPAS.findIndex((e) => e.id === x.etapa), render: (x) => <Tag>{(D.ETAPAS.find((e) => e.id === x.etapa) || {}).nome}</Tag> },
-                { id: 'valor', titulo: 'Valor', alinhar: 'dir', valor: (x) => +x.valor || 0, render: (x) => (x.valor ? D.fmtBRL(x.valor) : <span className="crm-mudo">—</span>) },
+                { id: 'valor', titulo: 'Valor', alinhar: 'dir', valor: (x) => +x.valor || 0, render: (x) => (x.valor ? D.fmtBRL(x.valor) : <span className="crm-mudo">{x.projeto_id ? 'no projeto' : '—'}</span>) },
               ]}
             />
           </Cartao>

@@ -300,3 +300,13 @@ test('um projeto revelado por "real time X" também recebe as entradas "X" do me
   assert.equal(aoProjeto.length, 2);
   assert.equal(aoProjeto[0].dados.projeto_id, aoProjeto[1].dados.projeto_id);
 });
+
+test('montarPlano: cada vídeo recebe o valor do pagamento; num lote, a parte dele', () => {
+  const tsv = ['Data\tNome\tCategoria\tValor',
+    '10/03/2026\tPodcast Cliente Teste\tEdição\tR$ 100,00',
+    '11/03/2026\t3 videos Cliente Teste\tEdição\tR$ 100,00'].join('\n');
+  const linhas = I.classificar(I.lerTabela(tsv), { clientes: [{ nome: 'Cliente Teste' }], categoriasVideo: [] });
+  const ops = I.montarPlano(linhas, {}, {}).ops.filter((o) => o.tabela === 'trabalhos');
+  assert.deepEqual(ops.map((o) => o.dados.valor), [100, 33.34, 33.33, 33.33]);
+  assert.equal(D.somar(ops.slice(1), (o) => o.dados.valor), 100);
+});
