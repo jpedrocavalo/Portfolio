@@ -15,6 +15,6 @@
    a chave "service_role": essa é secreta e este arquivo é público.
    ════════════════════════════════════════════════════════════════ */
 window.CRM_CONFIG = {
-  supabaseUrl: '',
-  supabaseAnonKey: '',
+  supabaseUrl: 'https://ogoinwjduestsqhcozob.supabase.co',
+  supabaseAnonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9nb2lud2pkdWVzdHNxaGNvem9iIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTMzNTE2MDMsImV4cCI6MjEwODkyNzYwM30.e8pHW8YX_hgYfhHtLm1bfSkWqImJqsTUVrtZLwCvTXg',
 };
