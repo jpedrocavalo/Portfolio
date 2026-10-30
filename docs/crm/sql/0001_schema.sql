@@ -14,6 +14,7 @@
 create or replace function public.crm_tocar_atualizado_em()
 returns trigger
 language plpgsql
+set search_path = public
 as $$
 begin
   new.atualizado_em = now();

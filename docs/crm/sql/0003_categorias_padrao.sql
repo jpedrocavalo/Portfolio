@@ -12,6 +12,7 @@ create or replace function public.crm_semear_categorias()
 returns int
 language plpgsql
 security invoker
+set search_path = public
 as $$
 declare
   novas int;
