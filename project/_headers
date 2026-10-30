@@ -1,0 +1,5 @@
+# CRM dos serviços: fora do Google, mesmo que alguém ache o endereço
+/crmadmin*
+  X-Robots-Tag: noindex, nofollow
+/crm/*
+  X-Robots-Tag: noindex, nofollow

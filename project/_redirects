@@ -1,2 +1,6 @@
 # A home era /reel; o link antigo continua funcionando
 /reel / 301
+
+# CRM dos serviços: a URL com maiúscula vai pra minúscula (a Cloudflare diferencia)
+/CRMadmin /crmadmin 301
+/CRMadmin/ /crmadmin 301
