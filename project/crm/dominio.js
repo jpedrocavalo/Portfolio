@@ -165,6 +165,15 @@
     return novos;
   }
 
+  // Modelo de cobrança vigente de um cliente em `hoje`: a linha mais
+  // recente com `desde` <= hoje. Sem nenhuma, vale 'avulso' (por vídeo).
+  function modeloDeCobranca(cobrancas, clienteId, hoje) {
+    const vigentes = (cobrancas || [])
+      .filter((c) => c.cliente_id === clienteId && c.desde <= hoje)
+      .sort((a, b) => b.desde.localeCompare(a.desde));
+    return vigentes.length ? vigentes[0].modelo : 'avulso';
+  }
+
   // ─── Atribuição da receita (base de TODOS os gráficos) ─────────
   // Cada recebível vira "fatias", e cada fatia carrega as dimensões em
   // que pode ser agrupada: cliente, projeto, trabalho, serviço, categoria.
@@ -264,7 +273,7 @@
     isoValido, hojeISO, mesDe, anoDe, addDias, addMeses, diffDias, ultimoDiaDoMes,
     parseDataBR, fmtData, fmtMes,
     centavos, deCentavos, fmtBRL, parseBRL, dividirIgual,
-    statusEfetivo, gerarMensalidades, atribuirReceita, somar,
+    statusEfetivo, gerarMensalidades, modeloDeCobranca, atribuirReceita, somar,
     resumoDoMes, acumuladoDoAno,
   };
 });

@@ -200,3 +200,17 @@ test('acumuladoDoAno e o limite', () => {
   assert.equal(D.acumuladoDoAno(cenario(), 2025, 81000).total, 0);
   assert.equal(D.acumuladoDoAno(cenario(), 2026).pct, null);
 });
+
+test('modeloDeCobranca: vale a linha mais recente que já começou; sem linha, avulso', () => {
+  const cob = [
+    { cliente_id: 'c1', modelo: 'avulso', desde: '2026-01-01' },
+    { cliente_id: 'c1', modelo: 'mensal', desde: '2026-06-01' },
+    { cliente_id: 'c1', modelo: 'avulso', desde: '2027-01-01' },
+    { cliente_id: 'c2', modelo: 'mensal', desde: '2026-02-01' },
+  ];
+  assert.equal(D.modeloDeCobranca(cob, 'c1', '2026-03-10'), 'avulso');
+  assert.equal(D.modeloDeCobranca(cob, 'c1', '2026-07-10'), 'mensal');
+  assert.equal(D.modeloDeCobranca(cob, 'c1', '2027-02-01'), 'avulso');
+  assert.equal(D.modeloDeCobranca(cob, 'c2', '2026-01-31'), 'avulso');
+  assert.equal(D.modeloDeCobranca(cob, 'c3', '2026-07-10'), 'avulso');
+});
