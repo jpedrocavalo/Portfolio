@@ -22,3 +22,10 @@ node_modules/
 # Fotos do portfólio de color: o PNG do export fica no seu disco, o site
 # serve o JPG leve do lado. Mandar os dois pro ar seria dezenas de MB.
 project/colorist/**/*.png
+
+# CRM dos serviços: este repositório é PÚBLICO. O plano cita clientes e
+# valores reais, o progresso idem e os dados reais são da planilha dele.
+# Ficam só no computador, nunca no Git.
+docs/crm-servicos.md
+docs/crm-progresso.md
+docs/crm/dados-reais/
