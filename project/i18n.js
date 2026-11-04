@@ -146,7 +146,7 @@ window.I18N = {
     // ── Página de colorista (colorist.html) ──
     colorist: {
       label:        'Colorista',
-      heading:      'Colorista.',
+      heading:      'Jotap Colorist.',
       roleLabel:    'Função',
       role:         'Colorista',
       servicesLabel:'Serviços',
@@ -289,7 +289,7 @@ window.I18N = {
 
     colorist: {
       label:        'Colorist',
-      heading:      'Colorist.',
+      heading:      'Jotap Colorist.',
       roleLabel:    'Role',
       role:         'Colorist',
       servicesLabel:'Services',
