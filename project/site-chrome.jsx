@@ -109,7 +109,7 @@ function SiteHeader({ current, lang, setLang, onContactOpen, colorist }) {
     }}>
       <a href={inicio} style={{
         fontWeight: 600, color: CH_P.fg, textDecoration: 'none', letterSpacing: '-0.01em',
-      }}>Jotap Films<sup style={{ fontSize: 8, marginLeft: 1, fontWeight: 500 }}>®</sup></a>
+      }}>{colorist ? 'Jotap Colorist' : 'Jotap Films'}<sup style={{ fontSize: 8, marginLeft: 1, fontWeight: 500 }}>®</sup></a>
 
       {!isMobile && (
         <div style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)' }}>
@@ -173,7 +173,7 @@ function ContactCta({ lang, isMobile }) {
   );
 }
 
-function SiteFooter({ lang }) {
+function SiteFooter({ lang, colorist }) {
   const t = window.I18N[lang].footer;
   return (
     <footer style={{
@@ -182,7 +182,7 @@ function SiteFooter({ lang }) {
       display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12,
       ...TH.label,
     }}>
-      <span style={{ color: CH_P.fg, fontWeight: 600 }}>Jotap Films<sup style={{ fontSize: 7, marginLeft: 1 }}>®</sup></span>
+      <span style={{ color: CH_P.fg, fontWeight: 600 }}>{colorist ? 'Jotap Colorist' : 'Jotap Films'}<sup style={{ fontSize: 7, marginLeft: 1 }}>®</sup></span>
       <span>{t.rightsReserved}</span>
     </footer>
   );
