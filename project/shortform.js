@@ -76,4 +76,9 @@ window.SHORTFORM = [
     },
     description: 'Material do Lucas haither.',
   },
+  { year: '2026', streamId: 'f4bf4cb3efd3de240ce415406da19362' },
+  { year: '2026', streamId: 'db0e90813f1621573992b5f2b6ccd760' },
+  { year: '2026', streamId: 'fb24d8ead762f8e9cdf62884bd164763' },
+  { year: '2026', streamId: '72a7083b07ac9d07dc6ccb0cdb9768ac' },
+  { year: '2026', streamId: '45df435cc02dda196a162520fed581da' },
 ];
