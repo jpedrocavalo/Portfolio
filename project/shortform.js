@@ -47,6 +47,8 @@ window.SHORTFORM = [
     year: '2026',
     streamId: 'e18e064a56ced6553e0ec220def58618',
     youtubeId: 'i2zMYQGhsQU',
+    // Fora do ar. Tire esta linha pra voltar.
+    hidden: true,
     // Mesmo trabalho que aparece em videos.js — mesma color.
     color: {
       before: './color/Antes-FormaturaGio.png',
